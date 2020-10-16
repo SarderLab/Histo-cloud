@@ -1,0 +1,36 @@
+*.pyc
+__pycache__/
+.ipynb_checkpoints
+*~
+*#
+.#*
+*.bak
+docs/_build
+dist/
+build
+_build
+.coverage
+*.egg
+.eggs
+*.egg-info
+.cache
+.idea
+.*.swp
+/.vagrant/
+.lprof
+# scikit-build
+_skbuild
+MANIFEST
+# cython output
+*.so
+wheels/
+dask-worker-space
+.tox
+log/
+py27/
+py36/
+py37/
+.package.lock
+tests/externaldata/
+*coverage.xml
+.coverage*
