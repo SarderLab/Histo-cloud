@@ -1,0 +1,13 @@
+{
+  "DetectGlomeruli": {
+    "type"    : "python"
+  },
+
+  "TranslateJsonToXML": {
+    "type"    : "python"
+  },
+
+  "TranslateXMLToJson": {
+    "type"    : "python"
+  }
+}

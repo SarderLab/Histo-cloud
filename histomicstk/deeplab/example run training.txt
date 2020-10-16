@@ -1,0 +1,26 @@
+python3 train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size 300 --train_logdir glom-models --dataset_dir /hdd/KPMPData/H-AI-L-master/KPMP/TRAINING_data/3/ --fine_tune_batch_norm True --logtostderr --train_batch_size 12 --num_clones 2
+
+
+## may help ##
+
+dronefreak commented on Sep 4, 2019
+
+@IamShubhamGupto
+Here is how you can do it.
+Under the utils folder, there is a file called train_utils.py
+There you need to add the following lines after the line scaled_labels = tf.reshape(scaled_labels, shape=[-1])
+
+ignore_weight = 0
+label0_weight = 3  # class 1
+label1_weight = 5 # class 2
+not_ignore_mask = tf.to_float(tf.equal(scaled_labels, 0)) * label0_weight + tf.to_float(tf.equal(scaled_labels, 1)) * label1_weight + tf.to_float(tf.equal(scaled_labels, ignore_label)) * ignore_weight
+
+The weights are experimental, you might need to tweak around to get the right combinations.
+
+
+python3 vis.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --checkpoint_dir glom-models_multiscale/ --dataset_dir /hdd/KPMPData/H-AI-L-master/KPMP/TRAINING_data/3_test/
+
+
+python3 train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size 512 --train_logdir test-models-gloms --dataset_dir /hdd/KPMPData/H-AI-L-master/KPMP/TRAINING_data/3_test/ --fine_tune_batch_norm True --logtostderr --train_batch_size 12 --num_clones 2 --training_number_of_steps 200000 --learning_rate_decay_step 10000 --wsi_downsample 1 --wsi_downsample 2 --wsi_downsample 4 --wsi_downsample 6 --wsi_downsample 8 --augment_prob 0 --base_learning_rate 0.007
+
+python3 train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size 512 --train_logdir glom-models-multiscale-7-16-20 --dataset_dir /hdd/KPMPData/H-AI-L-master/KPMP/TRAINING_data/3/ --fine_tune_batch_norm True --logtostderr --train_batch_size 12 --num_clones 2 --tf_initial_checkpoint glom-models_multiscale/model.ckpt-50207 --training_number_of_steps 200000 --learning_rate_decay_step 10000 --slow_start_step 1000 --wsi_downsample 1 --wsi_downsample 2 --wsi_downsample 3 --wsi_downsample 4 --wsi_downsample 5 --wsi_downsample 6 --augment_prob 0 --slow_start_learning_rate .00001 --base_learning_rate 0.001
