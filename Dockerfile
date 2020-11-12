@@ -4,14 +4,16 @@
 #
 # All plugins of HistomicsTK should derive from this docker image
 
-# start from nvidia/cuda 10.2
 
-# FROM nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04
-# FROM nvidia/cuda:9.2-cudnn7-devel-ubuntu18.04
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
-LABEL maintainer="Kitware, Inc. <kitware@kitware.com>"
+# start from nvidia/cuda 10.0
+# FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+FROM tensorflow/tensorflow:1.15.4-gpu-py3
+LABEL com.nvidia.volumes.needed="nvidia_driver"
 
-RUN mkdir /usr/local/nvidia && ln -s /usr/local/cuda-10.0/compat /usr/local/nvidia/lib
+LABEL maintainer="Brendon Lutnick - Sarder Lab. <brendonl@buffalo.edu>"
+
+CMD echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! STARTING THE BUILD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# RUN mkdir /usr/local/nvidia && ln -s /usr/local/cuda-10.0/compat /usr/local/nvidia/lib
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
@@ -26,6 +28,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get --yes --no-install-recommends -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    #keyboard-configuration \
     git \
     wget \
     python-qt4 \
@@ -57,15 +60,28 @@ RUN apt-get update && \
     libtool \
     pkg-config \
     # needed for supporting CUDA \
-    libcupti-dev \
+    # libcupti-dev \
     # Needed for ITK and SlicerExecutionModel \
     # ninja-build \
     \
     # useful later \
     libmemcached-dev && \
     \
-    apt-get autoremove && \
+    #apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+CMD echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CHECKPOINT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+RUN apt-get update ##[edited]
+RUN apt-get install 'ffmpeg'\
+    'libsm6'\
+    'libxext6'  -y
+
+# RUN apt-get install software-properties-common -y
+# RUN add-apt-repository ppa:graphics-drivers/ppa -y
+# RUN apt-get update -y
+# RUN apt-get upgrade -y
+# RUN apt-get install nvidia-driver-455 -y
 
 WORKDIR /
 # Make Python3 the default and install pip.  Whichever is done last determines
@@ -87,7 +103,7 @@ RUN mkdir -p $htk_path
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends memcached && \
-    apt-get autoremove && \
+    #apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY . $htk_path/
 WORKDIR $htk_path
@@ -105,16 +121,19 @@ RUN pip install --no-cache-dir --upgrade --ignore-installed pip setuptools && \
     # Install HistomicsTK
     pip install --no-cache-dir --pre . --find-links https://girder.github.io/large_image_wheels && \
     # Install GPU version of tensorflow
-    pip install --no-cache-dir 'tensorflow-gpu==1.14.0' && \
+    # pip install --no-cache-dir 'tensorflow-gpu==1.14.0' && \
     # Install tf-slim
     pip install --no-cache-dir 'tf-slim>=1.1.0' && \
     # Downgrade gast
-    pip install --no-cache-dir 'gast==0.2.2' && \
+    # pip install --no-cache-dir 'gast==0.2.2' && \
     # clean up
     rm -rf /root/.cache/pip/*
 
 # Show what was installed
 RUN pip freeze
+
+# remove cuda compat
+# RUN apt remove --purge cuda-compat-10-0 --yes
 
 # pregenerate font cache
 RUN python -c "from matplotlib import pylab"
@@ -125,6 +144,7 @@ WORKDIR $htk_path/histomicstk/cli
 # Test our entrypoint.  If we have incompatible versions of numpy and
 # openslide, one of these will fail
 RUN python -m slicer_cli_web.cli_list_entrypoint --list_cli
-RUN python -m slicer_cli_web.cli_list_entrypoint DetectGlomeruli --help
+RUN python -m slicer_cli_web.cli_list_entrypoint SegmentWSI --help
+RUN python -m slicer_cli_web.cli_list_entrypoint TrainNetwork --help
 
 ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]
