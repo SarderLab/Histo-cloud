@@ -1,5 +1,9 @@
 {
-  "DetectGlomeruli": {
+  "SegmentWSI": {
+    "type"    : "python"
+  },
+
+  "TrainNetwork": {
     "type"    : "python"
   },
 
