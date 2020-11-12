@@ -22,7 +22,7 @@ from __future__ import division
 from __future__ import print_function
 
 import sys
-sys.path.append("/home/brendonl/")
+sys.path.append("..")
 
 import warnings
 with warnings.catch_warnings():
@@ -436,6 +436,7 @@ def main(unused_argv):
     # Soft placement allows placing on CPU ops without GPU implementation.
     session_config = tf.ConfigProto(
         allow_soft_placement=True, log_device_placement=False)
+    session_config.gpu_options.allow_growth = True
 
     # Start the training.
     profile_dir = FLAGS.profile_logdir

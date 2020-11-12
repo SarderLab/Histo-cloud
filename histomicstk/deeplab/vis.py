@@ -60,11 +60,20 @@ flags.DEFINE_string('checkpoint_dir', None, 'Directory of model checkpoints.')
 flags.DEFINE_integer('vis_batch_size', 1,
                      'The number of images in each batch during evaluation.')
 
-flags.DEFINE_integer('vis_crop_size', 512,
+flags.DEFINE_integer('vis_crop_size', 2000,
                   'Crop size [size, size] for visualization.')
 
-flags.DEFINE_float('vis_remove_border', 0.15,
-                   'Percent of the vis_crop_size border that is not used.')
+flags.DEFINE_integer('wsi_downsample', 2,
+                  'Downsample rate of WSI used during training.')
+
+flags.DEFINE_integer('tile_step', 500,
+                  'Number of times the patch grid overlaps during testing.')
+
+flags.DEFINE_integer('vis_remove_border', 100,
+                   'Number of pixels on the patch boarder that are not used.')
+
+flags.DEFINE_float('simplify_contours', 0.001,
+                   'The amount of approximation used to simplify the predicted boundaries - we dont recommend setting this above a value of 0.01 (uses the Douglas-Peucker Algorythm epsilon).')
 
 flags.DEFINE_integer('eval_interval_secs', 60 * 5,
                      'How often (in seconds) to run evaluation.')
@@ -95,12 +104,6 @@ flags.DEFINE_integer(
 flags.DEFINE_string('dataset', 'wsi_dataset',
                     'Name of the segmentation dataset.')
 
-flags.DEFINE_integer('wsi_downsample', 4,
-                  'Downsample rate of WSI used during training.')
-
-flags.DEFINE_integer('overlap_num', 4,
-                  'Number of times the patch grid overlaps during testing.')
-
 flags.DEFINE_integer('min_size', 0,
                   'Minimum size of the detected regions.')
 
@@ -108,12 +111,6 @@ flags.DEFINE_integer('num_classes', 2,
                   'Downsample rate of WSI used during training.')
 
 flags.DEFINE_string('dataset_dir', None, 'Where the dataset reside.')
-
-flags.DEFINE_enum('colormap_type', 'pascal', ['pascal', 'cityscapes', 'ade20k'],
-                  'Visualization colormap type.')
-
-flags.DEFINE_boolean('also_save_raw_predictions', False,
-                     'Also save raw predictions.')
 
 flags.DEFINE_boolean('save_json_annotation', False,
                      'Save the predictions in .json format for HistomicsTK.')
@@ -133,27 +130,6 @@ _IMAGE_FORMAT = '%06d_image'
 _PREDICTION_FORMAT = '%06d_prediction'
 
 
-def _convert_train_id_to_eval_id(prediction, train_id_to_eval_id):
-  """Converts the predicted label for evaluation.
-
-  There are cases where the training labels are not equal to the evaluation
-  labels. This function is used to perform the conversion so that we could
-  evaluate the results on the evaluation server.
-
-  Args:
-    prediction: Semantic segmentation prediction.
-    train_id_to_eval_id: A list mapping from train id to evaluation id.
-
-  Returns:
-    Semantic segmentation prediction whose labels have been changed.
-  """
-  converted_prediction = prediction.copy()
-  for train_id, eval_id in enumerate(train_id_to_eval_id):
-    converted_prediction[prediction == train_id] = eval_id
-
-  return converted_prediction
-
-
 def _process_batch(sess, slide_mask, semantic_predictions,
                    image_names, mask_size, border, downsample, image_heights,
                    image_widths, image_id_offset,
@@ -171,11 +147,14 @@ def _process_batch(sess, slide_mask, semantic_predictions,
     raw_save_dir: The directory where the raw predictions will be saved.
     train_id_to_eval_id: A list mapping from train id to eval id.
   """
+  # t = time.time()
   (semantic_predictions,
    image_names,
    image_heights,
    image_widths) = sess.run([semantic_predictions,
                              image_names, image_heights, image_widths])
+  # print('\nNN time  : {}'.format(time.time()-t))
+  # t = time.time()
 
   num_image = semantic_predictions.shape[0]
   for i in range(num_image):
@@ -196,26 +175,20 @@ def _process_batch(sess, slide_mask, semantic_predictions,
 
     Ystop = min(Ystart+image_height-(border*2), mask_size[0])
     Xstop = min(Xstart+image_width-(border*2), mask_size[1])
+
     # print('\n')
     # print(mask_size)
     # print(border)
     # print(Xstart, Xstop, Ystart, Ystop)
-    # print(Ystop-Ystart+border, Xstop-Xstart+border)
-    # input('...')
+    # print(np.shape(slide_mask[Ystart:Ystop, Xstart:Xstop]))
+    # print(np.shape(semantic_prediction[border:Ystop-Ystart+border, border:Xstop-Xstart+border]))
+    # print(np.shape(slide_mask))
 
     slide_mask[Ystart:Ystop, Xstart:Xstop] = np.maximum(
                 slide_mask[Ystart:Ystop, Xstart:Xstop],
                 semantic_prediction[border:Ystop-Ystart+border, border:Xstop-Xstart+border])
 
-    if FLAGS.also_save_raw_predictions:
-      if train_id_to_eval_id is not None:
-        crop_semantic_prediction = _convert_train_id_to_eval_id(
-            crop_semantic_prediction,
-            train_id_to_eval_id)
-      save_annotation.save_annotation(
-          crop_semantic_prediction, raw_save_dir, image_filename,
-          add_colormap=False)
-
+  # print('Mask time: {}'.format(time.time()-t))
   return slide_mask
 
 
@@ -228,7 +201,7 @@ def main(unused_argv):
       dataset_dir=FLAGS.dataset_dir,
       num_of_classes=FLAGS.num_classes,
       downsample=FLAGS.wsi_downsample,
-      overlap_num=FLAGS.overlap_num,
+      tile_step=FLAGS.tile_step,
       batch_size=FLAGS.vis_batch_size,
       crop_size=FLAGS.vis_crop_size,
       min_resize_value=FLAGS.min_resize_value,
@@ -239,8 +212,7 @@ def main(unused_argv):
       should_shuffle=False,
       should_repeat=False)
 
-  vis_border = int(round(FLAGS.vis_crop_size*FLAGS.vis_remove_border))
-  assert vis_border * 2 < FLAGS.vis_crop_size
+  assert FLAGS.vis_remove_border*2 < FLAGS.vis_crop_size and FLAGS.vis_remove_border*2 < FLAGS.vis_crop_size - FLAGS.tile_step
 
   if os.path.isfile(FLAGS.dataset_dir):
       slides = [FLAGS.dataset_dir]
@@ -250,113 +222,105 @@ def main(unused_argv):
 
   broken_slides = []
 
-  for slide in slides:
+  with tf.Graph().as_default():
+      checkpoint_path = FLAGS.checkpoint_dir
+      config = tf.ConfigProto()
+      config.gpu_options.allow_growth = True
+      scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
+      session_creator = tf.train.ChiefSessionCreator(
+            scaffold=scaffold,
+            master=FLAGS.master,
+            config=config,
+            checkpoint_filename_with_path=checkpoint_path)
+      for slide in slides:
+          print('Working on: [{}]'.format(slide))
 
-      print('Working on: [{}]'.format(slide))
+          try:
+              # get slide size and create empty wsi mask
+              slide_size = get_slide_size(slide)
+              def get_downsampled_size(size, downsample=FLAGS.wsi_downsample):
+                  size /= downsample
+                  return int(np.ceil(size))
+              mask_size = [get_downsampled_size(slide_size[1]), get_downsampled_size(slide_size[0])]
+              slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
 
-      try:
-          # get slide size and create empty wsi mask
-          slide_size = get_slide_size(slide)
-          def get_downsampled_size(size, downsample=FLAGS.wsi_downsample):
-              size /= downsample
-              return int(np.ceil(size))
-          mask_size = [get_downsampled_size(slide_size[1]), get_downsampled_size(slide_size[0])]
-          slide_mask = np.zeros([slide_size[1], slide_size[0]], dtype=np.uint8)
+          except:
+              print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
+              broken_slides.append(slide)
+              continue
 
-      except:
-          print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
-          broken_slides.append(slide)
-          continue
+          train_id_to_eval_id = None
+          raw_save_dir = None
 
-      train_id_to_eval_id = None
-      raw_save_dir = None
+          try:
+              iterator, num_samples = dataset.get_one_shot_iterator_grid(slide)
+          except:
+              print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
+              broken_slides.append(slide)
+              continue
 
-      if FLAGS.also_save_raw_predictions:
-          raw_save_dir = os.path.join(
-                FLAGS.vis_logdir, _RAW_SEMANTIC_PREDICTION_SAVE_FOLDER)
-          # Prepare for visualization.
-          tf.gfile.MakeDirs(FLAGS.vis_logdir)
-          tf.gfile.MakeDirs(raw_save_dir)
+          samples = iterator.get_next()
 
-      with tf.Graph().as_default():
-        try:
-            iterator, num_samples = dataset.get_one_shot_iterator_grid(slide)
-        except:
-            print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
-            broken_slides.append(slide)
-            continue
-        samples = iterator.get_next()
+          model_options = common.ModelOptions(
+              outputs_to_num_classes={common.OUTPUT_TYPE: dataset.num_of_classes},
+              crop_size=[FLAGS.vis_crop_size,FLAGS.vis_crop_size],
+              atrous_rates=FLAGS.atrous_rates,
+              output_stride=FLAGS.output_stride)
 
-        model_options = common.ModelOptions(
-            outputs_to_num_classes={common.OUTPUT_TYPE: dataset.num_of_classes},
-            crop_size=[FLAGS.vis_crop_size,FLAGS.vis_crop_size],
-            atrous_rates=FLAGS.atrous_rates,
-            output_stride=FLAGS.output_stride)
+          tf.logging.info('Performing WSI patch detection.\n')
+          predictions = model.predict_labels(
+                samples[common.IMAGE],
+                model_options=model_options,
+                image_pyramid=FLAGS.image_pyramid)
 
-        tf.logging.info('Performing WSI patch detection.\n')
-        predictions = model.predict_labels(
-              samples[common.IMAGE],
-              model_options=model_options,
-              image_pyramid=FLAGS.image_pyramid)
+          predictions = predictions[common.OUTPUT_TYPE]
 
-        predictions = predictions[common.OUTPUT_TYPE]
+          tf.train.get_or_create_global_step()
+          if FLAGS.quantize_delay_step >= 0:
+              contrib_quantize.create_eval_graph()
 
-        tf.train.get_or_create_global_step()
-        if FLAGS.quantize_delay_step >= 0:
-          contrib_quantize.create_eval_graph()
+          with tf.train.MonitoredSession(
+              session_creator=session_creator, hooks=None) as sess:
+              batch = 0
+              image_id_offset = 0
+              print('\n')
+              while not sess.should_stop():
+                  # tf.logging.info('Visualizing batch %d', batch + 1)
+                  print('Working on [{}] patch: [{} of {}]'.format(os.path.basename(slide), min(batch, num_samples), num_samples))
+                  slide_mask = _process_batch(sess=sess,
+                                 slide_mask=slide_mask,
+                                 semantic_predictions=predictions,
+                                 image_names=samples[common.IMAGE_NAME],
+                                 mask_size=mask_size,
+                                 border=FLAGS.vis_remove_border,
+                                 downsample=FLAGS.wsi_downsample,
+                                 image_heights=samples[common.HEIGHT],
+                                 image_widths=samples[common.WIDTH],
+                                 image_id_offset=image_id_offset,
+                                 raw_save_dir=raw_save_dir,
+                                 train_id_to_eval_id=train_id_to_eval_id)
+                  image_id_offset += FLAGS.vis_batch_size
+                  batch += FLAGS.vis_batch_size
 
-        # checkpoints_iterator = contrib_training.checkpoints_iterator(
-        #     FLAGS.checkpoint_dir, min_interval_secs=FLAGS.eval_interval_secs)
-        # for checkpoint_path in checkpoints_iterator:
-        checkpoint_path = FLAGS.checkpoint_dir
-        # tf.logging.info(
-        #     'Starting visualization at ' + time.strftime('%Y-%m-%d-%H:%M:%S',
-        #                                                  time.gmtime()))
-        # tf.logging.info('Visualizing with model %s', checkpoint_path)
+          if FLAGS.save_json_annotation:
+              anot_filename = FLAGS.json_filename
+              print('\ncreating annotation file: [{}]'.format(anot_filename))
+              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True)
+              json_data = convert_xml_json(root, ['gloms'])
+              import json
+              with open(anot_filename, 'w') as annotation_file:
+                  json.dump(json_data, annotation_file, indent=2, sort_keys=False)
+              del json_data, root, anot_filename
 
-        scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
-        session_creator = tf.train.ChiefSessionCreator(
-              scaffold=scaffold,
-              master=FLAGS.master,
-              checkpoint_filename_with_path=checkpoint_path)
-        with tf.train.MonitoredSession(
-                session_creator=session_creator, hooks=None) as sess:
-            batch = 0
-            image_id_offset = 0
+          else:
+              anot_filename = '{}.xml'.format(slide.split('.')[0])
+              print('\ncreating annotation file: [{}]'.format(anot_filename))
+              mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours)
+              del anot_filename
 
-            while not sess.should_stop():
-              # tf.logging.info('Visualizing batch %d', batch + 1)
-              print('\rWorking on [{}] patch: [{} of {}]'.format(os.path.basename(slide), batch, num_samples), end='')
-              slide_mask = _process_batch(sess=sess,
-                             slide_mask=slide_mask,
-                             semantic_predictions=predictions,
-                             image_names=samples[common.IMAGE_NAME],
-                             mask_size=mask_size,
-                             border=vis_border,
-                             downsample=FLAGS.wsi_downsample,
-                             image_heights=samples[common.HEIGHT],
-                             image_widths=samples[common.WIDTH],
-                             image_id_offset=image_id_offset,
-                             raw_save_dir=raw_save_dir,
-                             train_id_to_eval_id=train_id_to_eval_id)
-              image_id_offset += FLAGS.vis_batch_size
-              batch += FLAGS.vis_batch_size
+          del slide_mask, predictions
+          print('annotation file saved...\n\n')
 
-      if FLAGS.save_json_annotation:
-          anot_filename = FLAGS.json_filename
-          print('\ncreating annotation file: [{}]'.format(anot_filename))
-          root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, return_root=True)
-          json_data = convert_xml_json(root, ['gloms'])
-          import json
-          with open(anot_filename, 'w') as annotation_file:
-              json.dump(json_data, annotation_file, indent=2, sort_keys=False)
-
-      else:
-          anot_filename = '{}.xml'.format(slide.split('.')[0])
-          print('\ncreating annotation file: [{}]'.format(anot_filename))
-          mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, )
-
-      print('annotation file saved...\n\n')
   if len(broken_slides) > 0:
       print('\n!!! The following slides are broken and were not run:')
       for slide in broken_slides:

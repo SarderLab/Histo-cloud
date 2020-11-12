@@ -52,7 +52,7 @@ class Dataset(object):
                batch_size,
                crop_size,
                downsample,
-               overlap_num = 4,
+               tile_step=None,
                include_background_prob = 0,
                augment_prob = 0,
                num_of_classes = None,
@@ -106,7 +106,7 @@ class Dataset(object):
     self.batch_size = batch_size
     self.crop_size = crop_size
     self.downsample = downsample
-    self.overlap_num = overlap_num
+    self.tile_step = tile_step
     self.augment_prob = augment_prob
     self.include_background_prob = include_background_prob
     self.min_resize_value = min_resize_value
@@ -218,21 +218,21 @@ class Dataset(object):
     patch_width = self.crop_size*scale_factor
 
     # get grid of start points of patches
-    points, length = get_grid_list(wsi_path, self.crop_size, self.downsample, wsi, self.overlap_num)
+    points, length = get_grid_list(wsi_path, self.crop_size, self.downsample, self.tile_step, wsi)
 
     # setup tf dataset using py_function
     points_ds = tf.data.Dataset.from_tensor_slices(points)
 
     wsi_dataset = points_ds.map(lambda point: tf.py_function(
             get_patch_from_points, [wsi_path, point, self.crop_size, patch_width,
-            level, self.downsample], [tf.float32,tf.uint8,tf.string]),
+            level, self.downsample, scale_factor], [tf.float32,tf.uint8,tf.string]),
             num_parallel_calls=self.num_readers)
 
     wsi_dataset = wsi_dataset.map(self._parse_function, num_parallel_calls=self.num_readers)
     # wsi_dataset = wsi_dataset.map(self._preprocess_image, num_parallel_calls=self.num_readers)
 
     wsi_dataset = wsi_dataset.batch(batch_size=self.batch_size, drop_remainder=False)
-    wsi_dataset = wsi_dataset.prefetch(buffer_size=2) # <-- very important for efficency
+    wsi_dataset = wsi_dataset.prefetch(buffer_size=1) # <-- very important for efficency
     return wsi_dataset.make_one_shot_iterator(), length
 
   def _get_all_files(self, with_xml=True, save_mask=True):
@@ -290,7 +290,7 @@ class Dataset(object):
     classes = 0
     slides = self._get_all_files()
     for slide in slides:
-        c = get_num_classes('{}.xml'.format(slide.split('.')[0]))
+        c = get_num_classes('{}.xml'.format(os.path.splitext(slide)[0]))
         classes = max(classes, c)
     print('\n-----------------------')
     print('Found [{}] data classes'.format(classes))

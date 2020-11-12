@@ -1,4 +1,4 @@
-import os, cv2, random
+import os, cv2, random, time
 import numpy as np
 import scipy
 import scipy.misc
@@ -72,7 +72,7 @@ def get_wsi_patch(filename, patch_size=256, downsample=[1], include_background_p
 
     return [region, mask, imageID]
 
-def get_patch_from_points(filename, point, patch_size, patch_width, level, downsample=1):
+def get_patch_from_points(filename, point, patch_size, patch_width, level, downsample=1, scale_factor=None):
     '''
     takes a wsi filename and tuple (x,y) location and returns a patch of patch_size
     downsample = >1 downsample of patch
@@ -80,32 +80,28 @@ def get_patch_from_points(filename, point, patch_size, patch_width, level, downs
     '''
     try: patch_size = patch_size.numpy()
     except: pass
-    try: filename = filename.numpy()
-    except: pass
     try: downsample = downsample.numpy()
     except: pass
     try: patch_width = patch_width.numpy()
     except: pass
     try: level = level.numpy()
     except: pass
+    try: filename = filename.numpy()
+    except: pass
+    try: base_name = filename.decode().split('.')[0]
+    except: base_name = filename.split('.')[0]
 
-
-    try:
-        base_name = filename.decode().split('.')[0]
-    except:
-        base_name = filename.split('.')[0]
-
+    t = time.time()
     wsi = openslide.OpenSlide(filename)
+    # print('t0: {}'.format(time.time()-t))
 
-    l_dims = wsi.level_dimensions
-    level = wsi.get_best_level_for_downsample(downsample + 0.1)
-
-    level_dims = l_dims[level]
-    level_downsample = wsi.level_downsamples[level]
-    scale_factor = int(round(downsample / level_downsample))
+    if scale_factor is not None:
+        level_downsample = wsi.level_downsamples[level]
+        scale_factor = int(round(downsample / level_downsample))
     patch_width = patch_size*scale_factor
 
     region = wsi.read_region(point, level, (patch_width,patch_width))
+    # print('t1: {}'.format(time.time()-t))
 
     if scale_factor > 1:
         region = region.resize((patch_size, patch_size), resample=1)
@@ -119,6 +115,7 @@ def get_patch_from_points(filename, point, patch_size, patch_width, level, downs
 
     # create zeros mask to pass - NOT USED LATER
     mask = np.zeros([patch_size,patch_size], dtype=np.uint8)
+    # print('t2: {}'.format(time.time()-t))
 
     return [region, mask, imageID]
 
@@ -240,8 +237,7 @@ def scale_patch(patch):
     patch -= 1
     return patch
 
-def get_grid_list(slide_path, patch_size, downsample, wsi=None, overlap_num=4):
-    # overlap_num is the number of overlapping blocks per patch_size
+def get_grid_list(slide_path, patch_size, downsample, tile_step, wsi=None):
     # returns a list of (x,y) points where tissue is present
 
     slide_mask = get_slide_mask(slide_path, save_mask=False)
@@ -255,18 +251,14 @@ def get_grid_list(slide_path, patch_size, downsample, wsi=None, overlap_num=4):
     mask_scale = thumbnail_size/max(level_dims)
     mask_patch_size = patch_size * mask_scale
 
-    Xs = []
-    Ys = []
+    assert tile_step <= patch_size # step must less than patch_size
 
-    assert overlap_num >= 1 # must be at least one
-
-    step = patch_size / overlap_num
-    offset = 0
-
-    for i in range(overlap_num):
-        Xs.extend(list(range(int(offset),level_dims[0],patch_size*downsample)))
-        Ys.extend(list(range(int(offset),level_dims[1],patch_size*downsample)))
-        offset += step
+    # generate grid
+    Xs = list(range(0,level_dims[0],tile_step*downsample))
+    Ys = list(range(0,level_dims[1],tile_step*downsample))
+    # fix last grid points (ensure it does not extend beyond the slide)
+    Xs[-1] = level_dims[0] - (tile_step*downsample)
+    Ys[-1] = level_dims[1] - (tile_step*downsample)
 
     points = []
     for X in Xs:
