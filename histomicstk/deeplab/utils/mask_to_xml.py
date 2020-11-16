@@ -14,7 +14,7 @@ xml_color (list) - list of binary color values to be used for classes
 
 """
 
-def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contours=0, xml_color=[65280, 65535, 33023, 255, 16711680], verbose=0, return_root=False):
+def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contours=0, xml_color=[65280, 65535, 33023, 255, 16711680], verbose=0, return_root=False, maxClass=None):
 
     min_size_thresh /= downsample
 
@@ -23,18 +23,23 @@ def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contou
 
     # get all classes
     classes = np.unique(mask)
+    if maxClass is None:
+        maxClass = max(classes)+1
 
     # add annotation classes to tree
-    for class_ in range(max(classes)+1)[1:]:
+    for class_ in range(maxClass)[1:]:
         if verbose:
             print('Creating class: [{}]'.format(class_))
         Annotations = xml_add_annotation(Annotations=Annotations, xml_color=xml_color, annotationID=class_)
 
     # add contour points to tree classwise
-    for class_ in classes[1:]: # iterate through all classes
+    for class_ in classes: # iterate through all classes
+
+        if class_ == 0:
+            continue
 
         if verbose:
-            print('Working on class [{} of {}]'.format(class_, max(classes)))
+            print('Working on class [{} of {}]'.format(class_, classes))
 
         # binarize the mask w.r.t. class_
         binaryMask = mask==class_

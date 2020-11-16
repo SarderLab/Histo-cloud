@@ -108,7 +108,10 @@ flags.DEFINE_integer('min_size', 0,
                   'Minimum size of the detected regions.')
 
 flags.DEFINE_integer('num_classes', 2,
-                  'Downsample rate of WSI used during training.')
+                  'Number of output classes.')
+
+flags.DEFINE_string('class_names', None,
+                  'Names of output classes for json conversion.')
 
 flags.DEFINE_string('dataset_dir', None, 'Where the dataset reside.')
 
@@ -305,8 +308,9 @@ def main(unused_argv):
           if FLAGS.save_json_annotation:
               anot_filename = FLAGS.json_filename
               print('\ncreating annotation file: [{}]'.format(anot_filename))
-              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True)
-              json_data = convert_xml_json(root, ['gloms'])
+              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes)
+              compartments = FLAGS.class_names.split(',')
+              json_data = convert_xml_json(root, compartments)
               import json
               with open(anot_filename, 'w') as annotation_file:
                   json.dump(json_data, annotation_file, indent=2, sort_keys=False)

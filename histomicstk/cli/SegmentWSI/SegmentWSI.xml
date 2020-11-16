@@ -18,19 +18,12 @@
       <channel>input</channel>
       <index>0</index>
     </image>
-    <file fileExtension=".data-00000-of-00001" defaultNameMatch="^model.*\.data-00000-of-00001$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
-      <name>inputModelFile_data</name>
-      <label>Input Model File - data</label>
-      <channel>input</channel>
-      <index>2</index>
-      <description>Tensorflow model file (model.ckpt-*.data*) of the deeplab model for segmentation</description>
-    </file>
-    <file fileExtension=".index" defaultNameMatch="^model.*\.index$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
+    <file fileExtension=".zip" defaultNameMatch="^model.*.zip$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
       <name>inputModelFile</name>
-      <label>Input Model File - index</label>
+      <label>Input Model File - (zip file)</label>
       <channel>input</channel>
       <index>1</index>
-      <description>Tensorflow model file (model.ckpt-*.index) of the deeplab model for segmentation</description>
+      <description>A zip file containing Tensorflow model-files and metadata for the deeplab segmentation network</description>
     </file>
     <file fileExtensions=".anot" reference="inputImageFile">
       <name>outputAnnotationFile</name>
@@ -56,7 +49,7 @@
       <description>Tile size for blockwise analysis (pixels)</description>
       <longflag>patch_size</longflag>
       <default>2000</default>
-    </integer>
+    </integer>7208ec76252542ba8286441ba3ca05f5
     <integer>
       <name>tile_stride</name>
       <label>Tile stride</label>
