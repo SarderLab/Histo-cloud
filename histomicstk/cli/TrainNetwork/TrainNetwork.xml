@@ -64,6 +64,55 @@
       <longflag>batch_size</longflag>
       <default>2</default>
     </integer>
+    <integer-vector>
+      <name>WSI_downsample</name>
+      <label>Training patch scale rates</label>
+      <description>The downsampling (w.r.t full slide resolution) applied to the WSI patches durring extraction - durring training. The values passed will be randomly used durring the training. We find that prerformance improves if the network is shown multiple different WSI scales at training time.</description>
+      <longflag>WSI_downsample</longflag>
+      <default>1,2,3,4,5,6</default>
+    </integer-vector>
+    <double>
+      <name>learning_rate</name>
+      <label>Network learning rate</label>
+      <description>The base learning rate used by the network. This will decay over the course of training.</description>
+      <longflag>learning_rate</longflag>
+      <default>0.001</default>
+    </double>
+    <double>
+      <name>learning_rate_start</name>
+      <label>Slow start learning rate</label>
+      <description>The initial learning rate used by the network. This should be set lower than the base learning rate to avoid shocking the model initially.</description>
+      <longflag>learning_rate_start</longflag>
+      <default>0.00001</default>
+    </double>
+    <integer>
+      <name>slow_start_step</name>
+      <label>Slow start steps</label>
+      <description>The number of steps the network should be trained using the slow start learning rate.</description>
+      <longflag>slow_start_step</longflag>
+      <default>1000</default>
+    </integer>
+    <double>
+      <name>augment</name>
+      <label>Patch augmentation percent</label>
+      <description>The percentage (as a decimal) of training patches that will be augmented by random color shifting and piecewise-affine transformations. Please enter a number between [0-1], a value of 0 will have no augmentation. Note - augmentation slows down network training and should be used sparingly!</description>
+      <longflag>augment</longflag>
+      <default>0.01</default>
+    </double>
+    <boolean>
+      <name>batch_norm</name>
+      <label>Fine tune batch norm layers</label>
+      <longflag>batch_norm</longflag>
+      <description>Fine tune the batch normalization layers - this should only be set to True if the batch size is sufficiently large. The official Deeplab implementation recommends a batch size > 12.</description>
+      <default>false</default>
+    </boolean>
+    <boolean>
+      <name>init_last_layer</name>
+      <label>Use previous classifier.</label>
+      <longflag>init_last_layer</longflag>
+      <description>Use the pervious networks classification layer. An option to initialze the new model using the parameters from the previous models last layer (classification layer). This can only be used if them model contains the same number of layers as the previous model.</description>
+      <default>false</default>
+    </boolean>
   </parameters>
   <parameters advanced="true">
     <label>Girder API URL and Key</label>

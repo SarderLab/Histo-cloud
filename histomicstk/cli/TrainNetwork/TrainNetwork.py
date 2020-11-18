@@ -8,6 +8,7 @@ from glob import glob
 import sys
 sys.path.append("..")
 from deeplab.utils.mask_to_xml import xml_create, xml_add_annotation, xml_add_region, xml_save
+from deeplab.utils.xml_to_mask import write_minmax_to_xml
 
 def main(args):
 
@@ -19,15 +20,15 @@ def main(args):
     # get compartments
     compartments = args.classes
 
-    print('\n\n---\n\nUsing annotated layers: {}'.format(compartments))
+    _ = os.system("printf '\n\n---\n\nUsing annotated layers: {}'".format(compartments))
     xml_color=[65280]*len(compartments) # for conversion to xml
 
     # get folder
     folder = args.inputFolder
     girder_folder_id = folder.split('/')[-2]
-    print('Using data from girder_client Folder: {}\n'.format(folder))
+    _ = os.system("printf 'Using data from girder_client Folder: {}\n'".format(folder))
 
-    os.system('ls -lh {}'.format(folder))
+    os.system("ls -lh '{}'".format(folder))
 
     # folder = '5fa18ecdf653e3ea051a2766'
     # init_model = 'model.ckpt-400000'
@@ -89,14 +90,14 @@ def main(args):
     slides_used = []
     for file in files:
         slidename = file['name']
-        print('\n---\n\nFOUND: [{}]'.format(slidename))
+        _ = os.system("printf '\n---\n\nFOUND: [{}]\n'".format(slidename))
         skipSlide = 0
 
         # get annotation
         item = gc.getItem(file['_id'])
         annot = gc.get('/annotation/item/{}'.format(item['_id']), parameters={'sort': 'updated'})
         annot.reverse()
-        print('\tfound [{}] annotation layers...'.format(len(annot)))
+        _ = os.system("printf '\tfound [{}] annotation layers...\n'".format(len(annot)))
 
         # create root for xml file
         xmlAnnot = xml_create()
@@ -124,7 +125,7 @@ def main(args):
                     pointsList = []
 
                     # load json data
-                    print('\tloading annotation layer: [{}]'.format(compart))
+                    _ = os.system("printf '\tloading annotation layer: [{}]\n'".format(compart))
 
                     a_data = a['annotation']['elements']
 
@@ -139,32 +140,56 @@ def main(args):
                     # write annotations to xml
                     for i in range(np.shape(pointsList)[0]):
                         pointList = pointsList[i]
-                        Annotations = xml_add_region(Annotations=xmlAnnot, pointList=pointList, annotationID=class_)
+                        xmlAnnot = xml_add_region(Annotations=xmlAnnot, pointList=pointList, annotationID=class_)
 
                     # print(a['_version'], a['updated'], a['created'])
                     break
 
         if skipSlide != len(compartments):
-            print('\tThis slide is missing annotation layers')
-            print('\tSKIPPING SLIDE...')
+            _ = os.system("printf '\tThis slide is missing annotation layers\n'")
+            _ = os.system("printf '\tSKIPPING SLIDE...\n'")
+            del xmlAnnot
             continue # correct layers not present
 
 
         # download item
-        print('\tFETCHING SLIDE...')
+        _ = os.system("printf '\tFETCHING SLIDE...\n'")
         slides_used.append(slidename)
         #gc.downloadItem(file['_id'], tmp)
 
         # save the final xml file
-        print('\tsaving a created xml annotation file')
-        xml_save(Annotations=xmlAnnot, filename='{}/{}.xml'.format(tmp, os.path.splitext(slidename)[0]))
+        xml_path = '{}/{}.xml'.format(tmp, os.path.splitext(slidename)[0])
+        _ = os.system("printf '\tsaving a created xml annotation file: [{}]\n'".format(xml_path))
+        xml_save(Annotations=xmlAnnot, filename=xml_path)
+        write_minmax_to_xml(xml_path) # to avoid trying to write to the xml from multiple workers
+        del xmlAnnot
 
-    print('\ndone retriving data...\nstarting training...\n')
+    os.system("ls -lh '{}'".format(folder))
+    _ = os.system("printf '\ndone retriving data...\nstarting training...\n\n'")
 
     # setup training params cli args
     trainlogdir = '{}/traininglogs/'.format(tmp)
-    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --fine_tune_batch_norm False --logtostderr --train_batch_size '{}' --num_clones 1 --tf_initial_checkpoint {} --training_number_of_steps '{}' --learning_rate_decay_step '{}' --slow_start_step 1000 --wsi_downsample 1 --wsi_downsample 2 --wsi_downsample 3 --wsi_downsample 4 --wsi_downsample 5 --wsi_downsample 6 --augment_prob 0.1 --slow_start_learning_rate .00001 --base_learning_rate 0.001 --initialize_last_layer=false".format(patch_size, trainlogdir, tmp, batch_size, init_model, steps, round(steps/20))
+    augment = args.augment
+    scales = args.WSI_downsample
+    batch_norm = args.batch_norm
+    base_learning_rate = args.learning_rate
+    start_learn_rate = args.learning_rate_start
+    slow_start_step = args.slow_start_step
+    init_last_layer = args.init_last_layer
+
+    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --num_clones 1 --tf_initial_checkpoint {} --training_number_of_steps '{}' --learning_rate_decay_step '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {}".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, round(steps/20), slow_start_step, augment, start_learn_rate, base_learning_rate)
+
+    for scale in scales:
+        cmd += ' --wsi_downsample {}'.format(scale)
+
+    if not init_last_layer:
+        cmd += ' --initialize_last_layer=false'
+
+    if not batch_norm:
+        cmd += '--fine_tune_batch_norm=false'
+
     # run training
+    os.system("printf '{}\n'".format(cmd))
     os.system(cmd)
 
     # move model to zipped file for output

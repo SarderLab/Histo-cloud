@@ -25,6 +25,13 @@
       <index>1</index>
       <description>Input annotation file (*.xml) containing annotations</description>
     </file>
+    <string-vector>
+      <name>classes</name>
+      <longflag>classes</longflag>
+      <label>XML layer names</label>
+      <description>A comma spearated list of the annotation layer names present in the XML file. Layers will be built up from the annotations in order.</description>
+      <default>name1,name2,name3,etc</default>
+    </string-vector>
     <file fileExtensions=".anot" reference="inputImageFile">
       <name>outputAnnotationFile</name>
       <label>Output Annotation File</label>

@@ -1,4 +1,4 @@
-import json
+import json, os
 import xml.etree.ElementTree as ET
 
 def convert_xml_json(root, names):
@@ -18,6 +18,7 @@ def convert_xml_json(root, names):
     for n, child in enumerate(anns):
         dataDict = dict()
         name = names[n]
+        _ = os.system("printf 'Building JSON layer: [{}]\n'".format(name))
         element = []
         reg = child.find('Regions')
         for i in reg.findall('Region'):

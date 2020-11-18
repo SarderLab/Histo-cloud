@@ -147,6 +147,10 @@ flags.DEFINE_multi_integer('wsi_downsample', 4,
 flags.DEFINE_float('augment_prob', 0,
                 'Probability that training data will be augmented.')
 
+flags.DEFINE_float('include_background_prob', 0.1,
+                'Probability that patches from the slide background will be '
+                'included in the training data.')
+
 flags.DEFINE_float(
     'last_layer_gradient_multiplier', 1.0,
     'The gradient multiplier for last layers, which is used to '
@@ -306,6 +310,7 @@ def main(unused_argv):
           batch_size=clone_batch_size,
           crop_size=FLAGS.train_crop_size,
           downsample=FLAGS.wsi_downsample,
+          include_background_prob = FLAGS.include_background_prob,
           augment_prob=FLAGS.augment_prob,
           min_resize_value=FLAGS.min_resize_value,
           max_resize_value=FLAGS.max_resize_value,

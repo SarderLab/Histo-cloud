@@ -28,7 +28,7 @@ import warnings
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
     warnings.filterwarnings("ignore",category=RuntimeWarning)
-    import os.path
+    import os
     import time
     import numpy as np
     from six.moves import range
@@ -289,7 +289,7 @@ def main(unused_argv):
               print('\n')
               while not sess.should_stop():
                   # tf.logging.info('Visualizing batch %d', batch + 1)
-                  print('Working on [{}] patch: [{} of {}]'.format(os.path.basename(slide), min(batch, num_samples), num_samples))
+                  os.system("printf 'Working on [{}] patch: [{} of {}]\n'".format(os.path.basename(slide), min(batch, num_samples), num_samples))
                   slide_mask = _process_batch(sess=sess,
                                  slide_mask=slide_mask,
                                  semantic_predictions=predictions,

@@ -10,6 +10,9 @@ location (tuple) - (x, y) tuple giving the top left pixel in the level 0 referen
 size (tuple) - (width, height) tuple giving the region size | set to 'full' for entire mask
 downsample - int giving the amount of downsampling done to the output pixel mask
 
+NOTE: if you plan to loop through xmls parallely, it is nessesary to run write_minmax_to_xml() 
+      on all the files prior - to avoid conflicting file writes
+
 """
 
 def xml_to_mask(xml_path, location, size, tree=None, downsample=1, verbose=0):
