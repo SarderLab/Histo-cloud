@@ -37,8 +37,11 @@ def main(args):
     steps = args.steps
 
     # create tmp directory for storing intemediate files
-    # with tempfile.TemporaryDirectory() as tmp:
-    tmp = folder
+    if not args.use_xml:
+        tmp = '{}/network_training_data/'.format(folder)
+        os.mkdir(tmp)
+    else:
+        tmp = folder
 
     def get_base_model_name(model_file):
         try:
@@ -80,91 +83,92 @@ def main(args):
     model_file = model_files[0]
     init_model = get_base_model_name(model_file)
 
+    if not args.use_xml:
+        gc = girder_client.GirderClient(apiUrl='{}'.format(host))
+        gc.authenticate(apiKey=apiKey)
+        # get files in folder
+        files = gc.listItem(girder_folder_id)
 
-    gc = girder_client.GirderClient(apiUrl='{}'.format(host))
-    gc.authenticate(apiKey=apiKey)
-    # get files in folder
-    files = gc.listItem(girder_folder_id)
+        # download slides and annotations to tmp directory
+        slides_used = []
+        for file in files:
+            slidename = file['name']
+            _ = os.system("printf '\n---\n\nFOUND: [{}]\n'".format(slidename))
+            skipSlide = 0
 
-    # download slides and annotations to tmp directory
-    slides_used = []
-    for file in files:
-        slidename = file['name']
-        _ = os.system("printf '\n---\n\nFOUND: [{}]\n'".format(slidename))
-        skipSlide = 0
+            # get annotation
+            item = gc.getItem(file['_id'])
+            annot = gc.get('/annotation/item/{}'.format(item['_id']), parameters={'sort': 'updated'})
+            annot.reverse()
+            _ = os.system("printf '\tfound [{}] annotation layers...\n'".format(len(annot)))
 
-        # get annotation
-        item = gc.getItem(file['_id'])
-        annot = gc.get('/annotation/item/{}'.format(item['_id']), parameters={'sort': 'updated'})
-        annot.reverse()
-        _ = os.system("printf '\tfound [{}] annotation layers...\n'".format(len(annot)))
+            # create root for xml file
+            xmlAnnot = xml_create()
 
-        # create root for xml file
-        xmlAnnot = xml_create()
+            # all compartments
+            for class_,compart in enumerate(compartments):
+                compart = compart.replace(' ','')
+                class_ +=1
+                # add layer to xml
+                xmlAnnot = xml_add_annotation(Annotations=xmlAnnot, xml_color=xml_color, annotationID=class_)
 
-        # all compartments
-        for class_,compart in enumerate(compartments):
-            compart = compart.replace(' ','')
-            class_ +=1
-            # add layer to xml
-            xmlAnnot = xml_add_annotation(Annotations=xmlAnnot, xml_color=xml_color, annotationID=class_)
+                # test all annotation layers in order created
+                for iter,a in enumerate(annot):
 
-            # test all annotation layers in order created
-            for iter,a in enumerate(annot):
+                    try:
+                        # check for annotation layer by name
+                        a_name = a['annotation']['name'].replace(' ','')
+                    except:
+                        a_name = None
 
-                try:
-                    # check for annotation layer by name
-                    a_name = a['annotation']['name'].replace(' ','')
-                except:
-                    a_name = None
+                    if a_name == compart:
+                        # track all layers present
+                        skipSlide +=1
 
-                if a_name == compart:
-                    # track all layers present
-                    skipSlide +=1
+                        pointsList = []
 
-                    pointsList = []
+                        # load json data
+                        _ = os.system("printf '\tloading annotation layer: [{}]\n'".format(compart))
 
-                    # load json data
-                    _ = os.system("printf '\tloading annotation layer: [{}]\n'".format(compart))
+                        a_data = a['annotation']['elements']
 
-                    a_data = a['annotation']['elements']
+                        for data in a_data:
+                            pointList = []
+                            points = data['points']
+                            for point in points:
+                                pt_dict = {'X': round(point[0]), 'Y': round(point[1])}
+                                pointList.append(pt_dict)
+                            pointsList.append(pointList)
 
-                    for data in a_data:
-                        pointList = []
-                        points = data['points']
-                        for point in points:
-                            pt_dict = {'X': round(point[0]), 'Y': round(point[1])}
-                            pointList.append(pt_dict)
-                        pointsList.append(pointList)
+                        # write annotations to xml
+                        for i in range(np.shape(pointsList)[0]):
+                            pointList = pointsList[i]
+                            xmlAnnot = xml_add_region(Annotations=xmlAnnot, pointList=pointList, annotationID=class_)
 
-                    # write annotations to xml
-                    for i in range(np.shape(pointsList)[0]):
-                        pointList = pointsList[i]
-                        xmlAnnot = xml_add_region(Annotations=xmlAnnot, pointList=pointList, annotationID=class_)
+                        # print(a['_version'], a['updated'], a['created'])
+                        break
 
-                    # print(a['_version'], a['updated'], a['created'])
-                    break
+            if skipSlide != len(compartments):
+                _ = os.system("printf '\tThis slide is missing annotation layers\n'")
+                _ = os.system("printf '\tSKIPPING SLIDE...\n'")
+                del xmlAnnot
+                continue # correct layers not present
 
-        if skipSlide != len(compartments):
-            _ = os.system("printf '\tThis slide is missing annotation layers\n'")
-            _ = os.system("printf '\tSKIPPING SLIDE...\n'")
+
+            # include slide and fetch annotations
+            _ = os.system("printf '\tFETCHING SLIDE...\n'")
+            os.rename('{}/{}'.format(folder, slidename), '{}/{}'.format(tmp, slidename))
+            slides_used.append(slidename)
+            #gc.downloadItem(file['_id'], tmp)
+
+            # save the final xml file
+            xml_path = '{}/{}.xml'.format(tmp, os.path.splitext(slidename)[0])
+            _ = os.system("printf '\tsaving a created xml annotation file: [{}]\n'".format(xml_path))
+            xml_save(Annotations=xmlAnnot, filename=xml_path)
+            write_minmax_to_xml(xml_path) # to avoid trying to write to the xml from multiple workers
             del xmlAnnot
-            continue # correct layers not present
 
-
-        # download item
-        _ = os.system("printf '\tFETCHING SLIDE...\n'")
-        slides_used.append(slidename)
-        #gc.downloadItem(file['_id'], tmp)
-
-        # save the final xml file
-        xml_path = '{}/{}.xml'.format(tmp, os.path.splitext(slidename)[0])
-        _ = os.system("printf '\tsaving a created xml annotation file: [{}]\n'".format(xml_path))
-        xml_save(Annotations=xmlAnnot, filename=xml_path)
-        write_minmax_to_xml(xml_path) # to avoid trying to write to the xml from multiple workers
-        del xmlAnnot
-
-    os.system("ls -lh '{}'".format(folder))
+    os.system("ls -lh '{}'".format(tmp))
     _ = os.system("printf '\ndone retriving data...\nstarting training...\n\n'")
 
     # setup training params cli args
@@ -186,7 +190,7 @@ def main(args):
         cmd += ' --initialize_last_layer=false'
 
     if not batch_norm:
-        cmd += '--fine_tune_batch_norm=false'
+        cmd += ' --fine_tune_batch_norm=false'
 
     # run training
     os.system("printf '{}\n'".format(cmd))

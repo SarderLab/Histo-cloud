@@ -67,7 +67,7 @@ flags.DEFINE_integer('task', 0, 'The task ID.')
 flags.DEFINE_string('train_logdir', None,
                     'Where the checkpoint and logs are stored.')
 
-flags.DEFINE_integer('log_steps', 10,
+flags.DEFINE_integer('log_steps', 50,
                      'Display logging information at every log_steps.')
 
 flags.DEFINE_integer('save_interval_secs', 1200,

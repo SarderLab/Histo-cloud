@@ -76,7 +76,7 @@
       <label>Network learning rate</label>
       <description>The base learning rate used by the network. This will decay over the course of training.</description>
       <longflag>learning_rate</longflag>
-      <default>0.001</default>
+      <default>0.0005</default>
     </double>
     <double>
       <name>learning_rate_start</name>
@@ -111,6 +111,13 @@
       <label>Use previous classifier.</label>
       <longflag>init_last_layer</longflag>
       <description>Use the pervious networks classification layer. An option to initialze the new model using the parameters from the previous models last layer (classification layer). This can only be used if them model contains the same number of layers as the previous model.</description>
+      <default>false</default>
+    </boolean>
+    <boolean>
+      <name>use_xml</name>
+      <label>Train from existing XML.</label>
+      <longflag>use_xml</longflag>
+      <description>Use Aperio Imagescope XML style annotations for training without conversion to JSON layers. The XMLs should be uploaded to the training data folder.</description>
       <default>false</default>
     </boolean>
   </parameters>
