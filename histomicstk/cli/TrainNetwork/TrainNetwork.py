@@ -14,8 +14,6 @@ def main(args):
 
     host = args.girderApiUrl
     apiKey = args.girderApiKey
-    # host = 'https://athena.ccr.buffalo.edu/api/v1' # url of the host
-    # apiKey = 'bbtEQX64TEi8kMWwbBlPzDkfifbSHGKBQI3YvYdu'
 
     # get compartments
     compartments = args.classes
@@ -82,6 +80,9 @@ def main(args):
     print(model_files)
     model_file = model_files[0]
     init_model = get_base_model_name(model_file)
+
+    if args.use_xml:
+        slides_used = glob('{}/*.xml'.format(tmp))
 
     if not args.use_xml:
         gc = girder_client.GirderClient(apiUrl='{}'.format(host))

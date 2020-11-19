@@ -42,6 +42,10 @@ try:
     from utils.wsi_dataset_util import get_wsi_patch, get_patch_from_points, get_num_classes, get_grid_list, save_wsi_thumbnail_mask
 except:
     from deeplab.utils.wsi_dataset_util import get_wsi_patch, get_patch_from_points, get_num_classes, get_grid_list, save_wsi_thumbnail_mask
+try:
+    from utils.xml_to_mask import write_minmax_to_xml
+except:
+    from deeplab.utils.xml_to_mask import write_minmax_to_xml
 
 class Dataset(object):
   """Represents input dataset for deeplab model."""
@@ -254,8 +258,11 @@ class Dataset(object):
         for slide in slides:
             if with_xml:
                 # check for annotaiton file
-                if os.path.isfile('{}.xml'.format(slide.split(ext)[0])):
+                xml_filename = '{}.xml'.format(slide.split(ext)[0])
+                if os.path.isfile(xml_filename):
                     wsi_paths.append(slide)
+                    # write to xml file to avoid parallel writes durring training
+                    write_minmax_to_xml(xml_filename)
             if not with_xml:
                 # check for missing annotaiton file
                 if not os.path.isfile('{}.xml'.format(slide.split(ext)[0])):
