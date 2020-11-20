@@ -182,7 +182,14 @@ def main(args):
     slow_start_step = args.slow_start_step
     init_last_layer = args.init_last_layer
 
-    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --num_clones 1 --tf_initial_checkpoint {} --training_number_of_steps '{}' --learning_rate_decay_step '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {}".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, round(steps/20), slow_start_step, augment, start_learn_rate, base_learning_rate)
+    # add training metadata to training zip file
+    comparts = ','.join(compartments)
+    trainingDict = {'num_classes':len(compartments)+1, 'compartments':comparts, 'patch_size':patch_size, 'batch_size':batch_size, 'steps':steps, 'init_model':os.path.basename(args.inputModelFile), 'slides_used':slides_used}
+    os.mkdir(trainlogdir)
+    with open('{}/args.txt'.format(trainlogdir), 'w') as file:
+        file.write(json.dumps(trainingDict))
+
+    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --num_clones 1 --tf_initial_checkpoint {} --training_number_of_steps '{}' --learning_rate_decay_step '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {} --train_model_zipfile {} --save_interval_secs 600".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, round(steps/20), slow_start_step, augment, start_learn_rate, base_learning_rate, args.output_model)
 
     for scale in scales:
         cmd += ' --wsi_downsample {}'.format(scale)
@@ -202,12 +209,6 @@ def main(args):
     os.chdir(trainlogdir)
     os.system('pwd')
     os.system('ls -lh')
-
-    # add training metadata to training zip file
-    comparts = ','.join(compartments)
-    trainingDict = {'num_classes':len(compartments)+1, 'compartments':comparts, 'patch_size':patch_size, 'batch_size':batch_size, 'steps':steps, 'init_model':os.path.basename(args.inputModelFile), 'slides_used':slides_used}
-    with open('args.txt', 'w') as file:
-        file.write(json.dumps(trainingDict))
 
     # get newest model
     filelist = glob('*.ckpt*')

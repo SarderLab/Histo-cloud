@@ -37,6 +37,7 @@ with warnings.catch_warnings():
     from deeplab.datasets import wsi_data_generator
     from deeplab.utils import train_utils
     from slim.deployment import model_deploy
+    from slim import learning_save_zip
 
 slim = tf.contrib.slim
 flags = tf.app.flags
@@ -66,6 +67,10 @@ flags.DEFINE_integer('task', 0, 'The task ID.')
 
 flags.DEFINE_string('train_logdir', None,
                     'Where the checkpoint and logs are stored.')
+
+flags.DEFINE_string('train_model_zipfile', None,
+                    'Where the zipped model file is saved if not None.'
+                    'This is for integration with HistomicsTK')
 
 flags.DEFINE_integer('log_steps', 50,
                      'Display logging information at every log_steps.')
@@ -459,9 +464,10 @@ def main(unused_argv):
             last_layers,
             ignore_missing_vars=True)
 
-      slim.learning.train(
+      learning_save_zip.train(
           train_tensor,
           logdir=FLAGS.train_logdir,
+          zipfilename=FLAGS.train_model_zipfile,
           log_every_n_steps=FLAGS.log_steps,
           master=FLAGS.master,
           number_of_steps=FLAGS.training_number_of_steps,
