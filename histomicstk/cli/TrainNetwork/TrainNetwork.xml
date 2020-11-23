@@ -64,6 +64,13 @@
       <longflag>batch_size</longflag>
       <default>2</default>
     </integer>
+    <integer>
+      <name>num_clones</name>
+      <label>GPU number of clones</label>
+      <description>The number of GPUs used for training. (only change is multiple are available)</description>
+      <longflag>num_clones</longflag>
+      <default>1</default>
+    </integer>
     <integer-vector>
       <name>WSI_downsample</name>
       <label>Training patch scale rates</label>
