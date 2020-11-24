@@ -18,7 +18,7 @@
       <channel>input</channel>
       <index>0</index>
     </image>
-    <file fileExtension=".zip" defaultNameMatch="^model.*.zip$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
+    <file fileExtensions=".zip" defaultNameMatch="^model.*.zip$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
       <name>inputModelFile</name>
       <label>Input Model File - (zip file)</label>
       <channel>input</channel>

@@ -87,7 +87,7 @@ def main(args):
     if not args.use_xml:
         #gc = girder_client.GirderClient(apiUrl='{}'.format(host))
         #gc.authenticate(apiKey=apiKey)
-        gc = girder_client.GirderClient(args.girderApiUrl)
+        gc = girder_client.GirderClient(apiUrl=args.girderApiUrl)
         gc.setToken(args.girderToken)
         # get files in folder
         files = gc.listItem(girder_folder_id)

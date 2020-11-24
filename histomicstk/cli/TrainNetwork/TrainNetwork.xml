@@ -32,7 +32,7 @@
       <description>A comma spearated list of the annotation layer names used for training. The name needs to match exactly. Layers will be built up from the annotations in order, sub-compartments should come after their parent structures.</description>
       <default>name1,name2,name3,etc</default>
     </string-vector>
-    <file fileExtension=".zip" defaultNameMatch="^model.*.zip$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
+    <file fileExtensions=".zip" defaultNameMatch="^model.*.zip$" defaultPathMatch="^\/collection\/Segmentation models\/Glomeruli model\/">
       <name>inputModelFile</name>
       <label>Input Model File - (zip file)</label>
       <channel>input</channel>
