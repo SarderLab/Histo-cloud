@@ -136,14 +136,14 @@
       <longflag>api-url</longflag>
       <label>Girder API URL</label>
       <description>A Girder API URL (e.g., https://girder.example.com:443/api/v1)</description>
-      <default>https://athena.ccr.buffalo.edu/api/v1</default>
+      <default></default>
     </string>
     <string>
-      <name>girderApiKey</name>
-      <longflag>api-key</longflag>
-      <label>Girder API Key</label>
+      <name>girderToken</name>
+      <longflag>token</longflag>
+      <label>Girder API Token</label>
       <description>A Girder token</description>
-      <default>bbtEQX64TEi8kMWwbBlPzDkfifbSHGKBQI3YvYdu</default>
+      <default></default>
     </string>
   </parameters>
 </executable>

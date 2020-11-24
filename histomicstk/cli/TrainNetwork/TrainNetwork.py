@@ -12,8 +12,8 @@ from deeplab.utils.xml_to_mask import write_minmax_to_xml
 
 def main(args):
 
-    host = args.girderApiUrl
-    apiKey = args.girderApiKey
+    # host = args.girderApiUrl
+    # apiKey = args.girderToken
 
     # get compartments
     compartments = args.classes
@@ -85,8 +85,10 @@ def main(args):
         slides_used = glob('{}/*.xml'.format(tmp))
 
     if not args.use_xml:
-        gc = girder_client.GirderClient(apiUrl='{}'.format(host))
-        gc.authenticate(apiKey=apiKey)
+        #gc = girder_client.GirderClient(apiUrl='{}'.format(host))
+        #gc.authenticate(apiKey=apiKey)
+        gc = girder_client.GirderClient(args.girderApiUrl)
+        gc.setToken(args.girderToken)
         # get files in folder
         files = gc.listItem(girder_folder_id)
 
