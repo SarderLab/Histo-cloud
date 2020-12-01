@@ -39,9 +39,9 @@ from deeplab import common
 from deeplab import input_preprocess
 from glob import glob
 try:
-    from utils.wsi_dataset_util import get_wsi_patch, get_patch_from_points, get_num_classes, get_grid_list, save_wsi_thumbnail_mask
+    from utils.wsi_dataset_util_large_image import get_wsi_patch, get_patch_from_points, get_num_classes, get_grid_list, save_wsi_thumbnail_mask
 except:
-    from deeplab.utils.wsi_dataset_util import get_wsi_patch, get_patch_from_points, get_num_classes, get_grid_list, save_wsi_thumbnail_mask
+    from deeplab.utils.wsi_dataset_util_large_image import get_wsi_patch, get_patch_from_points, get_num_classes, get_grid_list, save_wsi_thumbnail_mask
 try:
     from utils.xml_to_mask import write_minmax_to_xml
 except:
@@ -209,17 +209,8 @@ class Dataset(object):
     # wsi_path = '{}/{}'.format(self.dataset_dir, self.slide_name)
 
     # open slide once globally for efficency
-    import openslide
-    global wsi
-    wsi = openslide.OpenSlide(wsi_path)
-
-    l_dims = wsi.level_dimensions
-    level = wsi.get_best_level_for_downsample(self.downsample + 0.1)
-
-    level_dims = l_dims[level]
-    level_downsample = wsi.level_downsamples[level]
-    scale_factor = int(round(self.downsample / level_downsample))
-    patch_width = self.crop_size*scale_factor
+    import large_image
+    wsi = large_image.getTileSource(wsi_path)
 
     # get grid of start points of patches
     points, length = get_grid_list(wsi_path, self.crop_size, self.downsample, self.tile_step, wsi)
@@ -228,8 +219,8 @@ class Dataset(object):
     points_ds = tf.data.Dataset.from_tensor_slices(points)
 
     wsi_dataset = points_ds.map(lambda point: tf.py_function(
-            get_patch_from_points, [wsi_path, point, self.crop_size, patch_width,
-            level, self.downsample, scale_factor], [tf.float32,tf.uint8,tf.string]),
+            get_patch_from_points, [wsi_path, point, self.crop_size,
+            self.downsample], [tf.float32,tf.uint8,tf.string]),
             num_parallel_calls=self.num_readers)
 
     wsi_dataset = wsi_dataset.map(self._parse_function, num_parallel_calls=self.num_readers)

@@ -247,17 +247,12 @@ def main(unused_argv):
               mask_size = [get_downsampled_size(slide_size[1]), get_downsampled_size(slide_size[0])]
               slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
 
-          except:
-              print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
-              broken_slides.append(slide)
-              continue
-
-          train_id_to_eval_id = None
-          raw_save_dir = None
-
-          try:
+              train_id_to_eval_id = None
+              raw_save_dir = None
               iterator, num_samples = dataset.get_one_shot_iterator_grid(slide)
-          except:
+
+          except Exception as e:
+              print(e)
               print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
               broken_slides.append(slide)
               continue
