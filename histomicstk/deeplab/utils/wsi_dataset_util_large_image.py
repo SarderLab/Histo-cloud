@@ -95,7 +95,16 @@ def get_patch_from_points(filename, point, patch_size, downsample=1):
     wsi = large_image.getTileSource(filename)
     # print('t0: {}'.format(time.time()-t))
 
+    # set native mag if None
     nativeMag = wsi.getNativeMagnification()['magnification']
+    if nativeMag is None:
+        mm_x = wsi.getNativeMagnification()['mm_x']
+        if mm_x is None:
+            wsi.getNativeMagnification = lambda: {"magnification": 40, "mm_x": 0.0005, "mm_y": 0.0005}
+        else:
+             wsi.getNativeMagnification = lambda: {"magnification": 0.01/mm_x, "mm_x": mm_x, "mm_y": wsi.getNativeMagnification()['mm_y']}
+        nativeMag = wsi.getNativeMagnification()['magnification']
+
     mag = nativeMag/float(downsample)
     scaled_patch_size = (patch_size*downsample)+1 # add 1 to avoid rounding errors
 
@@ -267,7 +276,7 @@ def get_grid_list(slide_path, patch_size, downsample, tile_step, wsi=None):
             if np.sum(slide_mask[int(Y_):int(Y_+mask_patch_size), int(X_):int(X_+mask_patch_size)]) > 0:
                 points.append((X,Y))
 
-    return points, len(points)
+    return points, len(points), level_dims
 
 def get_slide_mask(filename, save_mask=True):
     # get or create wsi mask

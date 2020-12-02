@@ -39,7 +39,6 @@ with warnings.catch_warnings():
     from deeplab import model
     from deeplab.datasets import wsi_data_generator
     from deeplab.utils import save_annotation
-    from deeplab.utils.wsi_dataset_util import get_slide_size
     from deeplab.utils.mask_to_xml import mask_to_xml
     from deeplab.utils.xml_to_json import convert_xml_json
 
@@ -238,24 +237,24 @@ def main(unused_argv):
       for slide in slides:
           print('Working on: [{}]'.format(slide))
 
-          try:
-              # get slide size and create empty wsi mask
-              slide_size = get_slide_size(slide)
-              def get_downsampled_size(size, downsample=FLAGS.wsi_downsample):
-                  size /= downsample
-                  return int(np.ceil(size))
-              mask_size = [get_downsampled_size(slide_size[1]), get_downsampled_size(slide_size[0])]
-              slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
+          # try:
+          train_id_to_eval_id = None
+          raw_save_dir = None
+          iterator, num_samples, slide_size = dataset.get_one_shot_iterator_grid(slide)
 
-              train_id_to_eval_id = None
-              raw_save_dir = None
-              iterator, num_samples = dataset.get_one_shot_iterator_grid(slide)
+          # get slide size and create empty wsi mask
+          def get_downsampled_size(size, downsample=FLAGS.wsi_downsample):
+              size /= downsample
+              return int(np.ceil(size))
+          mask_size = [get_downsampled_size(slide_size[1]), get_downsampled_size(slide_size[0])]
+          slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
 
-          except Exception as e:
-              print(e)
-              print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
-              broken_slides.append(slide)
-              continue
+
+          # except Exception as e:
+          #     print(e)
+          #     print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
+          #     broken_slides.append(slide)
+          #     continue
 
           samples = iterator.get_next()
 

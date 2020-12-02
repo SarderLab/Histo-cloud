@@ -213,7 +213,7 @@ class Dataset(object):
     wsi = large_image.getTileSource(wsi_path)
 
     # get grid of start points of patches
-    points, length = get_grid_list(wsi_path, self.crop_size, self.downsample, self.tile_step, wsi)
+    points, length, slide_size = get_grid_list(wsi_path, self.crop_size, self.downsample, self.tile_step, wsi)
 
     # setup tf dataset using py_function
     points_ds = tf.data.Dataset.from_tensor_slices(points)
@@ -228,7 +228,7 @@ class Dataset(object):
 
     wsi_dataset = wsi_dataset.batch(batch_size=self.batch_size, drop_remainder=False)
     wsi_dataset = wsi_dataset.prefetch(buffer_size=1) # <-- very important for efficency
-    return wsi_dataset.make_one_shot_iterator(), length
+    return wsi_dataset.make_one_shot_iterator(), length, slide_size
 
   def _get_all_files(self, with_xml=True, save_mask=True):
     """Gets all the files to read data from.
