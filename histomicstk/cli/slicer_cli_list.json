@@ -7,7 +7,7 @@
     "type"    : "python"
   },
 
-  "TranslateJsonToXML": {
+  "ExportAperioXML": {
     "type"    : "python"
   },
 

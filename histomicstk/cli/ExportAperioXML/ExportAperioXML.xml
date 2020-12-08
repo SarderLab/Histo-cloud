@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executable>
+  <category>HistomicsTK</category>
+  <title>Train Segmentation Network</title>
+  <description>Trains a neural network to segment structures from whole-slide image</description>
+  <version>0.1.0</version>
+  <documentation-url>https://github.com/SarderLab/deeplab-WSI</documentation-url>
+  <license>Apache 2.0</license>
+  <contributor>Brendon Lutnick (SUNY Buffalo)</contributor>
+  <acknowledgements>This work is part of efforts in digital pathology by the Sarder Lab: SUNY Buffalo.</acknowledgements>
+  <parameters>
+    <label>IO</label>
+    <description>Input/output parameters</description>
+    <directory>
+      <name>inputFolder</name>
+      <label>Data Folder</label>
+      <description>Select the folder containing the slides with annotations to be exported to XMLs</description>
+      <channel>input</channel>
+      <index>0</index>
+    </directory>
+    <file fileExtensions=".zip" reference="AperioXMLs">
+      <name>output_folder</name>
+      <label>Output Folder Name</label>
+      <description>Select the name of the zip file produced (containing the XMLs). By default this willsaved in your Private folder.</description>
+      <channel>output</channel>
+      <index>1</index>
+    </file>
+    <string-vector>
+      <name>classes</name>
+      <longflag>classes</longflag>
+      <label>Training layers</label>
+      <description>A comma spearated list of the annotation layer names to be exported. The name needs to match exactly. Layers will be built up from the annotations in order, sub-compartments should come after their parent structures.</description>
+      <default>name1,name2,name3,etc</default>
+    </string-vector>
+  </parameters>
+  <parameters advanced="true">
+    <label>Girder API URL and Key</label>
+    <description>A Girder API URL and token for Girder client</description>
+    <string>
+      <name>girderApiUrl</name>
+      <longflag>api-url</longflag>
+      <label>Girder API URL</label>
+      <description>A Girder API URL (e.g., https://girder.example.com:443/api/v1)</description>
+      <default></default>
+    </string>
+    <string>
+      <name>girderToken</name>
+      <longflag>token</longflag>
+      <label>Girder API Token</label>
+      <description>A Girder token</description>
+      <default></default>
+    </string>
+  </parameters>
+</executable>

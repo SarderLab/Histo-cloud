@@ -30,6 +30,7 @@ with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=RuntimeWarning)
     import os
     import time
+    from large_image.cache_util import cachesClear
     import numpy as np
     from six.moves import range
     import tensorflow as tf
@@ -298,6 +299,9 @@ def main(unused_argv):
                                  train_id_to_eval_id=train_id_to_eval_id)
                   image_id_offset += FLAGS.vis_batch_size
                   batch += FLAGS.vis_batch_size
+
+          # clear large image caches
+          cachesClear()
 
           if FLAGS.save_json_annotation:
               anot_filename = FLAGS.json_filename

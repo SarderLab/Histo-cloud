@@ -310,10 +310,23 @@ def save_wsi_thumbnail_mask(filename, save_mask=True, thumbnail_size=2000):
     except: filename = filename
     wsi = large_image.getTileSource(filename)
 
+    # def find_tissue_mask():
+    #     thumbnail, _ = wsi.getThumbnail(width=thumbnail_size, height=thumbnail_size, format=large_image.tilesource.TILE_FORMAT_PIL)
+    #     thumbnail_blurred = np.array(thumbnail.filter(ImageFilter.GaussianBlur(radius=10)))
+    #     ret2,mask = cv2.threshold(thumbnail_blurred[:,:,0],0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    #     kernel = np.ones((5,5),np.uint8)
+    #     mask = cv2.erode(mask,kernel,iterations = 1)
+    #     mask[mask==0] = 1
+    #     mask[mask==255] = 0
+    #     return mask
+
     def find_tissue_mask():
         thumbnail, _ = wsi.getThumbnail(width=thumbnail_size, height=thumbnail_size, format=large_image.tilesource.TILE_FORMAT_PIL)
-        thumbnail_blurred = np.array(thumbnail.filter(ImageFilter.GaussianBlur(radius=10)))
-        ret2,mask = cv2.threshold(thumbnail_blurred[:,:,0],0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+        t_array = np.array(thumbnail)[:,:,0] # red channel
+        np.place(t_array, t_array==0, 255) # remove pure black
+        thumbnail = Image.fromarray(t_array)
+        thumbnail_blurred = np.array(thumbnail.filter(ImageFilter.GaussianBlur(radius=10))) # blur
+        ret2,mask = cv2.threshold(thumbnail_blurred,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) # threshold
         kernel = np.ones((5,5),np.uint8)
         mask = cv2.erode(mask,kernel,iterations = 1)
         mask[mask==0] = 1
