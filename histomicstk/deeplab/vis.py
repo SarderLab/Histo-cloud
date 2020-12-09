@@ -133,7 +133,7 @@ _IMAGE_FORMAT = '%06d_image'
 _PREDICTION_FORMAT = '%06d_prediction'
 
 
-def _process_batch(sess, slide_mask, semantic_predictions,
+def _process_batch(sess, slide_mask, offset, semantic_predictions,
                    image_names, mask_size, border, downsample, image_heights,
                    image_widths, image_id_offset,
                    raw_save_dir, train_id_to_eval_id=None):
@@ -168,11 +168,11 @@ def _process_batch(sess, slide_mask, semantic_predictions,
     image_filename = image_names[i].decode()
 
     # populate wsi mask
-    Ystart = float(image_filename.split('-')[-2])
+    Ystart = float(image_filename.split('-')[-2]) - offset['Y']
     Ystart /= downsample
     Ystart = int(round(Ystart))+border
 
-    Xstart = float(image_filename.split('-')[-3])
+    Xstart = float(image_filename.split('-')[-3]) - offset['X']
     Xstart /= downsample
     Xstart = int(round(Xstart))+border
 
@@ -241,13 +241,13 @@ def main(unused_argv):
           # try:
           train_id_to_eval_id = None
           raw_save_dir = None
-          iterator, num_samples, slide_size = dataset.get_one_shot_iterator_grid(slide)
+          iterator, num_samples, tissue_offset, tissue_size = dataset.get_one_shot_iterator_grid(slide)
 
-          # get slide size and create empty wsi mask
+          # get tissue region size and create empty wsi mask
           def get_downsampled_size(size, downsample=FLAGS.wsi_downsample):
               size /= downsample
               return int(np.ceil(size))
-          mask_size = [get_downsampled_size(slide_size[1]), get_downsampled_size(slide_size[0])]
+          mask_size = [get_downsampled_size(tissue_size[0]), get_downsampled_size(tissue_size[1])]
           slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
 
 
@@ -287,6 +287,7 @@ def main(unused_argv):
                   os.system("printf 'Working on [{}] patch: [{} of {}]\n'".format(os.path.basename(slide), min(batch, num_samples), num_samples))
                   slide_mask = _process_batch(sess=sess,
                                  slide_mask=slide_mask,
+                                 offset=tissue_offset,
                                  semantic_predictions=predictions,
                                  image_names=samples[common.IMAGE_NAME],
                                  mask_size=mask_size,
@@ -306,7 +307,7 @@ def main(unused_argv):
           if FLAGS.save_json_annotation:
               anot_filename = FLAGS.json_filename
               print('\ncreating annotation file: [{}]'.format(anot_filename))
-              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes)
+              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes, offset=tissue_offset)
               compartments = FLAGS.class_names.split(',')
               json_data = convert_xml_json(root, compartments)
               import json

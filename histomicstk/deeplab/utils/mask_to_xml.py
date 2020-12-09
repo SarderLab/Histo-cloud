@@ -14,7 +14,7 @@ xml_color (list) - list of binary color values to be used for classes
 
 """
 
-def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contours=0, xml_color=[65280, 65535, 33023, 255, 16711680], verbose=0, return_root=False, maxClass=None):
+def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contours=0, xml_color=[65280, 65535, 33023, 255, 16711680], verbose=0, return_root=False, maxClass=None, offset={'X': 0,'Y': 0}):
 
     min_size_thresh /= downsample
 
@@ -45,7 +45,7 @@ def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contou
         binaryMask = mask==class_
 
         # get contour points of the mask
-        pointsList = get_contour_points(binaryMask, downsample=downsample, min_size_thresh=min_size_thresh, simplify_contours=simplify_contours)
+        pointsList = get_contour_points(binaryMask, downsample=downsample, min_size_thresh=min_size_thresh, simplify_contours=simplify_contours, offset=offset)
         for i in range(np.shape(pointsList)[0]):
             pointList = pointsList[i]
             Annotations = xml_add_region(Annotations=Annotations, pointList=pointList, annotationID=class_)
