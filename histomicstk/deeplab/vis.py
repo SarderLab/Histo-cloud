@@ -248,6 +248,7 @@ def main(unused_argv):
               size /= downsample
               return int(np.ceil(size))
           mask_size = [get_downsampled_size(tissue_size[0]), get_downsampled_size(tissue_size[1])]
+          os.system("printf 'Creating a slide mask {} pixels\n'".format(mask_size))
           slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
 
 

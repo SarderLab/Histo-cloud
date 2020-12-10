@@ -278,12 +278,12 @@ def get_grid_list(slide_path, patch_size, downsample, tile_step, wsi=None):
 
     # calculate points size, offset
     p = np.array(points)
-    X_pts = points[:,0]
-    y_pts = points[:,1]
+    x_pts = p[:,0]
+    y_pts = p[:,1]
     min_x = min(x_pts)
     min_y = min(y_pts)
-    max_x = min(x_pts)
-    max_y = min(y_pts)
+    max_x = max(x_pts)
+    max_y = max(y_pts)
     tissue_offset = {'X':min_x, 'Y':min_y}
     tissue_size = [max_y-min_y, max_x-min_x]
 
