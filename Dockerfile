@@ -124,6 +124,8 @@ RUN pip install --no-cache-dir --upgrade --ignore-installed pip setuptools && \
     # pip install --no-cache-dir 'tensorflow-gpu==1.14.0' && \
     # Install tf-slim
     pip install --no-cache-dir 'tf-slim>=1.1.0' && \
+    # Install openpyxl
+    pip install --no-cache-dir 'openpyxl' && \
     # Downgrade gast
     # pip install --no-cache-dir 'gast==0.2.2' && \
     # clean up
@@ -146,5 +148,6 @@ WORKDIR $htk_path/histomicstk/cli
 RUN python -m slicer_cli_web.cli_list_entrypoint --list_cli
 RUN python -m slicer_cli_web.cli_list_entrypoint SegmentWSI --help
 RUN python -m slicer_cli_web.cli_list_entrypoint TrainNetwork --help
+RUN python -m slicer_cli_web.cli_list_entrypoint ExtractFeaturesFromAnnotations --help
 
 ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executable>
+  <category>HistomicsTK</category>
+  <title>Extract Features</title>
+  <description>Extracts a variety of features from a folder of annotated whole-slide image</description>
+  <version>0.1.0</version>
+  <documentation-url>https://github.com/SarderLab/deeplab-WSI</documentation-url>
+  <license>Apache 2.0</license>
+  <contributor>Brendon Lutnick (SUNY Buffalo)</contributor>
+  <acknowledgements>This work is part of efforts in digital pathology by the Sarder Lab: SUNY Buffalo.</acknowledgements>
+  <parameters>
+    <label>IO</label>
+    <description>Input/output parameters</description>
+    <directory>
+      <name>inputFolder</name>
+      <label>Training Data Folder</label>
+      <description>Select the folder containing the annotated slides to be analyzed</description>
+      <channel>input</channel>
+      <index>0</index>
+    </directory>
+    <file fileExtensions=".xlsx" reference="output">
+      <name>output_filename</name>
+      <label>Output CSV Filename</label>
+      <description>Select the name and location of the CSV file produced. By default this will be saved in your Private folder.</description>
+      <channel>output</channel>
+      <index>1</index>
+    </file>
+    <string-vector>
+      <name>classes</name>
+      <longflag>classes</longflag>
+      <label>Training layers</label>
+      <description>A comma spearated list of the annotation layer names used for feature extraction. The name needs to match exactly.</description>
+      <default>gloms</default>
+    </string-vector>
+    <boolean>
+      <name>use_microns</name>
+      <label>Convert pixels to microns.</label>
+      <longflag>use_microns</longflag>
+      <description>Convert features measured in pixels to microns.</description>
+      <default>true</default>
+    </boolean>
+  </parameters>
+  <parameters advanced="true">
+    <label>Girder API URL and Key</label>
+    <description>A Girder API URL and token for Girder client</description>
+    <string>
+      <name>girderApiUrl</name>
+      <longflag>api-url</longflag>
+      <label>Girder API URL</label>
+      <description>A Girder API URL (e.g., https://girder.example.com:443/api/v1)</description>
+      <default></default>
+    </string>
+    <string>
+      <name>girderToken</name>
+      <longflag>token</longflag>
+      <label>Girder API Token</label>
+      <description>A Girder token</description>
+      <default></default>
+    </string>
+  </parameters>
+</executable>

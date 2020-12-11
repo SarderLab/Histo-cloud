@@ -13,5 +13,9 @@
 
   "TranslateXMLToJson": {
     "type"    : "python"
+  },
+
+  "ExtractFeaturesFromAnnotations": {
+    "type"    : "python"
   }
 }

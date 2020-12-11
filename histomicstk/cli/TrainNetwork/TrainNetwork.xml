@@ -21,7 +21,7 @@
     <file fileExtensions=".zip" reference="modelfiles">
       <name>output_model</name>
       <label>Output Model Name</label>
-      <description>Select the name of the output model file produced. By default this willsaved in your Private folder.</description>
+      <description>Select the name of the output model file produced. By default this will be saved in your Private folder.</description>
       <channel>output</channel>
       <index>1</index>
     </file>
