@@ -46,7 +46,13 @@ def main(args):
     for file_iter, file in enumerate(files):
         slidename = file['name']
         _ = os.system("printf '\n---\n\nFOUND: [{}]\n'".format(slidename))
-        skipSlide = 0
+
+        df = pd.read_excel(args.slide_labels)
+        slide_label = df.loc[df.iloc[:,0] == slidename]
+        if not slide_label.empty:
+            label = slide_label.iloc[0,1:].to_dict()
+        else:
+            label = None
 
         # get annotation
         item = gc.getItem(file['_id'])
@@ -70,9 +76,6 @@ def main(args):
                     a_name = None
 
                 if a_name == compart:
-                    # track all layers present
-                    skipSlide +=1
-
                     pointsList = []
 
                     # load json data
@@ -130,6 +133,8 @@ def main(args):
 
                         feats = compute_image_contour_features(img=region, mask=mask, cnt=points, filename=slidename, file_iter=file_iter, microns=microns)
                         if feats is not None:
+                            if label is not None:
+                                feats.update(label)
                             features.append(feats)
 
                     break

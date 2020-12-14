@@ -18,6 +18,13 @@
       <channel>input</channel>
       <index>0</index>
     </directory>
+    <file fileExtensions=".xlsx" defaultNameMatch="^*.xlsx$" defaultPathMatch="^.\/">
+      <name>slide_labels</name>
+      <label>Slide label key - (Excel file)</label>
+      <channel>input</channel>
+      <index>1</index>
+      <description>An excel file containing labels for the slides</description>
+    </file>
     <file fileExtensions=".xlsx" reference="output">
       <name>output_filename</name>
       <label>Output CSV Filename</label>
