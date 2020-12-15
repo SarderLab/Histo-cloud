@@ -6,6 +6,11 @@ from termcolor import colored
 from histomicstk.cli.utils import CLIArgumentParser
 from glob import glob
 from large_image.cache_util import cachesClear
+import PIL.ImageOps
+from PIL import Image, ImageFilter
+import pillow_lut
+
+
 
 import sys
 sys.path.append("..")
@@ -44,6 +49,11 @@ def main(args):
 
     # get features for all annotated slides
     for file_iter, file in enumerate(files):
+        # create feature dict
+        slide_features = {}
+        for compart in anot_layers:
+            slide_features[compart] = []
+
         slidename = file['name']
         _ = os.system("printf '\n---\n\nFOUND: [{}]\n'".format(slidename))
 
@@ -138,11 +148,15 @@ def main(args):
                             features.append(feats)
 
                     break
-
+            slide_features[anot_layers[class_]].extend(features)
             all_features[anot_layers[class_]].extend(features)
 
         # clear large image caches
         cachesClear()
+
+        # write json data to girder item metadata
+        gc.addMetadataToItem(file['_id'], slide_features)
+
 
     # create excel file from feature array
     _ = os.system("printf '\tWriting Excel file: [{}]\n'".format(args.output_filename))
@@ -165,34 +179,34 @@ def compute_image_contour_features(img,mask,cnt,filename,file_iter,microns=None)
     # area
     area = cv2.contourArea(cnt)
     if microns is None:
-        feats['area (pixels^2)'] = area
+        feats['area (pixels^2)'] = float(area)
     else:
-        feats['area (microns^2)'] = area*(microns**2)
+        feats['area (microns^2)'] = float(area*(microns**2))
 
     # aspect ratio
     x,y,w,h = cv2.boundingRect(cnt)
     aspect_ratio = float(w)/h
-    feats['aspect ratio'] = aspect_ratio
+    feats['aspect ratio'] = float(aspect_ratio)
 
     # Extent
     rect_area = w*h
     extent = float(area)/rect_area
-    feats['extent'] = extent
+    feats['extent'] = float(extent)
 
     # solidity
     hull = cv2.convexHull(cnt)
     hull_area = cv2.contourArea(hull)
     try:
         solidity = float(area)/hull_area
-        feats['solidity'] = solidity
+        feats['solidity'] = float(solidity)
     except: pass
 
     # perimiter
     perimeter = cv2.arcLength(cnt,True)
     if microns is None:
-        feats['perimeter (pixels)'] = perimeter
+        feats['perimeter (pixels)'] = float(perimeter)
     else:
-         feats['perimeter (microns)'] = perimeter*microns
+         feats['perimeter (microns)'] = float(perimeter*microns)
 
     ###########################################################################
     ## Image features
@@ -205,21 +219,56 @@ def compute_image_contour_features(img,mask,cnt,filename,file_iter,microns=None)
     channel = channel.flatten()
     channel = channel[flat_mask==1]
     feats['red channel average'] = channel.mean()
-    feats['red channel std'] = np.std(channel)
+    feats['red channel std'] = float(np.std(channel))
 
     # green channel feats
     channel = img[:,:,1]
     channel = channel.flatten()
     channel = channel[flat_mask==1]
     feats['green channel average'] = channel.mean()
-    feats['green channel std'] = np.std(channel)
+    feats['green channel std'] = float(np.std(channel))
 
     # blue channel feats
     channel = img[:,:,2]
     channel = channel.flatten()
     channel = channel[flat_mask==1]
     feats['blue channel average'] = channel.mean()
-    feats['blue channel std'] = np.std(channel)
+    feats['blue channel std'] = float(np.std(channel))
+
+    # nuc mask
+    nuc_lut = pillow_lut.load_cube_file('ExtractFeaturesFromAnnotations/nuclei.cube')
+    im = Image.fromarray(img)
+    im = im.filter(nuc_lut) # filter with LUT
+    im = Image.fromarray(np.array(im)[:,:,0]) # get red channel
+    im = PIL.ImageOps.invert(im) # invert image
+    im = im.filter(ImageFilter.GaussianBlur(radius=3)) # blur image
+    ret2,nuc_mask = cv2.threshold(np.array(im),0,1,cv2.THRESH_BINARY+cv2.THRESH_OTSU) # otsus
+    # Image.fromarray(nuc_mask*255).save('nuc_mask.png')
+    nuc_area = float((nuc_mask*mask).sum())
+    if microns is None:
+        feats['nuclei area (pixels^2)'] = float(nuc_area)
+    else:
+        feats['nuclei area (microns^2)'] = float(nuc_area*(microns**2))
+
+
+    # PAS+ mask
+    PAS_lut = pillow_lut.load_cube_file('ExtractFeaturesFromAnnotations/PAS+.cube')
+    im = Image.fromarray(img)
+    im = im.filter(PAS_lut) # filter with LUT
+    im.convert(mode='CMYK') # convert to CMYK
+    im = Image.fromarray(np.array(im)[:,:,1]) # get magenta channel
+    im = PIL.ImageOps.invert(im) # invert image
+    #im = im.filter(ImageFilter.GaussianBlur(radius=3)) # blur image
+    ret2,PAS_mask = cv2.threshold(np.array(im),0,1,cv2.THRESH_BINARY+cv2.THRESH_OTSU) # otsus
+    kernel = np.ones((2,2),np.uint8)
+    PAS_mask = cv2.erode(PAS_mask,kernel,iterations = 1)
+    PAS_mask -= nuc_mask
+    # Image.fromarray(PAS_mask*255).save('PAS_mask.png')
+    pas_area = float((PAS_mask*mask).sum())
+    if microns is None:
+        feats['PAS+ area (pixels^2)'] = float(pas_area)
+    else:
+        feats['PAS+ area (microns^2)'] = float(pas_area*(microns**2))
 
     ###########################################################################
     ##

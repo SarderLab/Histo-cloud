@@ -27,8 +27,8 @@
     </file>
     <file fileExtensions=".xlsx" reference="output">
       <name>output_filename</name>
-      <label>Output CSV Filename</label>
-      <description>Select the name and location of the CSV file produced. By default this will be saved in your Private folder.</description>
+      <label>Output Excel Filename</label>
+      <description>Select the name and location of the Excel file produced. By default this will be saved in your Private folder.</description>
       <channel>output</channel>
       <index>1</index>
     </file>
