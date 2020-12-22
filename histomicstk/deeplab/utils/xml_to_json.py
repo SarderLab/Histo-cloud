@@ -8,11 +8,11 @@ def convert_xml_json(root, names):
                  "rgb(76, 216, 23)", "rgb(102, 51, 0)", "rgb(128, 128, 128)", "rgb(0, 153, 153)", "rgb(0, 0, 0)"]
 
     anns = root.findall('Annotation')
-    print(len(anns))
-    print(anns)
-    print(len(names))
-    print(names)
-    assert len(anns) == len(names)
+    # print(len(anns))
+    # print(anns)
+    # print(len(names))
+    # print(names)
+    assert len(anns) <= len(names)
 
     data = []
     for n, child in enumerate(anns):
@@ -34,7 +34,10 @@ def convert_xml_json(root, names):
             eleDict["lineWidth"] = 2
             points = []
             ver = i.find('Vertices')
-            for j in ver.findall('Vertex'):
+            Verts = ver.findall('Vertex')
+            if len(Verts) <= 1:
+                continue # skip if only 1 vertex points
+            for j in Verts:
                 eachPoint = []
                 eachPoint.append(float(j.get('X')))
                 eachPoint.append(float(j.get('Y')))

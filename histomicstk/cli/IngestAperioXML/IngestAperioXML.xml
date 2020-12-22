@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <executable>
   <category>HistomicsTK</category>
-  <title>Export Aperio XML annotations</title>
-  <description>Exports a zipped folder containing Aperio XML annotations for all the slides in a folder</description>
+  <title>Ingest Aperio XML annotations</title>
+  <description>Converts all the Aperio XML annotations contained within a folder into annotation layers</description>
   <version>0.1.0</version>
   <documentation-url>https://github.com/SarderLab/deeplab-WSI</documentation-url>
   <license>Apache 2.0</license>
@@ -18,36 +18,29 @@
       <channel>input</channel>
       <index>0</index>
     </directory>
-    <file fileExtensions=".zip" reference="AperioXMLs">
-      <name>output_folder</name>
-      <label>Output Folder Name</label>
-      <description>Select the name of the zip file produced (containing the XMLs). By default this willsaved in your Private folder.</description>
-      <channel>output</channel>
-      <index>1</index>
-    </file>
     <string-vector>
       <name>classes</name>
       <longflag>classes</longflag>
       <label>Training layers</label>
-      <description>A comma spearated list of the annotation layer names to be exported. The name needs to match exactly. Layers will be built up from the annotations in order, sub-compartments should come after their parent structures.</description>
+      <description>A comma spearated list of the annotation layer names to be ingested. This should match the number of annotation layers present in the XML files. Layers will be built up from the annotations in order, sub-compartments should come after their parent structures.</description>
       <default>name1,name2,name3,etc</default>
     </string-vector>
+    <string>
+      <name>apiKey</name>
+      <longflag>api-key</longflag>
+      <label>Girder API key</label>
+      <description>A Girder API key - created under the user my account option</description>
+      <default></default>
+    </string>
   </parameters>
   <parameters advanced="true">
-    <label>Girder API URL and Key</label>
+    <label>Girder API URL</label>
     <description>A Girder API URL and token for Girder client</description>
     <string>
       <name>girderApiUrl</name>
       <longflag>api-url</longflag>
       <label>Girder API URL</label>
       <description>A Girder API URL (e.g., https://girder.example.com:443/api/v1)</description>
-      <default></default>
-    </string>
-    <string>
-      <name>girderToken</name>
-      <longflag>token</longflag>
-      <label>Girder API Token</label>
-      <description>A Girder token</description>
       <default></default>
     </string>
   </parameters>
