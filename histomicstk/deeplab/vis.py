@@ -319,7 +319,7 @@ def main(unused_argv):
           else:
               anot_filename = '{}.xml'.format(slide.split('.')[0])
               print('\ncreating annotation file: [{}]'.format(anot_filename))
-              mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours)
+              mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, offset=tissue_offset)
               del anot_filename
 
           del slide_mask, predictions
