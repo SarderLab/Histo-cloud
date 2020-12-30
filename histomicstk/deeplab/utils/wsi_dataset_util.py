@@ -306,7 +306,7 @@ def save_wsi_thumbnail_mask(filename, save_mask=True):
         thumbnail = wsi.get_thumbnail((thumbnail_size,thumbnail_size))
         thumbnail_blurred = np.array(thumbnail.filter(ImageFilter.GaussianBlur(radius=10)))
         ret2,mask = cv2.threshold(thumbnail_blurred[:,:,0],0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-        kernel = np.ones((5,5),np.uint8)
+        kernel = np.ones((25,25),np.uint8)
         mask = cv2.erode(mask,kernel,iterations = 1)
         mask[mask==0] = 1
         mask[mask==255] = 0
