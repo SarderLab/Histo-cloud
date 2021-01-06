@@ -278,14 +278,32 @@ def get_grid_list(slide_path, patch_size, downsample, tile_step, wsi=None):
 
     # calculate points size, offset
     p = np.array(points)
-    x_pts = p[:,0]
-    y_pts = p[:,1]
+    try:
+        x_pts = p[:,0]
+        y_pts = p[:,1]
+
+    except: # tissue not found - run whole slide
+        for X in Xs:
+            for Y in Ys:
+                Y_ = Y * mask_scale
+                X_ = X * mask_scale
+                points.append((X,Y))
+        p = np.array(points)
+        x_pts = p[:,0]
+        y_pts = p[:,1]
+
     min_x = min(x_pts)
     min_y = min(y_pts)
     max_x = max(x_pts)
     max_y = max(y_pts)
     tissue_offset = {'X':min_x, 'Y':min_y}
-    tissue_size = [max_y-min_y, max_x-min_x]
+    tissue_size = [max_y-min_y+adj_patch_size, max_x-min_x+adj_patch_size]
+
+    # print('\n\n\n!!!')
+    # print(Xs[-1])
+    # print(max_x)
+    # print(level_dims)
+    # exit()
 
     return points, len(points), tissue_offset, tissue_size
 

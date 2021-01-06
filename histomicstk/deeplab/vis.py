@@ -186,6 +186,7 @@ def _process_batch(sess, slide_mask, offset, semantic_predictions,
     # print(np.shape(slide_mask[Ystart:Ystop, Xstart:Xstop]))
     # print(np.shape(semantic_prediction[border:Ystop-Ystart+border, border:Xstop-Xstart+border]))
     # print(np.shape(slide_mask))
+    semantic_prediction = np.ones(np.shape(semantic_prediction)) + semantic_prediction
 
     slide_mask[Ystart:Ystop, Xstart:Xstop] = np.maximum(
                 slide_mask[Ystart:Ystop, Xstart:Xstop],
