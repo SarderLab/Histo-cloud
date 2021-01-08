@@ -156,6 +156,9 @@ flags.DEFINE_float('include_background_prob', 0.1,
                 'Probability that patches from the slide background will be '
                 'included in the training data.')
 
+flags.DEFINE_integer('ignore_label', 255,
+                  'int label of the data class to ignore durring training.')
+
 flags.DEFINE_float(
     'last_layer_gradient_multiplier', 1.0,
     'The gradient multiplier for last layers, which is used to '
@@ -327,7 +330,8 @@ def main(unused_argv):
           num_readers=40,
           is_training=True,
           should_shuffle=True,
-          should_repeat=True)
+          should_repeat=True,
+          ignore_label=FLAGS.ignore_label)
 
     # Create the global step on the device storing the variables.
     with tf.device(config.variables_device()):

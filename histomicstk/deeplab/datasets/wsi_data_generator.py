@@ -60,7 +60,7 @@ class Dataset(object):
                include_background_prob = 0,
                augment_prob = 0,
                num_of_classes = None,
-               wsi_ext=['.svs', '.ndpi'],
+               wsi_ext=['.svs', '.ndpi', '.scn'],
                min_resize_value=None,
                max_resize_value=None,
                resize_factor=None,
@@ -71,7 +71,8 @@ class Dataset(object):
                num_readers=1,
                is_training=False,
                should_shuffle=False,
-               should_repeat=False):
+               should_repeat=False,
+               ignore_label=255):
     """Initializes the dataset.
 
     Args:
@@ -124,7 +125,7 @@ class Dataset(object):
     self.is_training = is_training
     self.should_shuffle = should_shuffle
     self.should_repeat = should_repeat
-    self.ignore_label = 255
+    self.ignore_label = ignore_label
 
     if num_of_classes == None:
         self.num_of_classes = self._get_num_classes()
@@ -184,7 +185,7 @@ class Dataset(object):
 
     wsi_dataset = path_ds.map(lambda filename: tf.py_function(
             get_wsi_patch, [filename, self.crop_size, self.downsample, self.include_background_prob,
-            self.augment_prob], [tf.float32,tf.uint8,tf.string]),
+            self.augment_prob,self.ignore_label], [tf.float32,tf.uint8,tf.string]),
             num_parallel_calls=self.num_readers)
 
 
@@ -288,7 +289,7 @@ class Dataset(object):
     classes = 0
     slides = self._get_all_files()
     for slide in slides:
-        c = get_num_classes('{}.xml'.format(os.path.splitext(slide)[0]))
+        c = get_num_classes('{}.xml'.format(os.path.splitext(slide)[0]), self.ignore_label)
         classes = max(classes, c)
     print('\n-----------------------')
     print('Found [{}] data classes'.format(classes))

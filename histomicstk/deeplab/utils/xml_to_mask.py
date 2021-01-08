@@ -10,7 +10,7 @@ location (tuple) - (x, y) tuple giving the top left pixel in the level 0 referen
 size (tuple) - (width, height) tuple giving the region size | set to 'full' for entire mask
 downsample - int giving the amount of downsampling done to the output pixel mask
 
-NOTE: if you plan to loop through xmls parallely, it is nessesary to run write_minmax_to_xml() 
+NOTE: if you plan to loop through xmls parallely, it is nessesary to run write_minmax_to_xml()
       on all the files prior - to avoid conflicting file writes
 
 """
@@ -205,13 +205,16 @@ def write_minmax_to_xml(xml_path, tree=None, time_buffer=10, get_absolute_max=Fa
             f.close()
 
 
-def get_num_classes(xml_path):
+def get_num_classes(xml_path,ignore_label=None):
     # parse xml and get root
     tree = ET.parse(xml_path)
     root = tree.getroot()
 
     annotation_num = 0
     for Annotation in root.findall("./Annotation"): # for all annotations
-        annotation_num += 1
+        if ignore_label != None:
+            if not int(Annotation.attrib['Id']) == ignore_label:
+                annotation_num += 1
+        else: annotation_num += 1
 
     return annotation_num + 1
