@@ -27,3 +27,5 @@ python3 train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 
 
 
 python3 train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size 512 --train_logdir /data/Vessel-segmentation-1-8-20-from-glom-model/ --dataset_dir /data/training/ --fine_tune_batch_norm True --logtostderr --train_batch_size 12 --num_clones 2 --tf_initial_checkpoint /model/model.ckpt-400000 --training_number_of_steps 200000 --learning_rate_decay_step 10000 --slow_start_step 1000 --wsi_downsample 1 --wsi_downsample 2 --wsi_downsample 3 --wsi_downsample 4 --augment_prob 0 --slow_start_learning_rate .00001 --base_learning_rate 0.001 --ignore_label 4 --initialize_last_layer=False
+
+python3 vis.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --checkpoint_dir /data/Vessel-segmentation-1-8-20-from-glom-model/model.ckpt-200000 --dataset_dir /data/holdout/ --vis_crop_size 2000 --wsi_downsample 2 --tile_step 1000 --min_size 1000 --vis_batch_size 3 --vis_remove_border 100 --num_classes 4 

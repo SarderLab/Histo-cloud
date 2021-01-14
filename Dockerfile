@@ -129,6 +129,8 @@ RUN pip install --no-cache-dir --upgrade --ignore-installed pip setuptools && \
     # Install openpyxl
     pip install --no-cache-dir 'openpyxl' && \
     pip install --no-cache-dir 'xlrd==1.2.0' && \
+    # Install umap
+    pip install --no-cache-dir umap-learn && \
     # Downgrade gast
     # pip install --no-cache-dir 'gast==0.2.2' && \
     # clean up

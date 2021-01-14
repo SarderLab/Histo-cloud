@@ -141,7 +141,8 @@ def main(args):
                         else:
                             microns = None
 
-                        feats = compute_image_contour_features(img=region, mask=mask, cnt=points, filename=slidename, file_iter=file_iter, microns=microns)
+                        centroid = [int((y_max+y_min)/2), int((x_max+x_min)/2)]
+                        feats = compute_image_contour_features(img=region, mask=mask, cnt=points, centroid=centroid, filename=slidename, file_iter=file_iter, microns=microns)
                         if feats is not None:
                             if label is not None:
                                 feats.update(label)
@@ -166,11 +167,13 @@ def main(args):
             df.to_excel(writer, index=False, sheet_name=compart)
 
 
-def compute_image_contour_features(img,mask,cnt,filename,file_iter,microns=None):
+def compute_image_contour_features(img,mask,cnt,centroid,filename,file_iter,microns=None):
     feats = {}
 
     feats['file number'] = file_iter
     feats['filename'] = filename
+    feats['x_centroid'] = centroid[0]
+    feats['y_centroid'] = centroid[1]
 
     ###########################################################################
     ### Contour features ###
