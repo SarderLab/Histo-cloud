@@ -309,7 +309,7 @@ def main(unused_argv):
           if FLAGS.save_json_annotation:
               anot_filename = FLAGS.json_filename
               print('\ncreating annotation file: [{}]'.format(anot_filename))
-              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes, offset=tissue_offset)
+              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes-1, offset=tissue_offset)
               compartments = FLAGS.class_names.split(',')
               json_data = convert_xml_json(root, compartments)
               import json

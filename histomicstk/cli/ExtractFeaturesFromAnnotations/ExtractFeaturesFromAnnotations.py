@@ -172,8 +172,8 @@ def compute_image_contour_features(img,mask,cnt,centroid,filename,file_iter,micr
 
     feats['file number'] = file_iter
     feats['filename'] = filename
-    feats['x_centroid'] = centroid[0]
-    feats['y_centroid'] = centroid[1]
+    feats['x_centroid'] = centroid[1]
+    feats['y_centroid'] = centroid[0]
 
     ###########################################################################
     ### Contour features ###

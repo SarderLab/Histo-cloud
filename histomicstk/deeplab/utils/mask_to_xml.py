@@ -24,10 +24,10 @@ def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contou
     # get all classes
     classes = np.unique(mask)
     if maxClass is None:
-        maxClass = max(classes)+1
+        maxClass = max(classes)
 
     # add annotation classes to tree
-    for class_ in range(maxClass)[1:]:
+    for class_ in range(maxClass+1)[1:]:
         if verbose:
             print('Creating class: [{}]'.format(class_))
         Annotations = xml_add_annotation(Annotations=Annotations, xml_color=xml_color, annotationID=class_)
@@ -35,11 +35,11 @@ def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contou
     # add contour points to tree classwise
     for class_ in classes: # iterate through all classes
 
-        if class_ == 0:
+        if class_ == 0 or class_ > maxClass:
             continue
 
         if verbose:
-            print('Working on class [{} of {}]'.format(class_, classes))
+            print('Working on class [{} of {}]'.format(class_, max(classes)))
 
         # binarize the mask w.r.t. class_
         binaryMask = mask==class_
