@@ -47,6 +47,8 @@ flags = tf.app.flags
 
 FLAGS = flags.FLAGS
 
+flags.DEFINE_string('gpu', '0', 'GPU id used for training')
+
 flags.DEFINE_string('master', '', 'BNS name of the tensorflow server')
 
 # Settings for log directories.
@@ -118,6 +120,12 @@ flags.DEFINE_string('dataset_dir', None, 'Where the dataset reside.')
 flags.DEFINE_boolean('save_json_annotation', False,
                      'Save the predictions in .json format for HistomicsTK.')
 
+flags.DEFINE_boolean('save_heatmap', False,
+                     'Save the prediction logits as a heatmap in HistomicsTK.')
+
+flags.DEFINE_integer('heatmap_stride', 4,
+                     'The stride of the saved heatmap. (an additional downsample)')
+
 flags.DEFINE_string('json_filename', 'annotation.anot', '*.json annotation filename.')
 
 # The folder where semantic segmentation predictions are saved.
@@ -133,8 +141,8 @@ _IMAGE_FORMAT = '%06d_image'
 _PREDICTION_FORMAT = '%06d_prediction'
 
 
-def _process_batch(sess, slide_mask, offset, semantic_predictions,
-                   image_names, mask_size, border, downsample, image_heights,
+def _process_batch(sess, slide_mask, slide_heatmap, offset, semantic_predictions, semantic_probablities,
+                   image_names, mask_size, border, downsample, extra_downsample, image_heights,
                    image_widths, image_id_offset,
                    raw_save_dir, train_id_to_eval_id=None):
   """Evaluates one single batch qualitatively.
@@ -142,6 +150,7 @@ def _process_batch(sess, slide_mask, offset, semantic_predictions,
   Args:
     sess: TensorFlow session.
     semantic_predictions: One batch of semantic segmentation predictions.
+    semantic_probablities: One batch of semantic segmentation probabilities (softmax).
     image_names: Image names.
     mask_size: [y,x] dimentions of the mask
     image_heights: Image heights.
@@ -152,32 +161,34 @@ def _process_batch(sess, slide_mask, offset, semantic_predictions,
   """
   # t = time.time()
   (semantic_predictions,
+   semantic_probablities,
    image_names,
    image_heights,
-   image_widths) = sess.run([semantic_predictions,
+   image_widths) = sess.run([semantic_predictions, semantic_probablities,
                              image_names, image_heights, image_widths])
   # print('\nNN time  : {}'.format(time.time()-t))
   # t = time.time()
 
+  border = int(round(border/extra_downsample))
   num_image = semantic_predictions.shape[0]
   for i in range(num_image):
-    image_height = np.squeeze(image_heights[i])
-    image_width = np.squeeze(image_widths[i])
+    image_height = np.squeeze(image_heights[i])/extra_downsample
+    image_width = np.squeeze(image_widths[i])/extra_downsample
     semantic_prediction = np.squeeze(semantic_predictions[i])
-    crop_semantic_prediction = semantic_prediction[:image_height, :image_width]
+    semantic_probability = semantic_probablities[i]
     image_filename = image_names[i].decode()
 
     # populate wsi mask
     Ystart = float(image_filename.split('-')[-2]) - offset['Y']
-    Ystart /= downsample
+    Ystart /= downsample*extra_downsample
     Ystart = int(round(Ystart))+border
 
     Xstart = float(image_filename.split('-')[-3]) - offset['X']
-    Xstart /= downsample
+    Xstart /= downsample*extra_downsample
     Xstart = int(round(Xstart))+border
 
-    Ystop = min(Ystart+image_height-(border*2), mask_size[0])
-    Xstop = min(Xstart+image_width-(border*2), mask_size[1])
+    Ystop = min(int(round(Ystart+image_height-(border*2))), mask_size[0])
+    Xstop = min(int(round(Xstart+image_width-(border*2))), mask_size[1])
 
     # print('\n')
     # print(mask_size)
@@ -192,11 +203,18 @@ def _process_batch(sess, slide_mask, offset, semantic_predictions,
                 slide_mask[Ystart:Ystop, Xstart:Xstop],
                 semantic_prediction[border:Ystop-Ystart+border, border:Xstop-Xstart+border])
 
+    slide_heatmap[Ystart:Ystop, Xstart:Xstop,:] = slide_heatmap[Ystart:Ystop,
+            Xstart:Xstop,:] + semantic_probability[border:Ystop-Ystart
+            +border, border:Xstop-Xstart+border,:]
+
   # print('Mask time: {}'.format(time.time()-t))
-  return slide_mask
+  return slide_mask, slide_heatmap
 
 
 def main(unused_argv):
+  os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
+  os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.gpu
+
   tf.logging.set_verbosity(tf.logging.INFO)
 
   # Get dataset-dependent information.
@@ -244,15 +262,6 @@ def main(unused_argv):
           raw_save_dir = None
           iterator, num_samples, tissue_offset, tissue_size = dataset.get_one_shot_iterator_grid(slide)
 
-          # get tissue region size and create empty wsi mask
-          def get_downsampled_size(size, downsample=FLAGS.wsi_downsample):
-              size /= downsample
-              return int(np.ceil(size))
-          mask_size = [get_downsampled_size(tissue_size[0]), get_downsampled_size(tissue_size[1])]
-          os.system("printf 'Creating a slide mask {} pixels\n'".format(mask_size))
-          slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
-
-
           # except Exception as e:
           #     print(e)
           #     print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
@@ -273,7 +282,22 @@ def main(unused_argv):
                 model_options=model_options,
                 image_pyramid=FLAGS.image_pyramid)
 
+          probabilities = predictions[common.OUTPUT_TYPE+'_prob']
           predictions = predictions[common.OUTPUT_TYPE]
+
+          # do not upsample predictions in network output
+          if not model_options.prediction_with_upsampled_logits:
+              extra_downsample = int(FLAGS.vis_crop_size / int(predictions.shape[1]))
+          else: extra_downsample=1
+
+          # get tissue region size and create empty wsi mask
+          def get_downsampled_size(size, downsample=FLAGS.wsi_downsample*extra_downsample):
+              size /= downsample
+              return int(np.ceil(size))
+          mask_size = [get_downsampled_size(tissue_size[0]), get_downsampled_size(tissue_size[1])]
+          os.system("printf 'Creating a slide mask {} pixels\n'".format(mask_size))
+          slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
+          slide_heatmap = np.zeros([mask_size[0], mask_size[1], FLAGS.num_classes], dtype=np.float16)
 
           tf.train.get_or_create_global_step()
           if FLAGS.quantize_delay_step >= 0:
@@ -287,14 +311,17 @@ def main(unused_argv):
               while not sess.should_stop():
                   # tf.logging.info('Visualizing batch %d', batch + 1)
                   os.system("printf 'Working on [{}] patch: [{} of {}]\n'".format(os.path.basename(slide), min(batch, num_samples), num_samples))
-                  slide_mask = _process_batch(sess=sess,
+                  slide_mask, slide_heatmap = _process_batch(sess=sess,
                                  slide_mask=slide_mask,
+                                 slide_heatmap=slide_heatmap,
                                  offset=tissue_offset,
                                  semantic_predictions=predictions,
+                                 semantic_probablities=probabilities,
                                  image_names=samples[common.IMAGE_NAME],
                                  mask_size=mask_size,
                                  border=FLAGS.vis_remove_border,
                                  downsample=FLAGS.wsi_downsample,
+                                 extra_downsample=extra_downsample,
                                  image_heights=samples[common.HEIGHT],
                                  image_widths=samples[common.WIDTH],
                                  image_id_offset=image_id_offset,
@@ -309,18 +336,56 @@ def main(unused_argv):
           if FLAGS.save_json_annotation:
               anot_filename = FLAGS.json_filename
               print('\ncreating annotation file: [{}]'.format(anot_filename))
-              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes-1, offset=tissue_offset)
+              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample*extra_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes-1, offset=tissue_offset)
               compartments = FLAGS.class_names.split(',')
               json_data = convert_xml_json(root, compartments)
+
+              if FLAGS.save_heatmap:
+                  ds = FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride
+                  strided_heatmap = slide_heatmap[::FLAGS.heatmap_stride,::FLAGS.heatmap_stride,:]
+
+                  cutoff = 1/(FLAGS.num_classes*3) # cutoff low values
+                  heatmap_sum = strided_heatmap.sum(2)
+                  heatmap_sum_mask = heatmap_sum==0
+                  np.place(strided_heatmap[:,:,0],heatmap_sum_mask,1)
+                  np.place(heatmap_sum,heatmap_sum_mask,1)
+                  strided_heatmap /=np.repeat(np.expand_dims(heatmap_sum,-1), FLAGS.num_classes,-1)
+
+                  for iter in range(FLAGS.num_classes-1): # iterate through all logits layers
+                      _ = os.system("printf 'Building JSON layer: [{}-heatmap]\n'".format(compartments[iter]))
+
+                      single_heatmap = strided_heatmap[:,:,iter+1]
+
+                      heatmap = {"type":"heatmap", "radius":FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride/2, "colorRange": ["rgba(255,255,0,0)", "rgba(255,255,0,.3)", "rgba(255,190,0,.4)", "rgba(255,0,0,.5)"], "rangeValues": [cutoff, cutoff*1.5, 1.5/FLAGS.num_classes, 1], "normalizeRange":True}
+
+                      values = single_heatmap.flatten()
+                      values_mask = values>(cutoff)
+                      values = np.round(values[values_mask],3)
+                      np.place(values, values>1, 1)
+                      y_idx, x_idx = np.indices(single_heatmap.shape)
+                      y_idx = y_idx.flatten()[values_mask]
+                      x_idx = x_idx.flatten()[values_mask]
+                      # y_idx = y_idx.flatten()[values_mask]
+                      # x_idx = x_idx.flatten()[values_mask]
+                      z_idx = np.zeros_like(x_idx)
+                      points = np.empty((x_idx.size*4), dtype = np.float32)
+                      points[0::4] = x_idx*ds + tissue_offset['X']
+                      points[1::4] = y_idx*ds + tissue_offset['Y']
+                      points[2::4] = z_idx
+                      points[3::4] = values
+                      heatmap["points"] = points.reshape([-1,4]).tolist()
+                      json_data.append({"name":"{}-heatmap".format(compartments[iter]),"elements":[heatmap]})
+
+              # save annotation as JSON
               import json
               with open(anot_filename, 'w') as annotation_file:
-                  json.dump(json_data, annotation_file, indent=2, sort_keys=False)
+                  json.dump(json_data, annotation_file, sort_keys=False)
               del json_data, root, anot_filename
 
           else:
               anot_filename = '{}.xml'.format(slide.split('.')[0])
               print('\ncreating annotation file: [{}]'.format(anot_filename))
-              mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, offset=tissue_offset)
+              mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample*extra_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, offset=tissue_offset)
               del anot_filename
 
           del slide_mask, predictions

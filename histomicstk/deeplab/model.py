@@ -202,18 +202,9 @@ def predict_labels(images, model_options, image_pyramid=None):
       predictions[output] = tf.argmax(logits, 3)
       predictions[output + PROB_SUFFIX] = tf.nn.softmax(logits)
     else:
-      argmax_results = tf.argmax(logits, 3)
-      argmax_results = tf.image.resize_nearest_neighbor(
-          tf.expand_dims(argmax_results, 3),
-          tf.shape(images)[1:3],
-          align_corners=True,
-          name='resize_prediction')
-      predictions[output] = tf.squeeze(argmax_results, 3)
-      predictions[output + PROB_SUFFIX] = tf.image.resize_bilinear(
-          tf.nn.softmax(logits),
-          tf.shape(images)[1:3],
-          align_corners=True,
-          name='resize_prob')
+      predictions[output] = tf.argmax(logits, 3)
+      predictions[output + PROB_SUFFIX] = tf.nn.softmax(logits)
+
   return predictions
 
 

@@ -34,6 +34,24 @@
     </file>
   </parameters>
   <parameters advanced="true">
+    <label>Heatmap Output</label>
+    <description>Parameters for saving network predictions as heatmaps</description>
+    <boolean>
+      <name>save_heatmap</name>
+      <label>Save heatmaps</label>
+      <longflag>save_heatmap</longflag>
+      <description>Save the network logits (probabilities) as heatmap layers.</description>
+      <default>false</default>
+    </boolean>
+    <integer>
+      <name>heatmap_stride</name>
+      <label>Heatmap stride</label>
+      <description>The additional downsample (applied by striding the logits) applied to the saved heatmaps.</description>
+      <longflag>heatmap_stride</longflag>
+      <default>1</default>
+    </integer>
+  </parameters>
+  <parameters advanced="true">
     <label>WSI Analysis</label>
     <description>Whole-slide image analysis (WSI) parameters</description>
     <integer>

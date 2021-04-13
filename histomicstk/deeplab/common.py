@@ -100,7 +100,7 @@ flags.DEFINE_enum('merge_method', 'max', ['max', 'avg'],
                   'Scheme to merge multi scale features.')
 
 flags.DEFINE_boolean(
-    'prediction_with_upsampled_logits', True,
+    'prediction_with_upsampled_logits', False,
     'When performing prediction, there are two options: (1) bilinear '
     'upsampling the logits followed by softmax, or (2) softmax followed by '
     'bilinear upsampling.')

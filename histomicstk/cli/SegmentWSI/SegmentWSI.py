@@ -56,11 +56,8 @@ def main(args):
 
     print('\noutput filename: {}\n'.format(args.outputAnnotationFile))
 
-    os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"]='{}'.format(args.gpu)
-
     # run vis.py with flags
-    cmd = "python3 ../deeplab/vis.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --save_json_annotation True --checkpoint_dir {} --dataset_dir '{}' --json_filename '{}' --vis_crop_size {} --wsi_downsample {} --tile_step {} --min_size {} --vis_batch_size {} --vis_remove_border {} --simplify_contours {} --num_classes {} --class_names '{}'".format(model, args.inputImageFile, args.outputAnnotationFile, args.patch_size, args.wsi_downsample, args.tile_stride, args.min_size, args.batch_size, args.remove_border, args.simplify_contours, num_classes, compartments)
+    cmd = "python3 ../deeplab/vis.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --save_json_annotation True --checkpoint_dir {} --dataset_dir '{}' --json_filename '{}' --vis_crop_size {} --wsi_downsample {} --tile_step {} --min_size {} --vis_batch_size {} --vis_remove_border {} --simplify_contours {} --num_classes {} --class_names '{}' --save_heatmap={} --heatmap_stride {} --gpu {}".format(model, args.inputImageFile, args.outputAnnotationFile, args.patch_size, args.wsi_downsample, args.tile_stride, args.min_size, args.batch_size, args.remove_border, args.simplify_contours, num_classes, compartments, args.save_heatmap, args.heatmap_stride, args.gpu)
     os.system(cmd)
 
 

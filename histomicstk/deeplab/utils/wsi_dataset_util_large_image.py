@@ -107,7 +107,7 @@ def get_patch_from_points(filename, point, patch_size, downsample=1, wsi=None, c
         nativeMag = wsi.getNativeMagnification()['magnification']
 
     mag = nativeMag/float(downsample)
-    scaled_patch_size = (patch_size*downsample)+1 # add 1 to avoid rounding errors
+    scaled_patch_size = (patch_size*downsample)+1 # add a buffer to avoid rounding errors
 
     region, _ = wsi.getRegion(region=dict(left=point[0],top=point[1], width=scaled_patch_size, height=scaled_patch_size, units='base_pixels'), scale=dict(magnification=mag), format=large_image.tilesource.TILE_FORMAT_NUMPY)
     # print('t1: {}'.format(time.time()-t))
@@ -259,7 +259,7 @@ def get_grid_list(slide_path, patch_size, downsample, tile_step, wsi=None):
     thumbnail_size = float(max(slide_mask.shape))
     mask_scale = thumbnail_size/max(level_dims)
     mask_patch_size = patch_size * mask_scale
-    adj_patch_size = patch_size*downsample
+    adj_patch_size = patch_size*downsample+1
 
     assert tile_step <= patch_size # step must less than patch_size
 
