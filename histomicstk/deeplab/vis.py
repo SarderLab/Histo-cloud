@@ -356,7 +356,7 @@ def main(unused_argv):
 
                       single_heatmap = strided_heatmap[:,:,iter+1]
 
-                      heatmap = {"type":"heatmap", "radius":FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride/2, "colorRange": ["rgba(255,255,0,0)", "rgba(255,255,0,.3)", "rgba(255,190,0,.4)", "rgba(255,0,0,.5)"], "rangeValues": [cutoff, cutoff*1.5, 1.5/FLAGS.num_classes, 1], "normalizeRange":True}
+                      heatmap = {"type":"heatmap", "radius":FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride/2 + 1, "colorRange": ["rgba(255,255,0,0)", "rgba(255,255,0,.3)", "rgba(255,190,0,.4)", "rgba(255,0,0,.5)"], "rangeValues": [cutoff, cutoff*1.5, 1.5/FLAGS.num_classes, 1], "normalizeRange":True}
 
                       values = single_heatmap.flatten()
                       values_mask = values>(cutoff)
