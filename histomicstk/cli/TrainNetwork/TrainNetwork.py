@@ -18,7 +18,7 @@ def main(args):
     # get compartments
     compartments = args.classes
 
-    _ = os.system("printf '\n\n---\n\nUsing annotated layers: {}'".format(compartments))
+    _ = os.system("printf '\n\n---\n\nUsing annotated layers: {}\n'".format(compartments))
     xml_color=[65280]*len(compartments) # for conversion to xml
 
     # get folder
