@@ -76,7 +76,7 @@
       <label>Training patch scale rates</label>
       <description>The downsampling (w.r.t full slide resolution) applied to the WSI patches durring extraction - durring training. The values passed will be randomly used durring the training. We find that prerformance improves if the network is shown multiple different WSI scales at training time.</description>
       <longflag>WSI_downsample</longflag>
-      <default>1,2,3,4,5,6</default>
+      <default>1,2,3,4</default>
     </integer-vector>
     <double>
       <name>learning_rate</name>
