@@ -333,6 +333,9 @@ def main(unused_argv):
           # clear large image caches
           cachesClear()
 
+          # slide_mask = np.copy(slide_mask)
+          slide_mask = np.argmax(slide_mask, axis=2)
+
           if FLAGS.save_json_annotation:
               anot_filename = FLAGS.json_filename
               print('\ncreating annotation file: [{}]'.format(anot_filename))
@@ -388,7 +391,7 @@ def main(unused_argv):
               mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample*extra_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, offset=tissue_offset)
               del anot_filename
 
-          del slide_mask, predictions
+          del slide_mask
           print('annotation file saved...\n\n')
 
   if len(broken_slides) > 0:
