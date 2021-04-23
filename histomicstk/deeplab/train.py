@@ -125,6 +125,9 @@ flags.DEFINE_float('learning_power', 0.9,
 flags.DEFINE_integer('training_number_of_steps', 30000,
                      'The number of steps used for training')
 
+flags.DEFINE_integer('global_step', 0,
+                     'The global (starting) step used for training')
+
 flags.DEFINE_float('momentum', 0.9, 'The momentum value to use')
 
 # Adam optimizer flags
@@ -335,6 +338,8 @@ def main(unused_argv):
 
     # Create the global step on the device storing the variables.
     with tf.device(config.variables_device()):
+      # assign global step to start
+      global_step_tensor = tf.Variable(FLAGS.global_step, trainable=False, name='global_step', dtype=tf.int64)
       global_step = tf.train.get_or_create_global_step()
 
       # Define the model and create clones.

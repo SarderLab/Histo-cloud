@@ -58,6 +58,13 @@
       <default>10000</default>
     </integer>
     <integer>
+      <name>global_step</name>
+      <label>Global step</label>
+      <description>The global step to use at the start of training. This is useful to continue training a previously trained network.</description>
+      <longflag>global_step</longflag>
+      <default>0</default>
+    </integer>
+    <integer>
       <name>batch_size</name>
       <label>Training batch size</label>
       <description>The batch size for training on WSI patches</description>
@@ -106,6 +113,20 @@
       <longflag>slow_start_step</longflag>
       <default>1000</default>
     </integer>
+    <double>
+      <name>end_learning_rate</name>
+      <label>End learning rate</label>
+      <description>The end learning rate reached by the network. The learning rate will decay to this value.</description>
+      <longflag>end_learning_rate</longflag>
+      <default>0.0</default>
+    </double>
+    <double>
+      <name>learning_power</name>
+      <label>Learning power</label>
+      <description>The power for polynomial learning rate decay.</description>
+      <longflag>learning_power</longflag>
+      <default>0.9</default>
+    </double>
     <double>
       <name>augment</name>
       <label>Patch augmentation percent</label>
