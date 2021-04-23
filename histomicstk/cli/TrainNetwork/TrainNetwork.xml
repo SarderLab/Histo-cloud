@@ -64,6 +64,13 @@
       <longflag>batch_size</longflag>
       <default>2</default>
     </integer>
+    <string>
+      <name>GPU</name>
+      <longflag>gpu</longflag>
+      <label>GPU IDs</label>
+      <description>A comma separated list of the GPU IDs that will be made avalable for training</description>
+      <default>0</default>
+    </string>
     <integer>
       <name>num_clones</name>
       <label>GPU number of clones</label>
