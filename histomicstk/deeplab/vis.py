@@ -333,8 +333,7 @@ def main(unused_argv):
           # clear large image caches
           cachesClear()
 
-          # slide_mask = np.copy(slide_mask)
-          slide_mask = np.argmax(slide_mask, axis=2)
+          # slide_mask = np.argmax(slide_heatmap, axis=2)
 
           if FLAGS.save_json_annotation:
               anot_filename = FLAGS.json_filename
