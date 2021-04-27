@@ -72,6 +72,13 @@
       <default>2</default>
     </integer>
     <string>
+      <name>ignore_label</name>
+      <longflag>ignore_label</longflag>
+      <label>Ignore class</label>
+      <description>The name of an annotation layer that will be ignored durring training. This allows parts of thge WSI to be ignored for training.</description>
+      <default>ignore</default>
+    </string>
+    <string>
       <name>GPU</name>
       <longflag>gpu</longflag>
       <label>GPU IDs</label>

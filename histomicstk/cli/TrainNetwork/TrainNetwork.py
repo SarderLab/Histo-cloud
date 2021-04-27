@@ -18,13 +18,13 @@ def main(args):
     # get compartments
     compartments = args.classes
 
-    _ = os.system("printf '\n\n---\n\nUsing annotated layers: {}\n'".format(compartments))
-    xml_color=[65280]*len(compartments) # for conversion to xml
+    _ = os.system("printf '\n\n---\n\nUsing annotated layers: {}\n\n'".format(compartments))
+    xml_color=[65280]*(len(compartments)+1) # for conversion to xml
 
     # get folder
     folder = args.inputFolder
     girder_folder_id = folder.split('/')[-2]
-    _ = os.system("printf 'Using data from girder_client Folder: {}\n'".format(folder))
+    _ = os.system("printf '\nUsing data from girder_client Folder: {}\n'".format(folder))
 
     os.system("ls -lh '{}'".format(folder))
 
@@ -103,6 +103,7 @@ def main(args):
             item = gc.getItem(file['_id'])
             annot = gc.get('/annotation/item/{}'.format(item['_id']), parameters={'sort': 'updated'})
             annot.reverse()
+            annot = list(annot)
             _ = os.system("printf '\tfound [{}] annotation layers...\n'".format(len(annot)))
 
             # create root for xml file
@@ -157,6 +158,35 @@ def main(args):
                 del xmlAnnot
                 continue # correct layers not present
 
+            # add ignore label if present
+            compart = args.ignore_label
+            ignore_label = len(compartments)+1
+            # add layer to xml
+            xmlAnnot = xml_add_annotation(Annotations=xmlAnnot, xml_color=xml_color, annotationID=ignore_label)
+            # test all annotation layers in order created
+            for iter,a in enumerate(annot):
+                try:
+                    # check for annotation layer by name
+                    a_name = a['annotation']['name'].replace(' ','')
+                except:
+                    a_name = None
+                if a_name == compart:
+                    pointsList = []
+                    # load json data
+                    _ = os.system("printf '\tloading annotation layer: [{}]\n'".format(compart))
+                    a_data = a['annotation']['elements']
+                    for data in a_data:
+                        pointList = []
+                        points = data['points']
+                        for point in points:
+                            pt_dict = {'X': round(point[0]), 'Y': round(point[1])}
+                            pointList.append(pt_dict)
+                        pointsList.append(pointList)
+                    # write annotations to xml
+                    for i in range(np.shape(pointsList)[0]):
+                        pointList = pointsList[i]
+                        xmlAnnot = xml_add_region(Annotations=xmlAnnot, pointList=pointList, annotationID=ignore_label)
+                    break
 
             # include slide and fetch annotations
             _ = os.system("printf '\tFETCHING SLIDE...\n'")
@@ -194,7 +224,7 @@ def main(args):
     os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"]="{}".format(args.GPU)
 
-    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --num_clones 1 --tf_initial_checkpoint {} --training_number_of_steps '{}' --learning_rate_decay_step '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {} --train_model_zipfile {} --save_interval_secs 600 --num_clones {} --global_step {} --end_learning_rate {} --learning_power {}".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, round(steps/20), slow_start_step, augment, start_learn_rate, base_learning_rate, args.output_model.replace(' ', '\ '), args.num_clones, args.global_step, args.end_learning_rate, args.learning_power)
+    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --num_clones 1 --tf_initial_checkpoint {} --training_number_of_steps '{}' --learning_rate_decay_step '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {} --train_model_zipfile {} --save_interval_secs 600 --num_clones {} --global_step {} --end_learning_rate {} --learning_power {} --ignore_label {}".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, round(steps/20), slow_start_step, augment, start_learn_rate, base_learning_rate, args.output_model.replace(' ', '\ '), args.num_clones, args.global_step, args.end_learning_rate, args.learning_power, ignore_label)
 
     for scale in scales:
         cmd += ' --wsi_downsample {}'.format(scale)
