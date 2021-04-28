@@ -481,15 +481,21 @@ def zip_model_if_new(logdir,output_zip):
             # get all ckpt files for latest model
             base_model_name = os.path.basename(latest_model)
             base_model_name = os.path.splitext(base_model_name)[0]
-            models = glob('{}*'.format(base_model_name))
 
-            # zip models into new folder
-            logging.info('zipping saved model...')
-            z = zipfile.ZipFile(output_zip, 'w')
-            for model in models:
-                z.write(model, compress_type=zipfile.ZIP_DEFLATED)
-            z.write('args.txt', compress_type=zipfile.ZIP_DEFLATED)
-            z.close()
+            for tries in range(2):
+                # zip models into new folder
+                models = glob('{}*'.format(base_model_name))
+                logging.info('zipping saved model...')
+                z = zipfile.ZipFile(output_zip, 'w')
+                try:
+                    for model in models:
+                        z.write(model, compress_type=zipfile.ZIP_DEFLATED)
+                    z.write('args.txt', compress_type=zipfile.ZIP_DEFLATED)
+                    continue
+                except:
+                    logging.info('zip failed trying again...')
+                    time.sleep(5) # wait for file to be written
+                z.close()
             os.chdir(cwd)
 
 def train(train_op,
