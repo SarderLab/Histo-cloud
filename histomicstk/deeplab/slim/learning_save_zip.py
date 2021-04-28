@@ -486,16 +486,15 @@ def zip_model_if_new(logdir,output_zip):
                 # zip models into new folder
                 models = glob('{}*'.format(base_model_name))
                 logging.info('zipping saved model...')
-                z = zipfile.ZipFile(output_zip, 'w')
-                try:
-                    for model in models:
-                        z.write(model, compress_type=zipfile.ZIP_DEFLATED)
-                    z.write('args.txt', compress_type=zipfile.ZIP_DEFLATED)
-                    continue
-                except:
-                    logging.info('zip failed trying again...')
-                    time.sleep(5) # wait for file to be written
-                z.close()
+                with zipfile.ZipFile(output_zip, 'w') as z:
+                    try:
+                        for model in models:
+                            z.write(model, compress_type=zipfile.ZIP_DEFLATED)
+                        z.write('args.txt', compress_type=zipfile.ZIP_DEFLATED)
+                        break
+                    except:
+                        logging.info('zip failed trying again...')
+                        time.sleep(5) # wait for file to be written
             os.chdir(cwd)
 
 def train(train_op,
