@@ -228,10 +228,10 @@ def main(args):
     if not batch_norm:
         cmd += ' --fine_tune_batch_norm=false'
 
-    if not args.last_layers_contain_logits_only
+    if not args.last_layers_contain_logits_only:
         cmd += ' --last_layers_contain_logits_only=false'
 
-    if not args.upsample_logits
+    if not args.upsample_logits:
         cmd += ' --upsample_logits=false'
 
     # run training
