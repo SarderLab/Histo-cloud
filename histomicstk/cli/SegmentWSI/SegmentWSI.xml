@@ -48,7 +48,7 @@
       <label>Heatmap stride</label>
       <description>The additional downsample (applied by striding the logits) applied to the saved heatmaps.</description>
       <longflag>heatmap_stride</longflag>
-      <default>1</default>
+      <default>2</default>
     </integer>
   </parameters>
   <parameters advanced="true">
