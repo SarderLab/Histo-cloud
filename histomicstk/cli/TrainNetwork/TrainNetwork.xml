@@ -55,7 +55,7 @@
       <label>Training steps</label>
       <description>The number of steps used for network training. The network will see [steps * batch size] image patches during training</description>
       <longflag>steps</longflag>
-      <default>10000</default>
+      <default>5000</default>
     </integer>
     <integer>
       <name>global_step</name>
@@ -134,6 +134,13 @@
       <longflag>learning_power</longflag>
       <default>0.9</default>
     </double>
+    <integer>
+      <name>decay_steps</name>
+      <label>Learning rate decay steps</label>
+      <description>The number of steps before the learning rate decays to the end learning rate. A value of 0 will decay by the end of training.</description>
+      <longflag>decay_steps</longflag>
+      <default>0</default>
+    </integer>
     <double>
       <name>augment</name>
       <label>Patch augmentation percent</label>
@@ -153,6 +160,27 @@
       <label>Use previous classifier.</label>
       <longflag>init_last_layer</longflag>
       <description>Use the pervious networks classification layer. An option to initialze the new model using the parameters from the previous models last layer (classification layer). This can only be used if them model contains the same number of layers as the previous model.</description>
+      <default>false</default>
+    </boolean>
+    <double>
+      <name>last_layer_gradient_multiplier</name>
+      <label>Last layer gradient multiplier</label>
+      <description>For fine tuning, the gradients of the last (classification) layer can be boosted by a multiplier. Generally this is set to 10.0, or it can be set to 1.0 for no boosting.</description>
+      <longflag>last_layer_gradient_multiplier</longflag>
+      <default>10.0</default>
+    </double>
+    <boolean>
+      <name>last_layers_contain_logits_only</name>
+      <label>Last layer includes logits only</label>
+      <longflag>last_layers_contain_logits_only</longflag>
+      <description>Boost the graients of only the logits. If not selected the gradients of decoder, ASPP, and pooling layers will also be boosted.</description>
+      <default>false</default>
+    </boolean>
+    <boolean>
+      <name>upsample_logits</name>
+      <label>Upsample logits</label>
+      <longflag>upsample_logits</longflag>
+      <description>If this is selected the logits (probablilities) of the network will be upsampled before the loss is calcluated. This increases the memory useage of the network.</description>
       <default>false</default>
     </boolean>
   </parameters>

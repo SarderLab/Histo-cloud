@@ -217,7 +217,7 @@ def main(args):
     os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"]="{}".format(args.GPU)
 
-    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --tf_initial_checkpoint {} --training_number_of_steps '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {} --train_model_zipfile {} --save_interval_secs 600 --num_clones {} --global_step {} --end_learning_rate {} --learning_power {} --ignore_label {}".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, slow_start_step, augment, start_learn_rate, base_learning_rate, args.output_model.replace(' ', '\ '), args.num_clones, args.global_step, args.end_learning_rate, args.learning_power, ignore_label)
+    cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --tf_initial_checkpoint {} --training_number_of_steps '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {} --train_model_zipfile {} --save_interval_secs 600 --num_clones {} --global_step {} --end_learning_rate {} --learning_power {} --ignore_label {} --decay_steps {} --last_layer_gradient_multiplier {}".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, slow_start_step, augment, start_learn_rate, base_learning_rate, args.output_model.replace(' ', '\ '), args.num_clones, args.global_step, args.end_learning_rate, args.learning_power, ignore_label, args.decay_steps, args.last_layer_gradient_multiplier)
 
     for scale in scales:
         cmd += ' --wsi_downsample {}'.format(scale)
@@ -227,6 +227,12 @@ def main(args):
 
     if not batch_norm:
         cmd += ' --fine_tune_batch_norm=false'
+
+    if not args.last_layers_contain_logits_only
+        cmd += ' --last_layers_contain_logits_only=false'
+
+    if not args.upsample_logits
+        cmd += ' --upsample_logits=false'
 
     # run training
     os.system("printf '{}\n'".format(cmd))
