@@ -237,6 +237,8 @@ def get_patch(wsi, xml_path, annotationID, l_dims, slide_mask, patch_size, filen
         region = region[2:-2,2:-2,:]
         mask = mask[2:-2,2:-2]
 
+    mask = np.expand_dims(mask,-1)
+
     return region, mask, x_start, y_start
 
 
