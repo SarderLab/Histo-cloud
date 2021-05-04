@@ -134,120 +134,19 @@ Some segmentation results on Flickr images:
 
 Demo:
 
-*   <a href='https://colab.sandbox.google.com/github/tensorflow/models/blob/master/research/deeplab/deeplab_demo.ipynb'>Colab notebook for off-the-shelf inference.</a><br>
-
-Running:
-
-*   <a href='g3doc/installation.md'>Installation.</a><br>
-*   <a href='g3doc/pascal.md'>Running DeepLab on PASCAL VOC 2012 semantic segmentation dataset.</a><br>
-*   <a href='g3doc/cityscapes.md'>Running DeepLab on Cityscapes semantic segmentation dataset.</a><br>
-*   <a href='g3doc/ade20k.md'>Running DeepLab on ADE20K semantic segmentation dataset.</a><br>
-
-Models:
+Pre-trained Models:
 
 *   <a href='g3doc/model_zoo.md'>Checkpoints and frozen inference graphs.</a><br>
+*   <a href='https://athena.ccr.buffalo.edu/#collection/5fa17ef9e8737fef305946fe'>Models trained on histology tissue.</a><br>
 
 Misc:
 
 *   Please check <a href='g3doc/faq.md'>FAQ</a> if you have some questions before reporting the issues.<br>
 
-## Getting Help
-
-To get help with issues you may encounter while using the DeepLab Tensorflow
-implementation, create a new question on
-[StackOverflow](https://stackoverflow.com/) with the tag "tensorflow".
-
-Please report bugs (i.e., broken code, not usage questions) to the
-tensorflow/models GitHub [issue
-tracker](https://github.com/tensorflow/models/issues), prefixing the issue name
-with "deeplab".
-
 ## License
 
 All the codes in deeplab folder is covered by the [LICENSE](https://github.com/tensorflow/models/blob/master/LICENSE)
 under tensorflow/models. Please refer to the LICENSE for details.
-
-## Change Logs
-
-### March 26, 2020
-* Supported EdgeTPU-DeepLab and EdgeTPU-DeepLab-slim on Cityscapes.
-**Contributor**: Yun Long.
-
-### November 20, 2019
-* Supported MobileNetV3 large and small model variants on Cityscapes.
-**Contributor**: Yukun Zhu.
-
-
-### March 27, 2019
-
-* Supported using different loss weights on different classes during training.
-**Contributor**: Yuwei Yang.
-
-
-### March 26, 2019
-
-* Supported ResNet-v1-18. **Contributor**: Michalis Raptis.
-
-
-### March 6, 2019
-
-* Released the evaluation code (under the `evaluation` folder) for image
-parsing, a.k.a. panoptic segmentation. In particular, the released code supports
-evaluating the parsing results in terms of both the parsing covering and
-panoptic quality metrics. **Contributors**: Maxwell Collins and Ting Liu.
-
-
-### February 6, 2019
-
-* Updated decoder module to exploit multiple low-level features with different
-output_strides.
-
-### December 3, 2018
-
-* Released the MobileNet-v2 checkpoint on ADE20K.
-
-
-### November 19, 2018
-
-* Supported NAS architecture for feature extraction. **Contributor**: Chenxi Liu.
-
-* Supported hard pixel mining during training.
-
-
-### October 1, 2018
-
-* Released MobileNet-v2 depth-multiplier = 0.5 COCO-pretrained checkpoints on
-PASCAL VOC 2012, and Xception-65 COCO pretrained checkpoint (i.e., no PASCAL
-pretrained).
-
-
-### September 5, 2018
-
-* Released Cityscapes pretrained checkpoints with found best dense prediction cell.
-
-
-### May 26, 2018
-
-* Updated ADE20K pretrained checkpoint.
-
-
-### May 18, 2018
-* Added builders for ResNet-v1 and Xception model variants.
-* Added ADE20K support, including colormap and pretrained Xception_65 checkpoint.
-* Fixed a bug on using non-default depth_multiplier for MobileNet-v2.
-
-
-### March 22, 2018
-
-* Released checkpoints using MobileNet-V2 as network backbone and pretrained on
-PASCAL VOC 2012 and Cityscapes.
-
-
-### March 5, 2018
-
-* First release of DeepLab in TensorFlow including deeper Xception network
-backbone. Included chekcpoints that have been pretrained on PASCAL VOC 2012
-and Cityscapes.
 
 ## References
 
