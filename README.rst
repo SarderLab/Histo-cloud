@@ -8,7 +8,7 @@ HistomicsTK-deeplab is a modified version of `HistomicsTK`_ by `Brendon Lutnick`
 
 HistomicsTK can be used in two ways:
 
-- **As a pure Python package**: enables application of image analysis algorithms to data independent of the `Digital Slide Archive`_ (DSA). HistomicsTK provides a collection of fundamental algorithms for tasks such as color normalization, color deconvolution, nuclei segmentation, and feature extraction. Read more about these capabilities here:  `api-docs <https://digitalslidearchive.github.io/HistomicsTK/api-docs.html>`__ and `examples <https://digitalslidearchive.github.io/HistomicsTK/examples.html>`__ for more information. The HistomicsTK-DeepLab specific plugins are documented `here <https://buffalo.app.box.com/s/3d56aoasjcwryw9ktyahhlzm8skl8c9b>`__. 
+- **As a pure Python package**: enables application of image analysis algorithms to data independent of the `Digital Slide Archive`_ (DSA). HistomicsTK provides a collection of fundamental algorithms for tasks such as color normalization, color deconvolution, nuclei segmentation, and feature extraction. Read more about these capabilities here:  `api-docs <https://digitalslidearchive.github.io/HistomicsTK/api-docs.html>`__ and `examples <https://digitalslidearchive.github.io/HistomicsTK/examples.html>`__ for more information. The HistomicsTK-DeepLab specific plugins are documented `here <https://buffalo.app.box.com/s/3d56aoasjcwryw9ktyahhlzm8skl8c9b>`__, and available for testing on our `test server <https://athena.ccr.buffalo.edu/>`__.
 
   **Installation instructions on Linux:**
 
