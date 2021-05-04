@@ -58,7 +58,7 @@ For WSI segmentation all tests were done using the Xception-65 backbone, with at
 ### Annotation:
 This code uses WSI contour annotations in XML form. This format is the same that is used by [Aperio Imagescope](https://www.leicabiosystems.com/digital-pathology/manage/aperio-imagescope/). If you are using the code standalone (not as a plugin in HistomicsTK-deeplab) we suggest annotating in Imagescope.
 
-In the XML file, annotation layers are defined using the AnnotationID tag. In Imagescope this means that they are built up sequentially as annotation layers.
+In the XML file, annotation layers are defined using the AnnotationID tag. In Imagescope this means that they are built up sequentially as annotation layers. For training the XML annotation files and corresponding WSIs should be placed in the same folder.
 
 We also have useful codes for conversion between rasterized masks and XML contour annotations and JSON annotation (for HistomicsUI):
 *   [XML --> mask](https://github.com/SarderLab/HistomicsTK-deeplab/blob/main/histomicstk/deeplab/utils/xml_to_mask.py)
