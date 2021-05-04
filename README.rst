@@ -8,7 +8,7 @@ HistomicsTK-deeplab is a modified version of `HistomicsTK`_ by `Brendon Lutnick`
 
 HistomicsTK can be used in two ways:
 
-- **As a pure Python package**: enables application of image analysis algorithms to data independent of the `Digital Slide Archive`_ (DSA). HistomicsTK provides a collection of fundamental algorithms for tasks such as color normalization, color deconvolution, nuclei segmentation, and feature extraction. Read more about these capabilities here:  `api-docs <https://digitalslidearchive.github.io/HistomicsTK/api-docs.html>`__ and `examples <https://digitalslidearchive.github.io/HistomicsTK/examples.html>`__ for more information.
+- **As a pure Python package**: enables application of image analysis algorithms to data independent of the `Digital Slide Archive`_ (DSA). HistomicsTK provides a collection of fundamental algorithms for tasks such as color normalization, color deconvolution, nuclei segmentation, and feature extraction. Read more about these capabilities here:  `api-docs <https://digitalslidearchive.github.io/HistomicsTK/api-docs.html>`__ and `examples <https://digitalslidearchive.github.io/HistomicsTK/examples.html>`__ for more information. The HistomicsTK-DeepLab specific plugins are documented `here <https://buffalo.app.box.com/s/3d56aoasjcwryw9ktyahhlzm8skl8c9b>`__. 
 
   **Installation instructions on Linux:**
 
@@ -53,7 +53,7 @@ HistomicsTK can be used in two ways:
 
 - **As a image-processing task library for HistomicsUI and the Digital Slide Archive**: This allows end users to apply containerized analysis modules/pipelines over the web. See the `Digital Slide Archive`_ for installation instructions.
 
-Refer to `our website`_ for more information.
+Refer to the `DSA website`_ for more information.
 
 See Also
 ---------
@@ -74,7 +74,7 @@ See Also
 .. _Digital Slide Archive: http://github.com/DigitalSlideArchive/digital_slide_archive
 .. _HistomicsUI: http://github.com/DigitalSlideArchive/HistomicsUI
 .. _large_image: https://github.com/girder/large_image
-.. _our website: https://digitalslidearchive.github.io/digital_slide_archive/
+.. _DSA website: https://digitalslidearchive.github.io/digital_slide_archive/
 .. _slicer execution model: https://www.slicer.org/slicerWiki/index.php/Slicer3:Execution_Model_Documentation
 .. _slicer_cli_web: https://github.com/girder/slicer_cli_web
 .. _Docker: https://www.docker.com/
