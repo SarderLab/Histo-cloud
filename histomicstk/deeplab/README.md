@@ -41,7 +41,7 @@ For WSI segmentation all tests were done using the Xception-65 backbone, with at
 
 ## Suggested Usage Examples
 
-# Annotation:
+### Annotation:
 This code uses WSI contour annotations in XML form. This format is the same that is used by [Aperio Imagescope](https://www.leicabiosystems.com/digital-pathology/manage/aperio-imagescope/). If you are using the code standalone (not as a plugin in HistomicsTK-deeplab) we suggest annotating in Imagescope.
 
 In the XML file, annotation layers are defined using the AnnotationID tag. In Imagescope this means that they are built up sequentially as annotation layers.
@@ -51,10 +51,10 @@ We also have useful codes for conversion between rasterized masks and XML contou
 *   [mask --> XML](https://github.com/SarderLab/HistomicsTK-deeplab/blob/main/histomicstk/deeplab/utils/mask_to_xml.py)
 *   [XML --> JSON](https://github.com/SarderLab/HistomicsTK-deeplab/blob/main/histomicstk/deeplab/utils/xml_to_json.py)
 
-# Training:
+### Training:
 python3 train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size 512 --train_logdir <directory to save models> --tf_initial_checkpoint <pretrained model> --dataset_dir <directory with training data> --fine_tune_batch_norm False --train_batch_size 12 --training_number_of_steps 10000 --slow_start_step 1000 --wsi_downsample 1 --wsi_downsample 2 --wsi_downsample 3 --wsi_downsample 4 --augment_prob .1 --slow_start_learning_rate .0001 --base_learning_rate 0.0007 --last_layer_gradient_multiplier 10
 
-# Testing:
+### Testing:
 python3 vis.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --vis_crop_size 2000 --wsi_downsample 2 --tile_step 1000 --min_size 1000 --vis_batch_size 3 --vis_remove_border 100 --num_classes <set to the number of training classes (number of annotation layers + background)> --dataset_dir <folder with WSIs> --checkpoint_dir <path to trained model>
 
 ## Contacts (Maintainers)
