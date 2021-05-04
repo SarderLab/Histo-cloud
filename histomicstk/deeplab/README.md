@@ -1,30 +1,7 @@
 # DeepLab-WSI: Deep Labelling for WSI Semantic Image Segmentation
 
 DeepLab is a state-of-art deep learning model for semantic image segmentation,
-This code has been modified to work natively and efficiently on Whole Slide Images (WSIs)
-Current implementation includes the following features:
-
-1.  DeepLabv1 [1]: We use *atrous convolution* to explicitly control the
-    resolution at which feature responses are computed within Deep Convolutional
-    Neural Networks.
-
-2.  DeepLabv2 [2]: We use *atrous spatial pyramid pooling* (ASPP) to robustly
-    segment objects at multiple scales with filters at multiple sampling rates
-    and effective fields-of-views.
-
-3.  DeepLabv3 [3]: We augment the ASPP module with *image-level feature* [5, 6]
-    to capture longer range information. We also include *batch normalization*
-    [7] parameters to facilitate the training. In particular, we applying atrous
-    convolution to extract output features at different output strides during
-    training and evaluation, which efficiently enables training BN at output
-    stride = 16 and attains a high performance at output stride = 8 during
-    evaluation.
-
-4.  DeepLabv3+ [4]: We extend DeepLabv3 to include a simple yet effective
-    decoder module to refine the segmentation results especially along object
-    boundaries. Furthermore, in this encoder-decoder structure one can
-    arbitrarily control the resolution of extracted encoder features by atrous
-    convolution to trade-off precision and runtime.
+This code has been modified to work natively and efficiently on Whole Slide Images (WSIs).
 
 If you find the code useful for your research, please consider citing our latest
 works:
@@ -42,7 +19,7 @@ works:
 }
 ```
 
-In the current implementation, we support adopting the following network
+The DeepLab implementation supports adopting the following network
 backbones:
 
 1.  MobileNetv2 [8] and MobileNetv3 [16]: A fast network structure designed
@@ -59,6 +36,26 @@ backbones:
 
 5.  Auto-DeepLab (called HNASNet in the code): A segmentation-specific network
     backbone found by neural architecture search.
+
+For WSI segmentation all tests were done using the Xception-65 backbone, with atrous rates 6, 12, and 18, output_stride=16, and decoder_output_stride=4
+
+## Suggested Usage Examples
+
+# Annotation:
+This code uses WSI contour annotations in XML form. This format is the same that is used by [Aperio Imagescope](https://www.leicabiosystems.com/digital-pathology/manage/aperio-imagescope/). If you are using the code standalone (not as a plugin in HistomicsTK-deeplab) we suggest annotating in Imagescope.
+
+In the XML file, annotation layers are defined using the AnnotationID tag. In Imagescope this means that they are built up sequentially as annotation layers.
+
+We also have useful codes for conversion between rasterized masks and XML contour annotations and JSON annotation (for HistomicsUI):
+*   [XML --> mask](https://github.com/SarderLab/HistomicsTK-deeplab/blob/main/histomicstk/deeplab/utils/xml_to_mask.py)
+*   [mask --> XML](https://github.com/SarderLab/HistomicsTK-deeplab/blob/main/histomicstk/deeplab/utils/mask_to_xml.py)
+*   [XML --> JSON](https://github.com/SarderLab/HistomicsTK-deeplab/blob/main/histomicstk/deeplab/utils/xml_to_json.py)
+
+# Training:
+python3 train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size 512 --train_logdir <directory to save models> --tf_initial_checkpoint <pretrained model> --dataset_dir <directory with training data> --fine_tune_batch_norm False --train_batch_size 12 --training_number_of_steps 10000 --slow_start_step 1000 --wsi_downsample 1 --wsi_downsample 2 --wsi_downsample 3 --wsi_downsample 4 --augment_prob .1 --slow_start_learning_rate .0001 --base_learning_rate 0.0007 --last_layer_gradient_multiplier 10
+
+# Testing:
+python3 vis.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --vis_crop_size 2000 --wsi_downsample 2 --tile_step 1000 --min_size 1000 --vis_batch_size 3 --vis_remove_border 100 --num_classes <set to the number of training classes (number of annotation layers + background)> --dataset_dir <folder with WSIs> --checkpoint_dir <path to trained model>
 
 ## Contacts (Maintainers)
 
