@@ -2,14 +2,9 @@
 HistomicsTK-deeplab
 ================================================
 
-HistomicsTK-deeplab is a modified version of `HistomicsTK`_ by `Brendon Lutnick`_.
+HistomicsTK-deeplab is a modified version of `HistomicsTK`_ by `Brendon Lutnick`_. This code has been modified to include native WSI segmentation via Google's `DeepLab`_ v3+ architecture. The `DeepLab codebase`_ has also been modified to directly and efficiently train and predict on histology Whole Slide Images (WSIs). The `DeepLab codebase`_ can be run via the command line, within this docker container (which will install all the needed dependencies), or via the options below.
 
 `HistomicsTK`_ is a Python package for the analysis of digital pathology images. It can function as a stand-alone library, or as a Digital Slide Archive plugin that allows users to invoke image analysis jobs through HistomicsUI. The functionality offered by HistomicsTK can be extended using `slicer cli web <https://github.com/girder/slicer_cli_web>`__ which allows developers to integrate their image analysis algorithms into DSA for dissemination through HistomicsUI.
-
-
-Whole-slide imaging captures the histologic details of tissues in large multiresolution images. Improvements in imaging technology, decreases in storage costs, and regulatory approval of digital pathology for primary diagnosis have resulted in an explosion of whole-slide imaging data. Digitization enables the application of computational image analysis and machine learning algorithms to characterize the contents of these images, and to understand the relationships between histology, clinical outcomes, and molecular data from genomic platforms. Compared to the related areas of radiology and genomics, open-source tools for the management, visualization, and analysis of digital pathology has lagged. To address this we have developed HistomicsTK in coordination with the `Digital Slide Archive`_ (DSA), a platform for managing and sharing digital pathology images in a centralized web-accessible server, and `HistomicsUI`_, a specialized user interface for annotation and markup of whole-slide images and for running image analysis tools and for scalable visualizing of dense outputs from image analysis algorithms. HistomicsTK aims to serve the needs of both pathologists/biologists interested in using state-of-the-art algorithms to analyze their data, and algorithm researchers interested in developing new/improved algorithms and disseminate them for wider use by the community.
-
-This code has been modified by Brendon Lutnick to include native WSI segmentation via Google's deeplab v3+ architecture.
 
 HistomicsTK can be used in two ways:
 
@@ -60,22 +55,6 @@ HistomicsTK can be used in two ways:
 
 Refer to `our website`_ for more information.
 
-For questions, comments, or to get in touch with the maintainers, head to our
-`Discourse forum`_, or use our `Gitter Chatroom`_.
-
-
-Previous Versions
------------------
-
-The HistomicsTK repository used to contain almost all of the Digital Slide Archive and HistomicsUI, and now container primarily code for image analysis algorithms and processing of annotation data.  The deployment and installation code and instructions for DSA have moved to the `Digital Slide Archive`_ repository.  The user interface and annotation functionality has moved to the `HistomicsUI`_ repository.
-
-The deployment and UI code will eventually be removed from the master branch of this repository; any new development on those topics should be done in those locations.
-
-Funding
--------
-
-This work is funded by the NIH grant U24-CA194362-01_.
-
 See Also
 ---------
 
@@ -89,7 +68,9 @@ See Also
 
 .. Links for everything above (not rendered):
 .. _Brendon Lutnick: https://github.com/brendonlutnick
-.. _HistomicsTK: https://digitalslidearchive.github.io/digital_slide_archive/
+.. _HistomicsTK: https://github.com/DigitalSlideArchive/HistomicsTK
+.. _DeepLab: https://github.com/tensorflow/models/tree/master/research/deeplab
+.. _DeepLab codebase: https://github.com/SarderLab/HistomicsTK-deeplab/tree/main/histomicstk/deeplab
 .. _Digital Slide Archive: http://github.com/DigitalSlideArchive/digital_slide_archive
 .. _HistomicsUI: http://github.com/DigitalSlideArchive/HistomicsUI
 .. _large_image: https://github.com/girder/large_image
@@ -98,6 +79,3 @@ See Also
 .. _slicer_cli_web: https://github.com/girder/slicer_cli_web
 .. _Docker: https://www.docker.com/
 .. _Kitware: http://www.kitware.com/
-.. _U24-CA194362-01: http://grantome.com/grant/NIH/U24-CA194362-01
-.. _Discourse forum: https://discourse.girder.org/c/histomicstk
-.. _Gitter Chatroom: https://gitter.im/DigitalSlideArchive/HistomicsTK?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
