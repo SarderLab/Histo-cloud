@@ -1,9 +1,8 @@
-# DeepLab: Deep Labelling for Semantic Image Segmentation
+# DeepLab-WSI: Deep Labelling for WSI Semantic Image Segmentation
 
 DeepLab is a state-of-art deep learning model for semantic image segmentation,
-where the goal is to assign semantic labels (e.g., person, dog, cat and so on)
-to every pixel in the input image. Current implementation includes the following
-features:
+This code has been modified to work natively and efficiently on Whole Slide Images (WSIs)
+Current implementation includes the following features:
 
 1.  DeepLabv1 [1]: We use *atrous convolution* to explicitly control the
     resolution at which feature responses are computed within Deep Convolutional
@@ -30,65 +29,18 @@ features:
 If you find the code useful for your research, please consider citing our latest
 works:
 
-*   DeepLabv3+:
+*   arXiv deposition:
 
 ```
-@inproceedings{deeplabv3plus2018,
-  title={Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation},
-  author={Liang-Chieh Chen and Yukun Zhu and George Papandreou and Florian Schroff and Hartwig Adam},
-  booktitle={ECCV},
-  year={2018}
+@misc{lutnick2021tool,
+      title={A tool for user friendly, cloud based, whole slide image segmentation},
+      author={Brendon Lutnick and David Manthey and Pinaki Sarder},
+      year={2021},
+      eprint={2101.07222},
+      archivePrefix={arXiv},
+      primaryClass={eess.IV}
 }
 ```
-
-*   MobileNetv2:
-
-```
-@inproceedings{mobilenetv22018,
-  title={MobileNetV2: Inverted Residuals and Linear Bottlenecks},
-  author={Mark Sandler and Andrew Howard and Menglong Zhu and Andrey Zhmoginov and Liang-Chieh Chen},
-  booktitle={CVPR},
-  year={2018}
-}
-```
-
-*   MobileNetv3:
-
-```
-@inproceedings{mobilenetv32019,
-  title={Searching for MobileNetV3},
-  author={Andrew Howard and Mark Sandler and Grace Chu and Liang-Chieh Chen and Bo Chen and Mingxing Tan and Weijun Wang and Yukun Zhu and Ruoming Pang and Vijay Vasudevan and Quoc V. Le and Hartwig Adam},
-  booktitle={ICCV},
-  year={2019}
-}
-```
-
-*  Architecture search for dense prediction cell:
-
-```
-@inproceedings{dpc2018,
-  title={Searching for Efficient Multi-Scale Architectures for Dense Image Prediction},
-  author={Liang-Chieh Chen and Maxwell D. Collins and Yukun Zhu and George Papandreou and Barret Zoph and Florian Schroff and Hartwig Adam and Jonathon Shlens},
-  booktitle={NIPS},
-  year={2018}
-}
-
-```
-
-*  Auto-DeepLab (also called hnasnet in core/nas_network.py):
-
-```
-@inproceedings{autodeeplab2019,
-  title={Auto-DeepLab: Hierarchical Neural Architecture Search for Semantic
-Image Segmentation},
-  author={Chenxi Liu and Liang-Chieh Chen and Florian Schroff and Hartwig Adam
-  and Wei Hua and Alan Yuille and Li Fei-Fei},
-  booktitle={CVPR},
-  year={2019}
-}
-
-```
-
 
 In the current implementation, we support adopting the following network
 backbones:
@@ -108,40 +60,14 @@ backbones:
 5.  Auto-DeepLab (called HNASNet in the code): A segmentation-specific network
     backbone found by neural architecture search.
 
-This directory contains our TensorFlow [11] implementation. We provide codes
-allowing users to train the model, evaluate results in terms of mIOU (mean
-intersection-over-union), and visualize segmentation results. We use PASCAL VOC
-2012 [12] and Cityscapes [13] semantic segmentation benchmarks as an example in
-the code.
-
-Some segmentation results on Flickr images:
-<p align="center">
-    <img src="g3doc/img/vis1.png" width=600></br>
-    <img src="g3doc/img/vis2.png" width=600></br>
-    <img src="g3doc/img/vis3.png" width=600></br>
-</p>
-
 ## Contacts (Maintainers)
 
-*   Liang-Chieh Chen, github: [aquariusjay](https://github.com/aquariusjay)
-*   YuKun Zhu, github: [yknzhu](https://github.com/YknZhu)
-*   George Papandreou, github: [gpapan](https://github.com/gpapan)
-*   Hui Hui, github: [huihui-personal](https://github.com/huihui-personal)
-*   Maxwell D. Collins, github: [mcollinswisc](https://github.com/mcollinswisc)
-*   Ting Liu: github: [tingliu](https://github.com/tingliu)
+*   Brendon Lutnick, github: [brendonlutnick](https://github.com/brendonlutnick)
 
-## Tables of Contents
-
-Demo:
-
-Pre-trained Models:
+## Pre-trained Models
 
 *   <a href='g3doc/model_zoo.md'>Checkpoints and frozen inference graphs.</a><br>
 *   <a href='https://athena.ccr.buffalo.edu/#collection/5fa17ef9e8737fef305946fe'>Models trained on histology tissue.</a><br>
-
-Misc:
-
-*   Please check <a href='g3doc/faq.md'>FAQ</a> if you have some questions before reporting the issues.<br>
 
 ## License
 
