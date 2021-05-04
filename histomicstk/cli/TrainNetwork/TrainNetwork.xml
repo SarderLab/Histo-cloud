@@ -181,7 +181,7 @@
       <label>Upsample logits</label>
       <longflag>upsample_logits</longflag>
       <description>If this is selected the logits (probablilities) of the network will be upsampled before the loss is calcluated. This increases the memory useage of the network.</description>
-      <default>false</default>
+      <default>true</default>
     </boolean>
   </parameters>
   <parameters advanced="true">

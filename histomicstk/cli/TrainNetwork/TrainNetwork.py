@@ -224,15 +224,23 @@ def main(args):
 
     if not init_last_layer:
         cmd += ' --initialize_last_layer=false'
+    else:
+        cmd += ' --initialize_last_layer=true'
 
     if not batch_norm:
         cmd += ' --fine_tune_batch_norm=false'
+    else:
+        cmd += ' --fine_tune_batch_norm=true'
 
     if not args.last_layers_contain_logits_only:
         cmd += ' --last_layers_contain_logits_only=false'
+    else:
+        cmd += ' --last_layers_contain_logits_only=true'
 
     if not args.upsample_logits:
         cmd += ' --upsample_logits=false'
+    else:
+        cmd += ' --upsample_logits=true'
 
     # run training
     os.system("printf '{}\n'".format(cmd))
