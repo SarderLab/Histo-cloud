@@ -1,8 +1,8 @@
 # DeepLab-WSI: Deep Labelling for WSI Semantic Image Segmentation
 
 DeepLab is a state-of-art deep learning model for semantic image segmentation,
-This code has been modified to work natively and efficiently on Whole Slide Images (WSIs).
-This code efficiently pulls randomly selected WSI ROI (patches) at runtime to avoid the need for WSI chopping.
+This code has been modified from the [original DeepLab](https://github.com/tensorflow/models/tree/master/research/deeplab) to work natively and efficiently on Whole Slide Images (WSIs).
+This code efficiently [pulls randomly selected WSI ROI](https://github.com/SarderLab/HistomicsTK-deeplab/blob/main/histomicstk/deeplab/input%20flowchart.pdf) (patches) at runtime to avoid the need for WSI chopping.
 
 If you find the code useful for your research, please consider citing our latest
 works:
