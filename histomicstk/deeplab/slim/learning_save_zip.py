@@ -459,6 +459,7 @@ _USE_DEFAULT = 0
 def zip_model_if_new(logdir,output_zip):
     from glob import glob
     import zipfile
+    import tensorflow as tf
 
     # find ckpt files
     latest_model = tf.train.latest_checkpoint(logdir)

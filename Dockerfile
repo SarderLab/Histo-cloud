@@ -116,7 +116,6 @@ RUN pip install --no-cache-dir --upgrade --ignore-installed pip setuptools && \
     pip install --no-cache-dir 'bokeh>=0.12.14' && \
     # Install large_image memcached extras
     pip install --no-cache-dir --pre 'large-image[memcached]' --find-links https://girder.github.io/large_image_wheels && \
-    pip install --no-cache-dir 'large-image-source-openslide' && \
     pip install --no-cache-dir 'large-image-source-ometiff' && \
     # Install girder-client
     pip install --no-cache-dir girder-client && \
