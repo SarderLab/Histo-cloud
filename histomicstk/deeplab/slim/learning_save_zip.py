@@ -461,10 +461,9 @@ def zip_model_if_new(logdir,output_zip):
     import zipfile
 
     # find ckpt files
-    filelist = glob('{}/*.ckpt*'.format(logdir))
-    if filelist is not []:
-        latest_model = max(filelist, key=os.path.getmtime)
-        ckpt_mod_time = os.path.getmtime(latest_model)
+    latest_model = tf.train.latest_checkpoint(logdir)
+    if latest_model is not None:
+        ckpt_mod_time = os.path.getmtime(latest_model + '.index')
 
         # copmpair modification times
         if os.path.isfile(output_zip):
@@ -480,9 +479,8 @@ def zip_model_if_new(logdir,output_zip):
             os.chdir(logdir)
             # get all ckpt files for latest model
             base_model_name = os.path.basename(latest_model)
-            base_model_name = os.path.splitext(base_model_name)[0]
-
-            for tries in range(2):
+            time.sleep(5) # wait for file to be written to disk
+            for tries in range(2): # file may be incomplete on first try
                 # zip models into new folder
                 models = glob('{}*'.format(base_model_name))
                 logging.info('zipping saved model...')
@@ -494,7 +492,7 @@ def zip_model_if_new(logdir,output_zip):
                         break
                     except:
                         logging.info('zip failed trying again...')
-                        time.sleep(5) # wait for file to be written
+                        time.sleep(5) # wait for file to be written to disk
             os.chdir(cwd)
 
 def train(train_op,
