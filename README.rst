@@ -13,6 +13,7 @@ The easiest way to use this code is to build it as a docker image which can be i
   $ docker build --force-rm -t <username>/<docker imagename>:<tag> .
   
   This image can be imported to a running version of the `Digital Slide Archive`_ under <Admin console / Plugins / Slicer CLI Web (gear icon)>
+  
   For the training plugin to work properly, it needs the correct routing to the internal girder_client database. The Alternative Girder API URL should be set to <serverURL>/api/v1 under <Admin console / Plugins / Worker (gear icon)>
   
 HistomicsTK can be used in two ways:
