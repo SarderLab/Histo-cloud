@@ -6,13 +6,13 @@ Histo-cloud (HistomicsTK-deeplab) is a modified version of `HistomicsTK`_ by `Br
 
 `HistomicsTK`_ is a Python package for the analysis of digital pathology images. It can function as a stand-alone library, or as a Digital Slide Archive plugin that allows users to invoke image analysis jobs through HistomicsUI. The functionality offered by HistomicsTK can be extended using `slicer cli web <https://github.com/girder/slicer_cli_web>`__ which allows developers to integrate their image analysis algorithms into DSA for dissemination through HistomicsUI.
 
-**The easiest way to use this code is to build it as a docker image which can be imported into the `Digital Slide Archive`_ as plugins.**
+The easiest way to use this code is to build it as a docker image which can be imported into the `Digital Slide Archive`_ as plugins:
 
   *To Build the docker image*::
 
     $ docker build --force-rm -t <username>/<docker imagename>:<tag> .
-    
-    This image can be imported to a running version of 
+   
+   This image can be imported to a running version of 
 
 HistomicsTK can be used in two ways:
 
