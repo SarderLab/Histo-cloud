@@ -12,7 +12,7 @@ The easiest way to use this code is to build it as a docker image which can be i
   
   $ docker build --force-rm -t <username>/<docker imagename>:<tag> .
   
-  This image can be imported to a running version of 
+  This image can be imported to a running version of the `Digital Slide Archive`_ under <Admin console / Plugins / Slicer CLI Web (gear icon)>
 
 HistomicsTK can be used in two ways:
 
