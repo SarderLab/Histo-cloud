@@ -74,8 +74,6 @@ See Also
 
 **Source repositories:** `Digital Slide Archive`_ | `HistomicsUI`_ | `large_image`_ | `slicer_cli_web`_
 
-**Discussion:** `Discourse forum`_ | `Gitter Chatroom`_
-
 .. Links for everything above (not rendered):
 .. _Brendon Lutnick: https://github.com/brendonlutnick
 .. _HistomicsTK: https://github.com/DigitalSlideArchive/HistomicsTK
