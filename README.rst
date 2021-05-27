@@ -13,7 +13,8 @@ The easiest way to use this code is to build it as a docker image which can be i
   $ docker build --force-rm -t <username>/<docker imagename>:<tag> .
   
   This image can be imported to a running version of the `Digital Slide Archive`_ under <Admin console / Plugins / Slicer CLI Web (gear icon)>
-
+  For the training plugin to work properly, it needs the correct routing to the internal girder_client database. The Alternative Girder API URL should be set to <serverURL>/api/v1 under <Admin console / Plugins / Worker (gear icon)>
+  
 HistomicsTK can be used in two ways:
 
 - **As a pure Python package**: enables application of image analysis algorithms to data independent of the `Digital Slide Archive`_ (DSA). HistomicsTK provides a collection of fundamental algorithms for tasks such as color normalization, color deconvolution, nuclei segmentation, and feature extraction. Read more about these capabilities here:  `api-docs <https://digitalslidearchive.github.io/HistomicsTK/api-docs.html>`__ and `examples <https://digitalslidearchive.github.io/HistomicsTK/examples.html>`__ for more information. The HistomicsTK-DeepLab specific plugins are documented `here <https://buffalo.app.box.com/s/3d56aoasjcwryw9ktyahhlzm8skl8c9b>`__, and available for testing on our `test server <https://athena.ccr.buffalo.edu/>`__.
