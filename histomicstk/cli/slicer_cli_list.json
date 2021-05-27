@@ -11,10 +11,6 @@
     "type"    : "python"
   },
 
-  "TranslateXMLToJson": {
-    "type"    : "python"
-  },
-
   "IngestAperioXML": {
     "type"    : "python"
   },
