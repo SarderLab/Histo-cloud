@@ -1,8 +1,8 @@
 ================================================
-HistomicsTK-deeplab
+Histo-cloud (HistomicsTK-deeplab)
 ================================================
 
-HistomicsTK-deeplab is a modified version of `HistomicsTK`_ by `Brendon Lutnick`_. This code has been modified to include native WSI segmentation via Google's `DeepLab`_ v3+ architecture. The `DeepLab codebase`_ has also been modified to directly and efficiently train and predict on histology Whole Slide Images (WSIs). The `DeepLab codebase`_ can be run via the command line, within this docker container (which will install all the needed dependencies), or via the options below.
+Histo-cloud (HistomicsTK-deeplab) is a modified version of `HistomicsTK`_ by `Brendon Lutnick`_. This code has been modified to include native WSI segmentation via Google's `DeepLab`_ v3+ architecture. The `DeepLab codebase`_ has also been modified to directly and efficiently train and predict on histology Whole Slide Images (WSIs). The `DeepLab codebase`_ can be run via the command line, within this docker container (which will install all the needed dependencies), or via the options below.
 
 `HistomicsTK`_ is a Python package for the analysis of digital pathology images. It can function as a stand-alone library, or as a Digital Slide Archive plugin that allows users to invoke image analysis jobs through HistomicsUI. The functionality offered by HistomicsTK can be extended using `slicer cli web <https://github.com/girder/slicer_cli_web>`__ which allows developers to integrate their image analysis algorithms into DSA for dissemination through HistomicsUI.
 
