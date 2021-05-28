@@ -12,6 +12,8 @@ Histo-cloud (HistomicsTK-deeplab) is a modified version of `HistomicsTK`_ by `Br
 
 The easiest way to use this code is to build it as a docker image which can be imported into the `Digital Slide Archive`_ as plugins:
 
+A video overview of the plugins is avalable `here <https://buffalo.app.box.com/s/w5h3eqqcdrmleeqmp7hwmb2rnin0ekeg>`__
+
   *To Build the docker image*::
   
   $ docker build --force-rm -t <username>/<docker imagename>:<tag> .
