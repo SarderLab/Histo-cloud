@@ -1,0 +1,27 @@
+# Welcome to the Sarder Lab Slide Archive
+---
+#### Whole Slide Image Analysis Platform: [Sarder Lab Slide Analyzer](histomics)
+
+![LabLogo_small.png](/static/LabLogo_small.png)
+
+---
+
+#### Documentation for the use of this website is available [here](https://buffalo.box.com/s/3d56aoasjcwryw9ktyahhlzm8skl8c9b).
+
+---
+
+This software was developed by [Kitware Inc.](https://www.kitware.com/) with analysis functionality from the [Sarder Lab](http://www.acsu.buffalo.edu/~pinakisa/).
+
+We would like to thank [David Manthey](https://www.kitware.com/david-manthey/) (Kitware Inc.) for his continued support and guidance. 
+
+This site is hosted by the SUNY Buffalo - Center for Computational Research - [Lake Effect Cloud](https://ubccr.freshdesk.com/support/solutions/articles/5000680722-what-is-lake-effect-ub-s-research-cloud-).
+
+Technical questions about this tool can be addressed to [Brendon Lutnick](https://github.com/brendonlutnick) (brendonl@buffalo.edu)
+
+
+
+
+_______________________________________________________________________________
+
+docker exec -it dsa_girder bash
+add lab logo to: /home/ubuntu/.virtualenvs/girder/share/girder/static/
