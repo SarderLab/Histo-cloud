@@ -42,6 +42,7 @@ with warnings.catch_warnings():
     from deeplab.utils import save_annotation
     from deeplab.utils.mask_to_xml import mask_to_xml
     from deeplab.utils.xml_to_json import convert_xml_json
+    from deeplab.ProgressHelper import ProgressHelper
 
 flags = tf.app.flags
 
@@ -305,30 +306,32 @@ def main(unused_argv):
 
           with tf.train.MonitoredSession(
               session_creator=session_creator, hooks=None) as sess:
-              batch = 0
-              image_id_offset = 0
-              print('\n')
-              while not sess.should_stop():
-                  # tf.logging.info('Visualizing batch %d', batch + 1)
-                  os.system("printf 'Working on [{}] patch: [{} of {}]\n'".format(os.path.basename(slide), min(batch, num_samples), num_samples))
-                  slide_mask, slide_heatmap = _process_batch(sess=sess,
-                                 slide_mask=slide_mask,
-                                 slide_heatmap=slide_heatmap,
-                                 offset=tissue_offset,
-                                 semantic_predictions=predictions,
-                                 semantic_probablities=probabilities,
-                                 image_names=samples[common.IMAGE_NAME],
-                                 mask_size=mask_size,
-                                 border=FLAGS.vis_remove_border,
-                                 downsample=FLAGS.wsi_downsample,
-                                 extra_downsample=extra_downsample,
-                                 image_heights=samples[common.HEIGHT],
-                                 image_widths=samples[common.WIDTH],
-                                 image_id_offset=image_id_offset,
-                                 raw_save_dir=raw_save_dir,
-                                 train_id_to_eval_id=train_id_to_eval_id)
-                  image_id_offset += FLAGS.vis_batch_size
-                  batch += FLAGS.vis_batch_size
+              with ProgressHelper() as helper:
+                  batch = 0
+                  image_id_offset = 0
+                  print('\n')
+                  while not sess.should_stop():
+                      # tf.logging.info('Visualizing batch %d', batch + 1)
+                      os.system("printf 'Working on [{}] patch: [{} of {}]\n'".format(os.path.basename(slide), min(batch, num_samples), num_samples))
+                      helper.progress(min(batch, num_samples)/float(num_samples))
+                      slide_mask, slide_heatmap = _process_batch(sess=sess,
+                                     slide_mask=slide_mask,
+                                     slide_heatmap=slide_heatmap,
+                                     offset=tissue_offset,
+                                     semantic_predictions=predictions,
+                                     semantic_probablities=probabilities,
+                                     image_names=samples[common.IMAGE_NAME],
+                                     mask_size=mask_size,
+                                     border=FLAGS.vis_remove_border,
+                                     downsample=FLAGS.wsi_downsample,
+                                     extra_downsample=extra_downsample,
+                                     image_heights=samples[common.HEIGHT],
+                                     image_widths=samples[common.WIDTH],
+                                     image_id_offset=image_id_offset,
+                                     raw_save_dir=raw_save_dir,
+                                     train_id_to_eval_id=train_id_to_eval_id)
+                      image_id_offset += FLAGS.vis_batch_size
+                      batch += FLAGS.vis_batch_size
 
           # clear large image caches
           cachesClear()
