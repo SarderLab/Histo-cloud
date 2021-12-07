@@ -42,7 +42,7 @@ with warnings.catch_warnings():
     from deeplab.utils import save_annotation
     from deeplab.utils.mask_to_xml import mask_to_xml
     from deeplab.utils.xml_to_json import convert_xml_json
-    from deeplab.ProgressHelper import ProgressHelper
+    from deeplab.progress_helper import ProgressHelper
 
 flags = tf.app.flags
 
@@ -213,100 +213,100 @@ def _process_batch(sess, slide_mask, slide_heatmap, offset, semantic_predictions
 
 
 def main(unused_argv):
-  os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
-  os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.gpu
+  with ProgressHelper('Segment WSI') as helper:
+      os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
+      os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.gpu
 
-  tf.logging.set_verbosity(tf.logging.INFO)
+      tf.logging.set_verbosity(tf.logging.INFO)
 
-  # Get dataset-dependent information.
-  dataset = wsi_data_generator.Dataset(
-      dataset_name=FLAGS.dataset,
-      dataset_dir=FLAGS.dataset_dir,
-      num_of_classes=FLAGS.num_classes,
-      downsample=FLAGS.wsi_downsample,
-      tile_step=FLAGS.tile_step,
-      batch_size=FLAGS.vis_batch_size,
-      crop_size=FLAGS.vis_crop_size,
-      min_resize_value=FLAGS.min_resize_value,
-      max_resize_value=FLAGS.max_resize_value,
-      resize_factor=FLAGS.resize_factor,
-      model_variant=FLAGS.model_variant,
-      is_training=False,
-      should_shuffle=False,
-      should_repeat=False)
+      # Get dataset-dependent information.
+      dataset = wsi_data_generator.Dataset(
+          dataset_name=FLAGS.dataset,
+          dataset_dir=FLAGS.dataset_dir,
+          num_of_classes=FLAGS.num_classes,
+          downsample=FLAGS.wsi_downsample,
+          tile_step=FLAGS.tile_step,
+          batch_size=FLAGS.vis_batch_size,
+          crop_size=FLAGS.vis_crop_size,
+          min_resize_value=FLAGS.min_resize_value,
+          max_resize_value=FLAGS.max_resize_value,
+          resize_factor=FLAGS.resize_factor,
+          model_variant=FLAGS.model_variant,
+          is_training=False,
+          should_shuffle=False,
+          should_repeat=False)
 
-  assert FLAGS.vis_remove_border*2 < FLAGS.vis_crop_size and FLAGS.vis_remove_border*2 < FLAGS.vis_crop_size - FLAGS.tile_step
+      assert FLAGS.vis_remove_border*2 < FLAGS.vis_crop_size and FLAGS.vis_remove_border*2 < FLAGS.vis_crop_size - FLAGS.tile_step
 
-  if os.path.isfile(FLAGS.dataset_dir):
-      slides = [FLAGS.dataset_dir]
-  else:
-      # get all WSI in test set
-      slides = dataset._get_all_files(with_xml=False, save_mask=False)
+      if os.path.isfile(FLAGS.dataset_dir):
+          slides = [FLAGS.dataset_dir]
+      else:
+          # get all WSI in test set
+          slides = dataset._get_all_files(with_xml=False, save_mask=False)
 
-  broken_slides = []
+      broken_slides = []
 
-  with tf.Graph().as_default():
-      checkpoint_path = FLAGS.checkpoint_dir
-      config = tf.ConfigProto()
-      config.gpu_options.allow_growth = True
-      scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
-      session_creator = tf.train.ChiefSessionCreator(
-            scaffold=scaffold,
-            master=FLAGS.master,
-            config=config,
-            checkpoint_filename_with_path=checkpoint_path)
-      for slide in slides:
-          print('Working on: [{}]'.format(slide))
+      with tf.Graph().as_default():
+          checkpoint_path = FLAGS.checkpoint_dir
+          config = tf.ConfigProto()
+          config.gpu_options.allow_growth = True
+          scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
+          session_creator = tf.train.ChiefSessionCreator(
+                scaffold=scaffold,
+                master=FLAGS.master,
+                config=config,
+                checkpoint_filename_with_path=checkpoint_path)
+          for slide in slides:
+              print('Working on: [{}]'.format(slide))
 
-          # try:
-          train_id_to_eval_id = None
-          raw_save_dir = None
-          iterator, num_samples, tissue_offset, tissue_size = dataset.get_one_shot_iterator_grid(slide)
+              # try:
+              train_id_to_eval_id = None
+              raw_save_dir = None
+              iterator, num_samples, tissue_offset, tissue_size = dataset.get_one_shot_iterator_grid(slide)
 
-          # except Exception as e:
-          #     print(e)
-          #     print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
-          #     broken_slides.append(slide)
-          #     continue
+              # except Exception as e:
+              #     print(e)
+              #     print('!!! Faulty slide: skipping [{}] !!!'.format(slide))
+              #     broken_slides.append(slide)
+              #     continue
 
-          samples = iterator.get_next()
+              samples = iterator.get_next()
 
-          model_options = common.ModelOptions(
-              outputs_to_num_classes={common.OUTPUT_TYPE: dataset.num_of_classes},
-              crop_size=[FLAGS.vis_crop_size,FLAGS.vis_crop_size],
-              atrous_rates=FLAGS.atrous_rates,
-              output_stride=FLAGS.output_stride)
+              model_options = common.ModelOptions(
+                  outputs_to_num_classes={common.OUTPUT_TYPE: dataset.num_of_classes},
+                  crop_size=[FLAGS.vis_crop_size,FLAGS.vis_crop_size],
+                  atrous_rates=FLAGS.atrous_rates,
+                  output_stride=FLAGS.output_stride)
 
-          tf.logging.info('Performing WSI patch detection.\n')
-          predictions = model.predict_labels(
-                samples[common.IMAGE],
-                model_options=model_options,
-                image_pyramid=FLAGS.image_pyramid)
+              tf.logging.info('Performing WSI patch detection.\n')
+              predictions = model.predict_labels(
+                    samples[common.IMAGE],
+                    model_options=model_options,
+                    image_pyramid=FLAGS.image_pyramid)
 
-          probabilities = predictions[common.OUTPUT_TYPE+'_prob']
-          predictions = predictions[common.OUTPUT_TYPE]
+              probabilities = predictions[common.OUTPUT_TYPE+'_prob']
+              predictions = predictions[common.OUTPUT_TYPE]
 
-          # do not upsample predictions in network output
-          if not model_options.prediction_with_upsampled_logits:
-              extra_downsample = int(FLAGS.vis_crop_size / int(predictions.shape[1]))
-          else: extra_downsample=1
+              # do not upsample predictions in network output
+              if not model_options.prediction_with_upsampled_logits:
+                  extra_downsample = int(FLAGS.vis_crop_size / int(predictions.shape[1]))
+              else: extra_downsample=1
 
-          # get tissue region size and create empty wsi mask
-          def get_downsampled_size(size, downsample=FLAGS.wsi_downsample*extra_downsample):
-              size /= downsample
-              return int(np.ceil(size))
-          mask_size = [get_downsampled_size(tissue_size[0]), get_downsampled_size(tissue_size[1])]
-          os.system("printf 'Creating a slide mask {} pixels\n'".format(mask_size))
-          slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
-          slide_heatmap = np.zeros([mask_size[0], mask_size[1], FLAGS.num_classes], dtype=np.float16)
+              # get tissue region size and create empty wsi mask
+              def get_downsampled_size(size, downsample=FLAGS.wsi_downsample*extra_downsample):
+                  size /= downsample
+                  return int(np.ceil(size))
+              mask_size = [get_downsampled_size(tissue_size[0]), get_downsampled_size(tissue_size[1])]
+              os.system("printf 'Creating a slide mask {} pixels\n'".format(mask_size))
+              slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
+              slide_heatmap = np.zeros([mask_size[0], mask_size[1], FLAGS.num_classes], dtype=np.float16)
 
-          tf.train.get_or_create_global_step()
-          if FLAGS.quantize_delay_step >= 0:
-              contrib_quantize.create_eval_graph()
+              tf.train.get_or_create_global_step()
+              if FLAGS.quantize_delay_step >= 0:
+                  contrib_quantize.create_eval_graph()
 
-          with tf.train.MonitoredSession(
-              session_creator=session_creator, hooks=None) as sess:
-              with ProgressHelper() as helper:
+              with tf.train.MonitoredSession(
+                  session_creator=session_creator, hooks=None) as sess:
                   batch = 0
                   image_id_offset = 0
                   print('\n')
@@ -333,73 +333,73 @@ def main(unused_argv):
                       image_id_offset += FLAGS.vis_batch_size
                       batch += FLAGS.vis_batch_size
 
-          # clear large image caches
-          cachesClear()
+              # clear large image caches
+              cachesClear()
 
-          # slide_mask = np.argmax(slide_heatmap, axis=2)
+              # slide_mask = np.argmax(slide_heatmap, axis=2)
 
-          if FLAGS.save_json_annotation:
-              anot_filename = FLAGS.json_filename
-              print('\ncreating annotation file: [{}]'.format(anot_filename))
-              root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample*extra_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes-1, offset=tissue_offset)
-              compartments = FLAGS.class_names.split(',')
-              json_data = convert_xml_json(root, compartments)
+              if FLAGS.save_json_annotation:
+                  anot_filename = FLAGS.json_filename
+                  print('\ncreating annotation file: [{}]'.format(anot_filename))
+                  root = mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample*extra_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, return_root=True, maxClass=FLAGS.num_classes-1, offset=tissue_offset)
+                  compartments = FLAGS.class_names.split(',')
+                  json_data = convert_xml_json(root, compartments)
 
-              if FLAGS.save_heatmap:
-                  ds = FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride
-                  strided_heatmap = slide_heatmap[::FLAGS.heatmap_stride,::FLAGS.heatmap_stride,:]
+                  if FLAGS.save_heatmap:
+                      ds = FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride
+                      strided_heatmap = slide_heatmap[::FLAGS.heatmap_stride,::FLAGS.heatmap_stride,:]
 
-                  cutoff = 1/(FLAGS.num_classes*3) # cutoff low values
-                  heatmap_sum = strided_heatmap.sum(2)
-                  heatmap_sum_mask = heatmap_sum==0
-                  np.place(strided_heatmap[:,:,0],heatmap_sum_mask,1)
-                  np.place(heatmap_sum,heatmap_sum_mask,1)
-                  strided_heatmap /=np.repeat(np.expand_dims(heatmap_sum,-1), FLAGS.num_classes,-1)
+                      cutoff = 1/(FLAGS.num_classes*3) # cutoff low values
+                      heatmap_sum = strided_heatmap.sum(2)
+                      heatmap_sum_mask = heatmap_sum==0
+                      np.place(strided_heatmap[:,:,0],heatmap_sum_mask,1)
+                      np.place(heatmap_sum,heatmap_sum_mask,1)
+                      strided_heatmap /=np.repeat(np.expand_dims(heatmap_sum,-1), FLAGS.num_classes,-1)
 
-                  for iter in range(FLAGS.num_classes-1): # iterate through all logits layers
-                      _ = os.system("printf 'Building JSON layer: [{}-heatmap]\n'".format(compartments[iter]))
+                      for iter in range(FLAGS.num_classes-1): # iterate through all logits layers
+                          _ = os.system("printf 'Building JSON layer: [{}-heatmap]\n'".format(compartments[iter]))
 
-                      single_heatmap = strided_heatmap[:,:,iter+1]
+                          single_heatmap = strided_heatmap[:,:,iter+1]
 
-                      heatmap = {"type":"heatmap", "radius":FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride/2 + 1, "colorRange": ["rgba(255,255,0,0)", "rgba(255,255,0,.3)", "rgba(255,190,0,.4)", "rgba(255,0,0,.5)"], "rangeValues": [cutoff, cutoff*1.5, 1.5/FLAGS.num_classes, 1], "normalizeRange":True}
+                          heatmap = {"type":"heatmap", "radius":FLAGS.wsi_downsample*extra_downsample*FLAGS.heatmap_stride/2 + 1, "colorRange": ["rgba(255,255,0,0)", "rgba(255,255,0,.3)", "rgba(255,190,0,.4)", "rgba(255,0,0,.5)"], "rangeValues": [cutoff, cutoff*1.5, 1.5/FLAGS.num_classes, 1], "normalizeRange":True}
 
-                      values = single_heatmap.flatten()
-                      values_mask = values>(cutoff)
-                      values = np.round(values[values_mask],3)
-                      np.place(values, values>1, 1)
-                      y_idx, x_idx = np.indices(single_heatmap.shape)
-                      y_idx = y_idx.flatten()[values_mask]
-                      x_idx = x_idx.flatten()[values_mask]
-                      # y_idx = y_idx.flatten()[values_mask]
-                      # x_idx = x_idx.flatten()[values_mask]
-                      z_idx = np.zeros_like(x_idx)
-                      points = np.empty((x_idx.size*4), dtype = np.float32)
-                      points[0::4] = x_idx*ds + tissue_offset['X']
-                      points[1::4] = y_idx*ds + tissue_offset['Y']
-                      points[2::4] = z_idx
-                      points[3::4] = values
-                      heatmap["points"] = points.reshape([-1,4]).tolist()
-                      json_data.append({"name":"{}-heatmap".format(compartments[iter]),"elements":[heatmap]})
+                          values = single_heatmap.flatten()
+                          values_mask = values>(cutoff)
+                          values = np.round(values[values_mask],3)
+                          np.place(values, values>1, 1)
+                          y_idx, x_idx = np.indices(single_heatmap.shape)
+                          y_idx = y_idx.flatten()[values_mask]
+                          x_idx = x_idx.flatten()[values_mask]
+                          # y_idx = y_idx.flatten()[values_mask]
+                          # x_idx = x_idx.flatten()[values_mask]
+                          z_idx = np.zeros_like(x_idx)
+                          points = np.empty((x_idx.size*4), dtype = np.float32)
+                          points[0::4] = x_idx*ds + tissue_offset['X']
+                          points[1::4] = y_idx*ds + tissue_offset['Y']
+                          points[2::4] = z_idx
+                          points[3::4] = values
+                          heatmap["points"] = points.reshape([-1,4]).tolist()
+                          json_data.append({"name":"{}-heatmap".format(compartments[iter]),"elements":[heatmap]})
 
-              # save annotation as JSON
-              import json
-              with open(anot_filename, 'w') as annotation_file:
-                  json.dump(json_data, annotation_file, sort_keys=False)
-              del json_data, root, anot_filename
+                  # save annotation as JSON
+                  import json
+                  with open(anot_filename, 'w') as annotation_file:
+                      json.dump(json_data, annotation_file, sort_keys=False)
+                  del json_data, root, anot_filename
 
-          else:
-              anot_filename = '{}.xml'.format(slide.split('.')[0])
-              print('\ncreating annotation file: [{}]'.format(anot_filename))
-              mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample*extra_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, offset=tissue_offset)
-              del anot_filename
+              else:
+                  anot_filename = '{}.xml'.format(slide.split('.')[0])
+                  print('\ncreating annotation file: [{}]'.format(anot_filename))
+                  mask_to_xml(xml_path=anot_filename, mask=slide_mask, downsample=FLAGS.wsi_downsample*extra_downsample, min_size_thresh=FLAGS.min_size, simplify_contours=FLAGS.simplify_contours, offset=tissue_offset)
+                  del anot_filename
 
-          del slide_mask
-          print('annotation file saved...\n\n')
+              del slide_mask
+              print('annotation file saved...\n\n')
 
-  if len(broken_slides) > 0:
-      print('\n!!! The following slides are broken and were not run:')
-      for slide in broken_slides:
-          print('-\t[{}]'.format(slide))
+      if len(broken_slides) > 0:
+          print('\n!!! The following slides are broken and were not run:')
+          for slide in broken_slides:
+              print('-\t[{}]'.format(slide))
 
 
 if __name__ == '__main__':

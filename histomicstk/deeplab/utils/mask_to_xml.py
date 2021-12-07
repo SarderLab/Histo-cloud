@@ -63,7 +63,7 @@ def get_contour_points(mask, downsample, min_size_thresh=0, simplify_contours=0,
     # input greyscale binary image
     #_, maskPoints, contours = cv2.findContours(np.array(mask), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)
     maskPoints, contours = cv2.findContours(np.uint8(mask), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_L1)
-
+    maskPoints = list(maskPoints)
     # remove small regions
     too_small = []
     for idx, cnt in enumerate(maskPoints):

@@ -10,9 +10,9 @@ class ProgressHelper(object):
 
     def __enter__(self):
         print("""<filter-start>
-<filter-name>%s</filter-name>
-<filter-comment>%s</filter-comment>
-</filter-start>""" % (self.name, self.comment))
+            <filter-name>%s</filter-name>
+            <filter-comment>%s</filter-comment>
+            </filter-start>""" % (self.name, self.comment))
         sys.stdout.flush()
         self.start = time.time()
         return self
@@ -30,9 +30,9 @@ class ProgressHelper(object):
         end = time.time()
         duration = end - self.start
         print("""<filter-end>
- <filter-name>%s</filter-name>
- <filter-time>%s</filter-time>
-</filter-end>""" % (self.name, duration))
+             <filter-name>%s</filter-name>
+             <filter-time>%s</filter-time>
+            </filter-end>""" % (self.name, duration))
         sys.stdout.flush()
 
 

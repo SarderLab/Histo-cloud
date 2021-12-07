@@ -72,7 +72,7 @@ flags.DEFINE_string('train_model_zipfile', None,
                     'Where the zipped model file is saved if not None.'
                     'This is for integration with HistomicsTK')
 
-flags.DEFINE_integer('log_steps', 50,
+flags.DEFINE_integer('log_steps', 10,
                      'Display logging information at every log_steps.')
 
 flags.DEFINE_integer('save_interval_secs', 1200,
@@ -341,6 +341,7 @@ def main(unused_argv):
       # assign global step to start
       global_step_tensor = tf.Variable(FLAGS.global_step, trainable=False, name='global_step', dtype=tf.int64)
       global_step = tf.train.get_or_create_global_step()
+      progress_percent = global_step / FLAGS.training_number_of_steps
 
       # Define the model and create clones.
       model_fn = _build_deeplab
@@ -486,7 +487,8 @@ def main(unused_argv):
           init_fn=init_fn,
           summary_op=summary_op,
           save_summaries_secs=FLAGS.save_summaries_secs,
-          save_interval_secs=FLAGS.save_interval_secs)
+          save_interval_secs=FLAGS.save_interval_secs,
+          progress_percent=progress_percent)
 
 
 if __name__ == '__main__':

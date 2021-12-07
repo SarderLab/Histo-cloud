@@ -224,6 +224,9 @@ from tensorflow.python.training import supervisor
 from tensorflow.python.training import sync_replicas_optimizer
 from tensorflow.python.training import training_util
 # pylint:enable=g-direct-tensorflow-import
+sys.path.append("..")
+from deeplab.progress_helper import ProgressHelper
+
 
 __all__ = [
     'add_gradients_summaries', 'clip_gradient_norms', 'multiply_gradients',
@@ -398,7 +401,7 @@ def _wait_for_step(sess, global_step, step):
     time.sleep(1.0)
 
 
-def train_step(sess, train_op, global_step, train_step_kwargs):
+def train_step(sess, train_op, global_step, progress_percent, train_step_kwargs):
   """Function that takes a gradient step and specifies whether to stop.
   Args:
     sess: The current session.
@@ -424,7 +427,7 @@ def train_step(sess, train_op, global_step, train_step_kwargs):
           trace_level=config_pb2.RunOptions.FULL_TRACE)
       run_metadata = config_pb2.RunMetadata()
 
-  total_loss, np_global_step = sess.run([train_op, global_step],
+  total_loss, np_global_step, percent_done = sess.run([train_op, global_step, progress_percent],
                                         options=trace_run_options,
                                         run_metadata=run_metadata)
   time_elapsed = time.time() - start_time
@@ -444,6 +447,9 @@ def train_step(sess, train_op, global_step, train_step_kwargs):
     if sess.run(train_step_kwargs['should_log']):
       logging.info('global step %d: loss = %.4f (%.3f sec/step)',
                    np_global_step, total_loss, time_elapsed)
+      with ProgressHelper('Train Network') as helper:
+        helper.message(f'Loss: {total_loss}')
+        helper.progress(percent_done)
 
   if 'should_stop' in train_step_kwargs:
     should_stop = sess.run(train_step_kwargs['should_stop'])
@@ -522,7 +528,8 @@ def train(train_op,
           session_config=None,
           session_wrapper=None,
           trace_every_n_steps=None,
-          ignore_live_threads=False):
+          ignore_live_threads=False,
+          progress_percent=None):
   """Runs a training loop using a TensorFlow supervisor.
   When the sync_optimizer is supplied, gradient updates are applied
   synchronously. Otherwise, gradient updates are applied asynchronous.
@@ -597,6 +604,7 @@ def train(train_op,
       negative, or if `trace_every_n_steps` is not `None` and no `logdir` is
       provided.
   """
+
   if train_op is None:
     raise ValueError('train_op cannot be None.')
 
@@ -734,8 +742,7 @@ def train(train_op,
           sess.run(init_tokens_op)
         try:
           while not sv.should_stop():
-            total_loss, should_stop = train_step_fn(sess, train_op, global_step,
-                                                    train_step_kwargs)
+            total_loss, should_stop = train_step_fn(sess, train_op, global_step, progress_percent, train_step_kwargs)
             if zipfilename is not None:
               zip_model_if_new(logdir,zipfilename)
 
