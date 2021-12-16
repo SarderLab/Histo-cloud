@@ -170,7 +170,13 @@ def main(args):
                 a_data = a['annotation']['elements']
                 for data in a_data:
                     pointList = []
-                    points = data['points']
+                    if data['type'] == 'polyline':
+                        points = data['points']
+                    elif data['type'] == 'rectangle':
+                        center = data['center']
+                        width = data['width']/2
+                        height = data['height']/2
+                        points = [[ center[0]-width, center[1]-width ],[ center[0]+width, center[1]+width ]]
                     for point in points:
                         pt_dict = {'X': round(point[0]), 'Y': round(point[1])}
                         pointList.append(pt_dict)
