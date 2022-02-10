@@ -30,7 +30,7 @@ else: color = None
 if args.alpha: alpha = args.alpha
 else: alpha = 0.5
 
-gc = girder_client.GirderClient(apiUrl='http://10.47.224.166:8080/api/v1')
+gc = girder_client.GirderClient(apiUrl='<URL>/api/v1')
 gc.authenticate(args.username,args.password)
 
 xmls = glob('{}/*.xml'.format(args.xml_folder))
