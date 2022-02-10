@@ -16,13 +16,21 @@ parser.add_argument("xml_folder", help="Local folder containing xml annotations"
 parser.add_argument("names", help='delimited list input of annotation layer names | example <name1,name2>', type=str)
 parser.add_argument("-ext", "--extension", help="wsi file extension")
 parser.add_argument("-c", "--collection", help="the data is in a collection not a user")
+parser.add_argument("-col", "--color", help="list of colors eg: 'rgb(0, 255, 128)'", type=str)
+parser.add_argument("-a", "--alpha", help="transperancy of the color used")
 
 args = parser.parse_args()
 
 if args.extension: ext = args.extension
 else: ext = '.svs'
 
-gc = girder_client.GirderClient(apiUrl='https://athena.ccr.buffalo.edu/api/v1')
+if args.color: color = args.color
+else: color = None
+
+if args.alpha: alpha = args.alpha
+else: alpha = 0.5
+
+gc = girder_client.GirderClient(apiUrl='http://10.47.224.166:8080/api/v1')
 gc.authenticate(args.username,args.password)
 
 xmls = glob('{}/*.xml'.format(args.xml_folder))
@@ -52,7 +60,7 @@ for xml in xmls:
     tree = ET.parse(xml)
     root = tree.getroot()
     names = args.names.split(',')
-    annot = convert_xml_json(root, names)
+    annot = convert_xml_json(root, names, color, alpha)
 
     _ = gc.post('/annotation/item/{}'.format(_id),data=json.dumps(annot))
     print('annotation uploaded...\n')
