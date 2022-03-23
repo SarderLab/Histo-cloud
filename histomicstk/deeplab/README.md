@@ -7,17 +7,22 @@ This code efficiently [pulls randomly selected WSI ROI](https://github.com/Sarde
 If you find the code useful for your research, please consider citing our latest
 works:
 
-*   Cloud based WSI segmentation (arXiv deposition):
+*   Cloud based WSI segmentation (bioRxiv deposition):
 
 ```
-@misc{lutnick2021tool,
-      title={A tool for user friendly, cloud based, whole slide image segmentation},
-      author={Brendon Lutnick and David Manthey and Pinaki Sarder},
-      year={2021},
-      eprint={2101.07222},
-      archivePrefix={arXiv},
-      primaryClass={eess.IV}
+@article {Lutnick2021.08.16.456524,
+	author = {Lutnick, Brendon and Manthey, David and Becker, Jan U. and Ginley, Brandon and Moos, Katharina and Zuckerman, Jonathan E. and Rodrigues, Luis and Gallan, Alexander J. and Barisoni, Laura and Alpers, Charles E. and Wang, Xiaoxin X. and Myakala, Komuraiah and Jones, Bryce A. and Levi, Moshe and Kopp, Jeffrey B. and Yoshida, Teruhiko and Han, Seung Seok and Jain, Sanjay and Rosenberg, Avi Z. and Jen, Kuang Yu. and Sarder, Pinaki and the Kidney Precision Medicine Project},
+	title = {A user-friendly tool for cloud-based whole slide image segmentation, with examples from renal histopathology},
+	elocation-id = {2021.08.16.456524},
+	year = {2022},
+	doi = {10.1101/2021.08.16.456524},
+	publisher = {Cold Spring Harbor Laboratory},
+	abstract = {Background Image-based machine learning tools hold great promise for clinical applications in nephropathology and kidney research. However, the ideal end-users of these computational tools (e.g., pathologists and biological scientists) often face prohibitive challenges in using these tools to their full potential, including the lack of technical expertise, suboptimal user interface, and limited computation power.Methods We have developed Histo-Cloud, a tool for segmentation of whole slide images (WSIs) that has an easy-to-use graphical user interface. This tool runs a state-of-the-art convolutional neural network (CNN) for segmentation of WSIs in the cloud and allows the extraction of features from segmented regions for further analysis.Results By segmenting glomeruli, interstitial fibrosis and tubular atrophy, and vascular structures from renal and non-renal WSIs, we demonstrate the scalability, best practices for transfer learning, and effects of dataset variability. Finally, we demonstrate an application for animal model research, analyzing glomerular features in murine models of aging, diabetic nephropathy, and HIV associated nephropathy.Conclusion The ability to access this tool over the internet will facilitate widespread use by computational non-experts. Histo-Cloud is open source and adaptable for segmentation of any histological structure regardless of stain. Histo-Cloud will greatly accelerate and facilitate the generation of datasets for machine learning in the analysis of kidney histology, empowering computationally novice end-users to conduct deep feature analysis of tissue slides.Competing Interest StatementJ.E.Z. is a paid consultant for Leica Biosystems.},
+	URL = {https://www.biorxiv.org/content/early/2022/03/12/2021.08.16.456524},
+	eprint = {https://www.biorxiv.org/content/early/2022/03/12/2021.08.16.456524.full.pdf},
+	journal = {bioRxiv}
 }
+
 ```
 
 *   Histofetch - On the fly patch processing:
