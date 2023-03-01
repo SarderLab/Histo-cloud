@@ -18,6 +18,10 @@ CMD echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! STARTING THE BUILD !!!!!!!!!!!!!!!!!!!
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
+# Remove bad repos
+RUN rm \
+    /etc/apt/sources.list.d/cuda.list
+
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends software-properties-common && \
     # As of 2018-04-16 this repo has the latest release of Python 2.7 (2.7.14) \
@@ -43,15 +47,12 @@ RUN apt-get update && \
     libpython3-dev \
     python2.7-dev \
     python-tk \
+    # We can't go higher than 3.7 and use tensorflow 1.x \
     python3.6-dev \
     python3.6-distutils \
     python3-tk \
     software-properties-common \
     libssl-dev \
-    # needed to build openslide, libtif and openjpg \
-    # libopenslide-dev \
-    # libtiff-dev \
-    # libvips-dev \
     # Standard build tools \
     build-essential \
     cmake \
@@ -61,12 +62,8 @@ RUN apt-get update && \
     pkg-config \
     # needed for supporting CUDA \
     # libcupti-dev \
-    # Needed for ITK and SlicerExecutionModel \
-    # ninja-build \
-    \
     # useful later \
     libmemcached-dev && \
-    \
     #apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -87,10 +84,15 @@ WORKDIR /
 # Make Python3 the default and install pip.  Whichever is done last determines
 # the default python version for pip.
 RUN rm /usr/bin/python && \
-    ln /usr/bin/python3 /usr/bin/python
-RUN curl https://bootstrap.pypa.io/get-pip.py -O && \
-    python2 get-pip.py && \
-    python3 get-pip.py && \
+    ln /usr/bin/python3.6 /usr/bin/python && \
+    rm /usr/local/bin/python && \
+    ln /usr/bin/python3.6 /usr/local/bin/python && \
+    ln /usr/bin/python3.6 /usr/local/bin/python3
+RUN which  python && \
+    python --version
+# RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+RUN curl -O https://bootstrap.pypa.io/pip/3.6/get-pip.py && \
+    python get-pip.py && \
     rm get-pip.py
 
 ENV build_path=$PWD/build
@@ -105,6 +107,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends memcached && \
     #apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# RUN pip install torch
+# RUN python -c 'import torch,sys;print(torch.cuda.is_available());sys.exit(not torch.cuda.is_available())'
 COPY . $htk_path/
 WORKDIR $htk_path
 
@@ -112,39 +116,30 @@ WORKDIR $htk_path
 #   Upgrade setuptools, as the version in Conda won't upgrade cleanly unless it
 # is ignored.
 RUN pip install --no-cache-dir --upgrade --ignore-installed pip setuptools && \
-    # Install bokeh to help debug dask
-    pip install --no-cache-dir 'bokeh>=0.12.14' && \
-    # Install large_image memcached extras
-    pip install --no-cache-dir --pre 'large-image[memcached]' --find-links https://girder.github.io/large_image_wheels && \
-    pip install --no-cache-dir 'large-image-source-ometiff' && \
-    # Install girder-client
-    pip install --no-cache-dir girder-client && \
-    # Install HistomicsTK
-    pip install --no-cache-dir --pre . --find-links https://girder.github.io/large_image_wheels && \
-    # Install GPU version of tensorflow
-    # pip install --no-cache-dir 'tensorflow-gpu==1.14.0' && \
-    # Install tf-slim
+    # pip install --no-cache-dir 'tensorflow<2' && \
+    # Install large_image memcached extras \
+    pip install --no-cache-dir 'large-image[memcached]' && \
+    # Install HistomicsTK \
+    pip install --no-cache-dir . --find-links https://girder.github.io/large_image_wheels && \
+    # Install tf-slim \
     pip install --no-cache-dir 'tf-slim>=1.1.0' && \
-    # Install pillow_lut
+    # Install pillow_lut \
     pip install --no-cache-dir 'pillow-lut' && \
-    # Install openpyxl
-    pip install --no-cache-dir 'openpyxl' && \
-    pip install --no-cache-dir 'xlrd==1.2.0' && \
-    # Install umap
-    pip install --no-cache-dir umap-learn && \
-    # Downgrade gast
-    # pip install --no-cache-dir 'gast==0.2.2' && \
-    # clean up
+    # clean up \
     rm -rf /root/.cache/pip/*
 
 # Show what was installed
-RUN pip freeze
+RUN python --version && pip --version && pip freeze
 
 # remove cuda compat
 # RUN apt remove --purge cuda-compat-10-0 --yes
 
 # pregenerate font cache
 RUN python -c "from matplotlib import pylab"
+
+# Suppress warnings
+RUN sed -i 's/^_PRINT_DEPRECATION_WARNINGS = True/_PRINT_DEPRECATION_WARNINGS = False/g' /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/util/deprecation.py && \
+    sed -i 's/rename = get_rename_v2(full_name)/rename = False/g' /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/util/module_wrapper.py
 
 # define entrypoint through which all CLIs can be run
 WORKDIR $htk_path/histomicstk/cli
