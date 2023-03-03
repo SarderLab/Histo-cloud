@@ -68,6 +68,8 @@ setup(
         'matplotlib',
         'pyvips',
         'termcolor',
+        'openpyxl',
+        'xlrd<2',
         # dask packages
         'dask[dataframe]>=1.1.0',
         'distributed>=1.21.6',
