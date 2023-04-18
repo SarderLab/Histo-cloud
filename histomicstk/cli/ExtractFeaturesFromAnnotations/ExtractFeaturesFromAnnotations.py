@@ -57,7 +57,7 @@ def main(args):
         slidename = file['name']
         _ = os.system("printf '\n---\n\nFOUND: [{}]\n'".format(slidename))
 
-        df = pd.read_excel(args.slide_labels)
+        df = pd.read_excel(args.slide_labels, engine = 'openpyxl')
         slide_label = df.loc[df.iloc[:,0] == slidename]
         if not slide_label.empty:
             label = slide_label.iloc[0,1:].to_dict()
