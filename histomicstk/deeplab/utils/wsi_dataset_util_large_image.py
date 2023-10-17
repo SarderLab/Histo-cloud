@@ -26,10 +26,10 @@ def get_image(filename):
     """
 
     slide = large_image.open(filename)
-    
+
     if slide.frames == 3 and slide.bandCount == 1:
         slide = large_image.open(filename, style={'bands': [{'framedelta': 0, 'palette': '#f00'},{'framedelta': 1, 'palette': '#0f0'},{'framedelta': 2, 'palette': '#00f'}]})
-    elif slide.frames == 1 and slide.bandCount == 3:
+    elif slide.frames == 1 and slide.bandCount in [3, 4]:
         pass
     else:
         raise Exception('Cannot do channel decomposition with [{}] frame and [{}] band image.'.format(slide.frames, slide.bandCount))
