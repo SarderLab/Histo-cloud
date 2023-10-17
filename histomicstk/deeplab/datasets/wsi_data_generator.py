@@ -60,7 +60,7 @@ class Dataset(object):
                include_background_prob = 0,
                augment_prob = 0,
                num_of_classes = None,
-               wsi_ext=['.svs', '.ndpi', '.scn', '.czi'],
+               wsi_ext=['.svs', '.ndpi', '.scn', '.czi','.ome.tif'],
                min_resize_value=None,
                max_resize_value=None,
                resize_factor=None,
