@@ -20,6 +20,22 @@ except:
 ################################ main function #################################
 ################################################################################
 
+def get_image(filename):
+    """
+    Read the inut image and perform channel decomposition if necessary.
+    """
+
+    slide = large_image.open(filename)
+
+    if slide.frames == 3 and slide.bandCount == 1:
+        slide = large_image.open(filename, style={'bands': [{'framedelta': 0, 'palette': '#f00'},{'framedelta': 1, 'palette': '#0f0'},{'framedelta': 2, 'palette': '#00f'}]})
+    elif slide.frames == 1 and slide.bandCount in [3, 4]:
+        pass
+    else:
+        raise Exception(f"Cannot do channel decomposition with [{}] frame and [{}] band image.".format(slide.frames, slide.bandCount))
+    
+    return slide
+
 def get_wsi_patch(filename, patch_size=256, downsample=[1], include_background_prob=0.1, augment=0, ignore_label=255):
     '''
     takes a wsi and returns a random patch of patch_size
@@ -47,7 +63,7 @@ def get_wsi_patch(filename, patch_size=256, downsample=[1], include_background_p
     except:
         base_name = filename.split('.')[0]
 
-    wsi = large_image.getTileSource(filename)
+    wsi = get_image(filename)
     l_dims = get_slide_size(wsi=wsi)
     xml_path = '{}.xml'.format(base_name)
 
@@ -91,7 +107,7 @@ def get_patch_from_points(filename, point, patch_size, downsample=1, wsi=None, c
     base_name = filename.split('.')[0]
 
     if wsi==None:
-        wsi = large_image.getTileSource(filename)
+        wsi = get_image(filename)
 
     # t = time.time()
     # print('t0: {}'.format(time.time()-t))
@@ -255,7 +271,7 @@ def get_grid_list(slide_path, patch_size, downsample, tile_step, wsi=None):
     slide_mask = get_slide_mask(slide_path, save_mask=False)
     # open slide once globally for efficency
     if wsi == None:
-        wsi = large_image.getTileSource(slide_path)
+        wsi = get_image(slide_path)
 
     level_dims = get_slide_size(wsi=wsi)
     thumbnail_size = float(max(slide_mask.shape))
@@ -341,7 +357,7 @@ def save_wsi_thumbnail_mask(filename, save_mask=True, thumbnail_size=2000):
 
     try: filename = filename.numpy()
     except: filename = filename
-    wsi = large_image.getTileSource(filename)
+    wsi = get_image(filename)
 
     # def find_tissue_mask():
     #     thumbnail, _ = wsi.getThumbnail(width=thumbnail_size, height=thumbnail_size, format=large_image.tilesource.TILE_FORMAT_PIL)
@@ -446,7 +462,7 @@ def get_slide_label(filename, data_label_xlsx):
 
 def get_slide_size(filename=None, wsi=None):
     if filename:
-        wsi = large_image.getTileSource(filename)
+        wsi = get_image(filename)
 
     width = wsi.sizeX
     height = wsi.sizeY
