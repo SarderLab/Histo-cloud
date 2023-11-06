@@ -32,7 +32,7 @@ def get_image(filename):
     elif slide.frames == 1 and slide.bandCount in [3, 4]:
         pass
     else:
-        raise Exception('Cannot do channel decomposition with [{}] frame and [{}] band image.'.format(slide.frames, slide.bandCount))
+        raise Exception(f"Cannot do channel decomposition with [{}] frame and [{}] band image.".format(slide.frames, slide.bandCount))
     
     return slide
 
