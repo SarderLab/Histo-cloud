@@ -1,7 +1,5 @@
 import girder_client, os, shutil, json, time, tempfile, zipfile
-import xml.etree.ElementTree as ET
 import numpy as np
-from termcolor import colored
 from histomicstk.cli.utils import CLIArgumentParser
 from glob import glob
 
@@ -198,6 +196,7 @@ def main(args):
         _ = os.system("printf '\tsaving a created xml annotation file: [{}]\n'".format(xml_path))
         xml_save(Annotations=xmlAnnot, filename=xml_path)
         write_minmax_to_xml(xml_path) # to avoid trying to write to the xml from multiple workers
+        gc.uploadFileToFolder(girder_folder_id, xml_path)
         del xmlAnnot
 
     os.system("ls -lh '{}'".format(tmp))
