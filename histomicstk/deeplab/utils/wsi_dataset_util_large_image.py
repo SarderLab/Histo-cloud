@@ -27,9 +27,9 @@ def get_image(filename):
 
     slide = large_image.open(filename)
 
-    if slide.frames == 3 and slide.bandCount == 1:
+    if slide.frames == 3:
         slide = large_image.open(filename, style={'bands': [{'framedelta': 0, 'palette': '#f00'},{'framedelta': 1, 'palette': '#0f0'},{'framedelta': 2, 'palette': '#00f'}]})
-    elif slide.frames == 1 and slide.bandCount in [3, 4]:
+    elif slide.frames == 1:
         pass
     else:
         raise Exception(f"Cannot do channel decomposition with {[{}]} frame and {[{}]} band image.".format(slide.frames, slide.bandCount))
@@ -58,10 +58,10 @@ def get_wsi_patch(filename, patch_size=256, downsample=[1], include_background_p
     downsample = random.choice(downsample)
 
     try:
-        base_name = filename.decode().split('.')[0]
+        base_name = '.'.join(filename.decode().split('.')[:-1])
         filename = filename.decode()
     except:
-        base_name = filename.split('.')[0]
+        base_name = '.'.join(filename.split('.')[:-1])
 
     wsi = get_image(filename)
     l_dims = get_slide_size(wsi=wsi)
@@ -330,9 +330,9 @@ def get_grid_list(slide_path, patch_size, downsample, tile_step, wsi=None):
 def get_slide_mask(filename, save_mask=True):
     # get or create wsi mask
     try:
-        mask_path = '{}_MASK.png'.format(filename.decode().split('.')[0])
+        mask_path = '{}_MASK.png'.format('.'.join(filename.decode().split('.')[:-1]))
     except:
-        mask_path = '{}_MASK.png'.format(filename.split('.')[0])
+        mask_path = '{}_MASK.png'.format('.'.join(filename.split('.')[:-1]))
 
     # dont save mask, only return it
     if not save_mask:
@@ -383,9 +383,9 @@ def save_wsi_thumbnail_mask(filename, save_mask=True, thumbnail_size=2000):
         return mask
 
     try:
-        mask_path = '{}_MASK.png'.format(filename.decode().split('.')[0])
+        mask_path = '{}_MASK.png'.format('.'.join(filename.decode().split('.')[:-1]))
     except:
-        mask_path = '{}_MASK.png'.format(filename.split('.')[0])
+        mask_path = '{}_MASK.png'.format('.'.join(filename.split('.')[:-1]))
 
     # dont save mask, only return it
     if not save_mask:
