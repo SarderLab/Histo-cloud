@@ -282,6 +282,5 @@ def main(args):
     z.write('args.txt', compress_type=zipfile.ZIP_DEFLATED)
     z.close()
 
-
 if __name__ == "__main__":
     main(CLIArgumentParser().parse_args())
