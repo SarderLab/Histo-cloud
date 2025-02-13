@@ -248,17 +248,18 @@ class Dataset(object):
     for ext in self.wsi_ext:
         slides = list(glob('{}/*{}'.format(self.dataset_dir, ext)))
         for slide in slides:
+            slide_name = slide.split('/')[-1].split(ext)[0]
             if with_xml:
                 # check for annotaiton file
-                xml_filename = '{}.xml'.format(slide.split(ext)[0])
+                xml_filename = '{}/{}.xml'.format(slide, slide_name)
                 if os.path.isfile(xml_filename):
-                    wsi_paths.append(slide)
+                    wsi_paths.append(slide + f"/{slide_name}{ext}")
                     # write to xml file to avoid parallel writes durring training
                     write_minmax_to_xml(xml_filename)
             if not with_xml:
                 # check for missing annotaiton file
-                if not os.path.isfile('{}.xml'.format(slide.split(ext)[0])):
-                    wsi_paths.append(slide)
+                if not os.path.isfile('{}/{}.xml'.format(slide, slide_name)):
+                    wsi_paths.append(slide + f"/{slide_name}{ext}")
 
     wsi_paths = [str(path) for path in wsi_paths]
 

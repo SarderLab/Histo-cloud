@@ -10,83 +10,16 @@ sys.path.append("..")
 from deeplab.utils.mask_to_xml import xml_create, xml_add_annotation, xml_add_region, xml_save
 from deeplab.utils.xml_to_mask import write_minmax_to_xml
 
-def main(args):
-
-    # host = args.girderApiUrl
-    # apiKey = args.girderToken
-
-    # get compartments
-    compartments = args.classes
-
-    _ = os.system("printf '\n\n---\n\nUsing annotated layers: {}\n\n'".format(compartments))
-    xml_color=[65280]*(len(compartments)+1) # for conversion to xml
-
-    # get folder
-    folder = args.inputFolder
-    girder_folder_id = folder.split('/')[-2]
-    _ = os.system("printf '\nUsing data from girder_client Folder: {}\n'".format(folder))
-
-    os.system("ls -lh '{}'".format(folder))
-
-    # folder = '5fa18ecdf653e3ea051a2766'
-    # init_model = 'model.ckpt-400000'
-    patch_size = args.patch_size
-    batch_size = args.batch_size
-    steps = args.steps
-
-    # create tmp directory for storing intemediate files
-    tmp = folder
-
-    def get_base_model_name(model_file):
-        try:
-            base_model = model_file.split('.meta')
-            assert len(base_model) == 2
-            base_model = base_model[0]
-        except:
-            try:
-                base_model = model_file.split('.index')
-                assert len(base_model) == 2
-                base_model = base_model[0]
-            except:
-                try:
-                    base_model = model_file.split('.data')
-                    assert len(base_model) == 2
-                    base_model = base_model[0]
-                except:
-                    base_model = model_file
-        return base_model
-
-    cwd = os.getcwd()
-    # move to data folder and extract models
-    os.chdir(tmp)
-    # unpck model files from zipped folder
-    with open(args.inputModelFile, 'rb') as fh:
-        z = zipfile.ZipFile(fh)
-        for name in z.namelist():
-            z.extract(name, tmp)
-    # get num_classes from json file
-    with open('args.txt', 'rb') as file:
-        trainingDict = json.load(file)
-    num_classes = trainingDict['num_classes']
-
-    # move back to cli folder
-    os.chdir(cwd)
-
-    model_files = glob('{}/*.ckpt*'.format(tmp))
-    print(model_files)
-    model_file = model_files[0]
-    init_model = get_base_model_name(model_file)
-
-    #gc = girder_client.GirderClient(apiUrl='{}'.format(host))
-    #gc.authenticate(apiKey=apiKey)
+def process_xml(args, girder_folder_id, folder, tmp, compartments, ignore_label):
     gc = girder_client.GirderClient(apiUrl=args.girderApiUrl)
     gc.setToken(args.girderToken)
+
+    xml_color=[65280]*(len(compartments)+1) # for conversion to xml
+
     # get files in folder
     files = gc.listItem(girder_folder_id)
 
-    # download slides and annotations to tmp directory
-    slides_used = []
-    ignore_label = len(compartments)+1
+    # get all slides in folder
     for file in files:
         slidename = file['name']
         _ = os.system("printf '\n---\n\nFOUND: [{}]\n'".format(slidename))
@@ -102,6 +35,7 @@ def main(args):
         # create root for xml file
         xmlAnnot = xml_create()
 
+        slides_used = []
         # all compartments
         for class_,compart in enumerate(compartments):
             compart = compart.replace(' ','')
@@ -142,7 +76,6 @@ def main(args):
                         pointList = pointsList[i]
                         xmlAnnot = xml_add_region(Annotations=xmlAnnot, pointList=pointList, annotationID=class_)
 
-                    # print(a['_version'], a['updated'], a['created'])
                     break
 
         if skipSlide != len(compartments):
@@ -198,7 +131,76 @@ def main(args):
         _ = os.system("printf '\tsaving a created xml annotation file: [{}]\n'".format(xml_path))
         xml_save(Annotations=xmlAnnot, filename=xml_path)
         write_minmax_to_xml(xml_path) # to avoid trying to write to the xml from multiple workers
+        gc.uploadFileToFolder(file['_id'], xml_path)
         del xmlAnnot
+        
+    return slides_used
+
+def main(args):
+    # get compartments
+    compartments = args.classes
+
+    _ = os.system("printf '\n\n---\n\nUsing annotated layers: {}\n\n'".format(compartments))
+
+    # get folder
+    folder = args.inputFolder
+    girder_folder_id = folder.split('/')[-2]
+    _ = os.system("printf '\nUsing data from girder_client Folder: {}\n'".format(folder))
+    _ = os.system("printf '\nUsing data from girder_client Folder ID: {}\n'".format(girder_folder_id))
+
+    os.system("ls -lh '{}'".format(folder))
+
+    patch_size = args.patch_size
+    batch_size = args.batch_size
+    steps = args.steps
+
+    # create tmp directory for storing intemediate files
+    tmp = folder
+
+    def get_base_model_name(model_file):
+        try:
+            base_model = model_file.split('.meta')
+            assert len(base_model) == 2
+            base_model = base_model[0]
+        except:
+            try:
+                base_model = model_file.split('.index')
+                assert len(base_model) == 2
+                base_model = base_model[0]
+            except:
+                try:
+                    base_model = model_file.split('.data')
+                    assert len(base_model) == 2
+                    base_model = base_model[0]
+                except:
+                    base_model = model_file
+        return base_model
+
+    cwd = os.getcwd()
+    # move to data folder and extract models
+    os.chdir(tmp)
+    # unpck model files from zipped folder
+    with open(args.inputModelFile, 'rb') as fh:
+        z = zipfile.ZipFile(fh)
+        for name in z.namelist():
+            z.extract(name, tmp)
+    # get num_classes from json file
+    with open('args.txt', 'rb') as file:
+        trainingDict = json.load(file)
+    num_classes = trainingDict['num_classes']
+
+    # move back to cli folder
+    os.chdir(cwd)
+
+    model_files = glob('{}/*.ckpt*'.format(tmp))
+    print(model_files)
+    model_file = model_files[0]
+    init_model = get_base_model_name(model_file)
+
+    # download slides and annotations to tmp directory
+    slides_used = process_xml(args, girder_folder_id, folder, tmp, compartments, num_classes)
+    ignore_label = len(compartments)+1
+    
 
     os.system("ls -lh '{}'".format(tmp))
     _ = os.system("printf '\ndone retriving data...\nstarting training...\n\n'")
@@ -215,13 +217,24 @@ def main(args):
 
     # add training metadata to training zip file
     comparts = ','.join(compartments)
-    trainingDict = {'num_classes':len(compartments)+1, 'compartments':comparts, 'patch_size':patch_size, 'batch_size':batch_size, 'steps':steps, 'init_model':os.path.basename(args.inputModelFile), 'slides_used':slides_used}
-    os.mkdir(trainlogdir)
+    trainingDict = {
+        'num_classes':len(compartments)+1, 
+        'compartments':comparts, 
+        'patch_size':patch_size, 
+        'batch_size':batch_size, 
+        'steps':steps, 
+        'init_model':os.path.basename(args.inputModelFile), 
+        'slides_used':slides_used
+    }
+    if not os.path.exists(trainlogdir):
+        os.mkdir(trainlogdir)
+
     with open('{}/args.txt'.format(trainlogdir), 'w') as file:
         file.write(json.dumps(trainingDict))
 
     os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"]="{}".format(args.GPU)
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
     cmd = "python3 ../deeplab/train.py --model_variant xception_65 --atrous_rates 6 --atrous_rates 12 --atrous_rates 18 --output_stride 16 --decoder_output_stride 4 --train_crop_size '{}' --train_logdir {} --dataset_dir {} --logtostderr --train_batch_size '{}' --tf_initial_checkpoint {} --training_number_of_steps '{}' --slow_start_step {} --augment_prob {} --slow_start_learning_rate {} --base_learning_rate {} --train_model_zipfile {} --save_interval_secs 600 --num_clones {} --global_step {} --end_learning_rate {} --learning_power {} --ignore_label {} --decay_steps {} --last_layer_gradient_multiplier {}".format(patch_size, trainlogdir.replace(' ', '\ '), tmp.replace(' ', '\ '), batch_size, init_model.replace(' ', '\ '), steps, slow_start_step, augment, start_learn_rate, base_learning_rate, args.output_model.replace(' ', '\ '), args.num_clones, args.global_step, args.end_learning_rate, args.learning_power, ignore_label, args.decay_steps, args.last_layer_gradient_multiplier)
 
