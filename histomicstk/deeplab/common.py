@@ -21,89 +21,84 @@ import copy
 import json
 import tensorflow as tf
 
-from absl.flags._expections import DuplicateFlagError
 
 flags = tf.app.flags
 
 # Flags for input preprocessing.
-try:
-  flags.DEFINE_integer('min_resize_value', None, 'Desired size of the smaller image side.')
+flags.DEFINE_integer('min_resize_value', None, 'Desired size of the smaller image side.')
 
-  flags.DEFINE_integer('max_resize_value', None, 'Maximum allowed size of the larger image side.')
+flags.DEFINE_integer('max_resize_value', None, 'Maximum allowed size of the larger image side.')
 
-  flags.DEFINE_integer('resize_factor', None, 'Resized dimensions are multiple of factor plus one.')
+flags.DEFINE_integer('resize_factor', None, 'Resized dimensions are multiple of factor plus one.')
 
-  flags.DEFINE_boolean('keep_aspect_ratio', True, 'Keep aspect ratio after resizing or not.')
-  # Model dependent flags.
+flags.DEFINE_boolean('keep_aspect_ratio', True, 'Keep aspect ratio after resizing or not.')
+# Model dependent flags.
 
-  flags.DEFINE_integer('logits_kernel_size', 1, 'The kernel size for the convolutional kernel that generates logits.')
+flags.DEFINE_integer('logits_kernel_size', 1, 'The kernel size for the convolutional kernel that generates logits.')
 
-  # When using 'mobilent_v2', we set atrous_rates = decoder_output_stride = None.
-  # When using 'xception_65' or 'resnet_v1' model variants, we set
-  # atrous_rates = [6, 12, 18] (output stride 16) and decoder_output_stride = 4.
-  # See core/feature_extractor.py for supported model variants.
-  flags.DEFINE_string('model_variant', 'mobilenet_v2', 'DeepLab model variant.')
+# When using 'mobilent_v2', we set atrous_rates = decoder_output_stride = None.
+# When using 'xception_65' or 'resnet_v1' model variants, we set
+# atrous_rates = [6, 12, 18] (output stride 16) and decoder_output_stride = 4.
+# See core/feature_extractor.py for supported model variants.
+flags.DEFINE_string('model_variant', 'mobilenet_v2', 'DeepLab model variant.')
 
-  flags.DEFINE_multi_float('image_pyramid', None, 'Input scales for multi-scale feature extraction.')
+flags.DEFINE_multi_float('image_pyramid', None, 'Input scales for multi-scale feature extraction.')
 
-  flags.DEFINE_boolean('add_image_level_feature', True, 'Add image level feature.')
+flags.DEFINE_boolean('add_image_level_feature', True, 'Add image level feature.')
 
-  flags.DEFINE_list('image_pooling_crop_size', None, 'Image pooling crop size [height, width] used in the ASPP module. When value is None, the model performs image pooling with "crop_size". This flag is useful when one likes to use different image pooling sizes.')
+flags.DEFINE_list('image_pooling_crop_size', None, 'Image pooling crop size [height, width] used in the ASPP module. When value is None, the model performs image pooling with "crop_size". This flag is useful when one likes to use different image pooling sizes.')
 
-  flags.DEFINE_list('image_pooling_stride', '1,1', 'Image pooling stride [height, width] used in the ASPP image pooling. ')
+flags.DEFINE_list('image_pooling_stride', '1,1', 'Image pooling stride [height, width] used in the ASPP image pooling. ')
 
-  flags.DEFINE_boolean('aspp_with_batch_norm', True, 'Use batch norm parameters for ASPP or not.')
+flags.DEFINE_boolean('aspp_with_batch_norm', True, 'Use batch norm parameters for ASPP or not.')
 
-  flags.DEFINE_boolean('aspp_with_separable_conv', True, 'Use separable convolution for ASPP or not.')
+flags.DEFINE_boolean('aspp_with_separable_conv', True, 'Use separable convolution for ASPP or not.')
 
-  # Defaults to None. Set multi_grid = [1, 2, 4] when using provided
-  # 'resnet_v1_{50,101}_beta' checkpoints.
-  flags.DEFINE_multi_integer('multi_grid', None, 'Employ a hierarchy of atrous rates for ResNet.')
+# Defaults to None. Set multi_grid = [1, 2, 4] when using provided
+# 'resnet_v1_{50,101}_beta' checkpoints.
+flags.DEFINE_multi_integer('multi_grid', None, 'Employ a hierarchy of atrous rates for ResNet.')
 
-  flags.DEFINE_float('depth_multiplier', 1.0, 'Multiplier for the depth (number of channels) for all convolution ops used in MobileNet.')
+flags.DEFINE_float('depth_multiplier', 1.0, 'Multiplier for the depth (number of channels) for all convolution ops used in MobileNet.')
 
-  flags.DEFINE_integer('divisible_by', None, 'An integer that ensures the layer # channels are divisible by this value. Used in MobileNet.')
+flags.DEFINE_integer('divisible_by', None, 'An integer that ensures the layer # channels are divisible by this value. Used in MobileNet.')
 
-  # For `xception_65`, use decoder_output_stride = 4. For `mobilenet_v2`, use
-  # decoder_output_stride = None.
-  flags.DEFINE_list('decoder_output_stride', None,'Comma-separated list of strings with the number specifying output stride of low-level features at each network level. Current semantic segmentation implementation assumes at most one output stride (i.e., either None or a list with only one element.')
+# For `xception_65`, use decoder_output_stride = 4. For `mobilenet_v2`, use
+# decoder_output_stride = None.
+flags.DEFINE_list('decoder_output_stride', None,'Comma-separated list of strings with the number specifying output stride of low-level features at each network level. Current semantic segmentation implementation assumes at most one output stride (i.e., either None or a list with only one element.')
 
-  flags.DEFINE_boolean('decoder_use_separable_conv', True, 'Employ separable convolution for decoder or not.')
+flags.DEFINE_boolean('decoder_use_separable_conv', True, 'Employ separable convolution for decoder or not.')
 
-  flags.DEFINE_enum('merge_method', 'max', ['max', 'avg'], 'Scheme to merge multi scale features.')
+flags.DEFINE_enum('merge_method', 'max', ['max', 'avg'], 'Scheme to merge multi scale features.')
 
-  flags.DEFINE_boolean('prediction_with_upsampled_logits', False, 'When performing prediction, there are two options: (1) bilinear upsampling the logits followed by softmax, or (2) softmax followed by bilinear upsampling.')
+flags.DEFINE_boolean('prediction_with_upsampled_logits', False, 'When performing prediction, there are two options: (1) bilinear upsampling the logits followed by softmax, or (2) softmax followed by bilinear upsampling.')
 
-  flags.DEFINE_string('dense_prediction_cell_json', '', 'A JSON file that specifies the dense prediction cell.')
+flags.DEFINE_string('dense_prediction_cell_json', '', 'A JSON file that specifies the dense prediction cell.')
 
-  flags.DEFINE_integer('nas_stem_output_num_conv_filters', 20, 'Number of filters of the stem output tensor in NAS models.')
+flags.DEFINE_integer('nas_stem_output_num_conv_filters', 20, 'Number of filters of the stem output tensor in NAS models.')
 
-  flags.DEFINE_bool('nas_use_classification_head', False, 'Use image classification head for NAS model variants.')
+flags.DEFINE_bool('nas_use_classification_head', False, 'Use image classification head for NAS model variants.')
 
-  flags.DEFINE_bool('nas_remove_os32_stride', False, 'Remove the stride in the output stride 32 branch.')
+flags.DEFINE_bool('nas_remove_os32_stride', False, 'Remove the stride in the output stride 32 branch.')
 
-  flags.DEFINE_bool('use_bounded_activation', False, 'Whether or not to use bounded activations. Bounded activations better lend themselves to quantized inference.')
+flags.DEFINE_bool('use_bounded_activation', False, 'Whether or not to use bounded activations. Bounded activations better lend themselves to quantized inference.')
 
-  flags.DEFINE_boolean('aspp_with_concat_projection', True, 'ASPP with concat projection.')
+flags.DEFINE_boolean('aspp_with_concat_projection', True, 'ASPP with concat projection.')
 
-  flags.DEFINE_boolean('aspp_with_squeeze_and_excitation', False, 'ASPP with squeeze and excitation.')
+flags.DEFINE_boolean('aspp_with_squeeze_and_excitation', False, 'ASPP with squeeze and excitation.')
 
-  flags.DEFINE_integer('aspp_convs_filters', 256, 'ASPP convolution filters.')
+flags.DEFINE_integer('aspp_convs_filters', 256, 'ASPP convolution filters.')
 
-  flags.DEFINE_boolean('decoder_use_sum_merge', False, 'Decoder uses simply sum merge.')
+flags.DEFINE_boolean('decoder_use_sum_merge', False, 'Decoder uses simply sum merge.')
 
-  flags.DEFINE_integer('decoder_filters', 256, 'Decoder filters.')
+flags.DEFINE_integer('decoder_filters', 256, 'Decoder filters.')
 
-  flags.DEFINE_boolean('decoder_output_is_logits', False, 'Use decoder output as logits or not.')
+flags.DEFINE_boolean('decoder_output_is_logits', False, 'Use decoder output as logits or not.')
 
-  flags.DEFINE_boolean('image_se_uses_qsigmoid', False, 'Use q-sigmoid.')
+flags.DEFINE_boolean('image_se_uses_qsigmoid', False, 'Use q-sigmoid.')
 
-  flags.DEFINE_multi_float('label_weights', None, 'A list of label weights, each element represents the weight for the label of its index, for example, label_weights = [0.1, 0.5] means the weight for label 0 is 0.1 and the weight for label 1 is 0.5. If set as None, all the labels have the same weight 1.0.')
+flags.DEFINE_multi_float('label_weights', None, 'A list of label weights, each element represents the weight for the label of its index, for example, label_weights = [0.1, 0.5] means the weight for label 0 is 0.1 and the weight for label 1 is 0.5. If set as None, all the labels have the same weight 1.0.')
 
-  flags.DEFINE_float('batch_norm_decay', 0.9997, 'Batchnorm decay.')
-except DuplicateFlagError:
-  pass
-
+flags.DEFINE_float('batch_norm_decay', 0.9997, 'Batchnorm decay.')
 
 FLAGS = flags.FLAGS
 

@@ -129,7 +129,7 @@ def process_xml(args, girder_folder_id, folder, tmp, compartments, ignore_label)
         _ = os.system("printf '\tsaving a created xml annotation file: [{}]\n'".format(xml_path))
         xml_save(Annotations=xmlAnnot, filename=xml_path)
         write_minmax_to_xml(xml_path) # to avoid trying to write to the xml from multiple workers
-        gc.uploadFileToFolder(file['_id'], xml_path)
+        gc.uploadFileToItem(file['_id'], xml_path)
         del xmlAnnot
         
     return slides_used
