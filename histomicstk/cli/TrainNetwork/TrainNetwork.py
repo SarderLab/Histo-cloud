@@ -8,7 +8,7 @@ sys.path.append("..")
 from deeplab.utils.mask_to_xml import xml_create, xml_add_annotation, xml_add_region, xml_save
 from deeplab.utils.xml_to_mask import write_minmax_to_xml
 
-def process_xml(args, girder_folder_id, folder, tmp, compartments, ignore_label):
+def process_xml(args, girder_folder_id, folder, tmp, compartments, save_dir, ignore_label):
     # get girder client
     gc = girder_client.GirderClient(apiUrl=args.girderApiUrl)
     gc.setToken(args.girderToken)
@@ -17,10 +17,6 @@ def process_xml(args, girder_folder_id, folder, tmp, compartments, ignore_label)
 
     # for conversion to xml
     xml_color=[65280]*(len(compartments)+1)
-
-    # create files folder
-    save_dir = "files"
-    os.makedirs(save_dir, exist_ok=True)
 
     # get files in folder
     files = list(gc.listItem(girder_folder_id))
@@ -223,13 +219,24 @@ def main(args):
     # move back to cli folder
     os.chdir(cwd)
 
+    if os.path.exists('/mnt/girder_worker'):
+        os.system("printf '\n\n---\n\nUsing /mnt/girder_worker as mounted path...\n\n'")
+        mounted_path = f"/mnt/girder_worker/{os.listdir('/mnt/girder_worker')[0]}"
+    else:
+        os.system("printf '\n\n---\n\nUsing /tmp/ as mounted path...\n\n'")
+        mounted_path = cwd
+
+    # create files folder
+    save_dir = os.path.join(mounted_path, "files")
+    os.makedirs(save_dir, exist_ok=True)
+    
     model_files = glob('{}/*.ckpt*'.format(tmp))
     print(model_files)
     model_file = model_files[0]
     init_model = get_base_model_name(model_file)
 
     # download slides and annotations to tmp directory
-    slides_used = process_xml(args, girder_folder_id, folder, tmp, compartments, num_classes)
+    slides_used = process_xml(args, girder_folder_id, folder, tmp, compartments, save_dir, num_classes)
     ignore_label = len(compartments)+1
     
 
