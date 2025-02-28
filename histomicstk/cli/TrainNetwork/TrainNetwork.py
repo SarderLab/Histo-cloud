@@ -47,8 +47,6 @@ def process_xml(args, girder_folder_id, folder, tmp, compartments, ignore_label)
             gc.downloadItem(xml_id, save_dir)
             xml_annots.remove('{}.xml'.format(slidename))
             xml_path = '{}/{}'.format(save_dir, '{}.xml'.format(slidename))
-            # Delete the xml file from base folder
-            gc.delete('item/{}'.format(xml_id))
         else:
             # If no xml file is found, create one
             _ = os.system("printf '\n\tNO XML Annotation file found: [{}]\n'".format(slide))

@@ -144,6 +144,9 @@ RUN sed -i 's/^_PRINT_DEPRECATION_WARNINGS = True/_PRINT_DEPRECATION_WARNINGS = 
 # define entrypoint through which all CLIs can be run
 WORKDIR $htk_path/histomicstk/cli
 
+# For Parashurama
+LABEL entry_path=$htk_path/histomicstk/cli
+
 # Test our entrypoint.  If we have incompatible versions of numpy and
 # openslide, one of these will fail
 RUN python -m slicer_cli_web.cli_list_entrypoint --list_cli
