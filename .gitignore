@@ -1,0 +1,14 @@
+
+/container
+__pycache__/
+deeplab/__pycache__/
+deeplab/core/__pycache__/
+deeplab/datasets/__pycache__/
+deeplab/utils/__pycache__/
+deeplab/evaluation/__pycache__/
+deeplab/nets/__pycache__/
+deeplab/slim/__pycache__/
+
+deeplab/*.txt
+
+logs/
