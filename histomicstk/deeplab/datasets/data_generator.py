@@ -1,4 +1,3 @@
-# Lint as: python2, python3
 # Copyright 2018 The TensorFlow Authors All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Wrapper for providing semantic segmentaion data.
+"""Wrapper for providing semantic segmentation data.
+
+TF2-MIGRATION: This module has been updated to use TF2-native APIs.
+Key changes:
+- Replaced tf.FixedLenFeature with tf.io.FixedLenFeature
+- Replaced tf.parse_single_example with tf.io.parse_single_example
+- Replaced tf.gfile.Glob with tf.io.gfile.glob
+- Replaced tf.logging with tf.get_logger()
+- Replaced make_one_shot_iterator() with direct iteration
+- Updated dataset API calls for TF2 compatibility
 
 The SegmentationDataset class provides both images and annotations (semantic
 segmentation and/or instance segmentation) for TensorFlow. Currently, we
@@ -51,9 +59,14 @@ References:
 
 import collections
 import os
+from typing import Dict, List, Optional, Tuple
+
 import tensorflow as tf
 from deeplab import common
 from deeplab import input_preprocess
+
+# Get TF2 logger
+_logger = tf.get_logger()
 
 # Named tuple to describe the dataset properties.
 DatasetDescriptor = collections.namedtuple(
@@ -170,9 +183,9 @@ class Dataset(object):
       raise ValueError('data split name %s not recognized' % split_name)
 
     if model_variant is None:
-      tf.logging.warning('Please specify a model_variant. See '
-                         'feature_extractor.network_map for supported model '
-                         'variants.')
+      _logger.warning('Please specify a model_variant. See '
+                      'feature_extractor.network_map for supported model '
+                      'variants.')
 
     self.split_name = split_name
     self.dataset_dir = dataset_dir
@@ -218,22 +231,22 @@ class Dataset(object):
 
     features = {
         'image/encoded':
-            tf.FixedLenFeature((), tf.string, default_value=''),
+            tf.io.FixedLenFeature((), tf.string, default_value=''),
         'image/filename':
-            tf.FixedLenFeature((), tf.string, default_value=''),
+            tf.io.FixedLenFeature((), tf.string, default_value=''),
         'image/format':
-            tf.FixedLenFeature((), tf.string, default_value='jpeg'),
+            tf.io.FixedLenFeature((), tf.string, default_value='jpeg'),
         'image/height':
-            tf.FixedLenFeature((), tf.int64, default_value=0),
+            tf.io.FixedLenFeature((), tf.int64, default_value=0),
         'image/width':
-            tf.FixedLenFeature((), tf.int64, default_value=0),
+            tf.io.FixedLenFeature((), tf.int64, default_value=0),
         'image/segmentation/class/encoded':
-            tf.FixedLenFeature((), tf.string, default_value=''),
+            tf.io.FixedLenFeature((), tf.string, default_value=''),
         'image/segmentation/class/format':
-            tf.FixedLenFeature((), tf.string, default_value='png'),
+            tf.io.FixedLenFeature((), tf.string, default_value='png'),
     }
 
-    parsed_features = tf.parse_single_example(example_proto, features)
+    parsed_features = tf.io.parse_single_example(example_proto, features)
 
     image = _decode_image(parsed_features['image/encoded'], channels=3)
 
@@ -316,16 +329,21 @@ class Dataset(object):
   def get_one_shot_iterator(self):
     """Gets an iterator that iterates across the dataset once.
 
+    TF2-MIGRATION: In TF2, datasets are directly iterable. This method
+    now returns the dataset itself which can be iterated with a for loop.
+    For backward compatibility, calling iter() on the returned dataset
+    gives an iterator.
+
     Returns:
-      An iterator of type tf.data.Iterator.
+      A tf.data.Dataset that can be iterated.
     """
 
     files = self._get_all_files()
 
     dataset = (
         tf.data.TFRecordDataset(files, num_parallel_reads=self.num_readers)
-        .map(self._parse_function, num_parallel_calls=self.num_readers)
-        .map(self._preprocess_image, num_parallel_calls=self.num_readers))
+        .map(self._parse_function, num_parallel_calls=tf.data.AUTOTUNE)
+        .map(self._preprocess_image, num_parallel_calls=tf.data.AUTOTUNE))
 
     if self.should_shuffle:
       dataset = dataset.shuffle(buffer_size=100)
@@ -335,8 +353,19 @@ class Dataset(object):
     else:
       dataset = dataset.repeat(1)
 
-    dataset = dataset.batch(self.batch_size).prefetch(self.batch_size)
-    return dataset.make_one_shot_iterator()
+    dataset = dataset.batch(self.batch_size).prefetch(tf.data.AUTOTUNE)
+    return dataset
+
+  def get_dataset(self):
+    """Gets the tf.data.Dataset for this data source.
+    
+    TF2-MIGRATION: New method that returns the dataset directly.
+    Preferred over get_one_shot_iterator() in TF2.
+    
+    Returns:
+      A tf.data.Dataset.
+    """
+    return self.get_one_shot_iterator()
 
   def _get_all_files(self):
     """Gets all the files to read data from.
@@ -347,4 +376,4 @@ class Dataset(object):
     file_pattern = _FILE_PATTERN
     file_pattern = os.path.join(self.dataset_dir,
                                 file_pattern % self.split_name)
-    return tf.gfile.Glob(file_pattern)
+    return tf.io.gfile.glob(file_pattern)

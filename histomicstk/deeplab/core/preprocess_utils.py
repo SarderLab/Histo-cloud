@@ -14,7 +14,16 @@
 # limitations under the License.
 # ==============================================================================
 
-"""Utility functions related to preprocessing inputs."""
+"""Utility functions related to preprocessing inputs.
+
+TF2-MIGRATION: This module has been updated for TF2 compatibility.
+Key changes:
+- tf.random_uniform -> tf.random.uniform
+- tf.random_shuffle -> tf.random.shuffle
+- tf.image.resize_bilinear -> tf.image.resize with method='bilinear'
+- tf.lin_space -> tf.linspace
+- Control dependencies are kept for shape assertions (still valid in TF2)
+"""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -25,6 +34,8 @@ import tensorflow as tf
 
 def flip_dim(tensor_list, prob=0.5, dim=1):
   """Randomly flips a dimension of the given tensor.
+
+  TF2-MIGRATION: Updated tf.random_uniform -> tf.random.uniform
 
   The decision to randomly flip the `Tensors` is made together. In other words,
   all or none of the images pass in are flipped.
@@ -46,7 +57,8 @@ def flip_dim(tensor_list, prob=0.5, dim=1):
   Raises:
     ValueError: If dim is negative or greater than the dimension of a `Tensor`.
   """
-  random_value = tf.random_uniform([])
+  # TF2-MIGRATION: tf.random_uniform -> tf.random.uniform
+  random_value = tf.random.uniform([])
 
   def flip():
     flipped = []
@@ -305,15 +317,16 @@ def random_crop(image_list, crop_height, crop_width):
 
   # Create a random bounding box.
   #
-  # Use tf.random_uniform and not numpy.random.rand as doing the former would
+  # Use tf.random.uniform and not numpy.random.rand as doing the former would
   # generate random numbers at graph eval time, unlike the latter which
   # generates random numbers at graph definition time.
   with tf.control_dependencies(asserts):
     max_offset_height = tf.reshape(image_height - crop_height + 1, [])
     max_offset_width = tf.reshape(image_width - crop_width + 1, [])
-  offset_height = tf.random_uniform(
+  # TF2-MIGRATION: tf.random_uniform -> tf.random.uniform
+  offset_height = tf.random.uniform(
       [], maxval=max_offset_height, dtype=tf.int32)
-  offset_width = tf.random_uniform(
+  offset_width = tf.random.uniform(
       [], maxval=max_offset_width, dtype=tf.int32)
 
   return [_crop(image, offset_height, offset_width,
@@ -322,6 +335,11 @@ def random_crop(image_list, crop_height, crop_width):
 
 def get_random_scale(min_scale_factor, max_scale_factor, step_size):
   """Gets a random scale value.
+
+  TF2-MIGRATION: Updated deprecated ops:
+  - tf.random_uniform -> tf.random.uniform
+  - tf.lin_space -> tf.linspace
+  - tf.random_shuffle -> tf.random.shuffle
 
   Args:
     min_scale_factor: Minimum scale value.
@@ -342,19 +360,24 @@ def get_random_scale(min_scale_factor, max_scale_factor, step_size):
 
   # When step_size = 0, we sample the value uniformly from [min, max).
   if step_size == 0:
-    return tf.random_uniform([1],
+    # TF2-MIGRATION: tf.random_uniform -> tf.random.uniform
+    return tf.random.uniform([1],
                              minval=min_scale_factor,
                              maxval=max_scale_factor)
 
   # When step_size != 0, we randomly select one discrete value from [min, max].
   num_steps = int((max_scale_factor - min_scale_factor) / step_size + 1)
-  scale_factors = tf.lin_space(min_scale_factor, max_scale_factor, num_steps)
-  shuffled_scale_factors = tf.random_shuffle(scale_factors)
+  # TF2-MIGRATION: tf.lin_space -> tf.linspace
+  scale_factors = tf.linspace(min_scale_factor, max_scale_factor, num_steps)
+  # TF2-MIGRATION: tf.random_shuffle -> tf.random.shuffle
+  shuffled_scale_factors = tf.random.shuffle(scale_factors)
   return shuffled_scale_factors[0]
 
 
 def randomly_scale_image_and_label(image, label=None, scale=1.0):
   """Randomly scales image and label.
+
+  TF2-MIGRATION: Updated tf.image.resize_bilinear -> tf.image.resize
 
   Args:
     image: Image with shape [height, width, 3].
@@ -374,16 +397,17 @@ def randomly_scale_image_and_label(image, label=None, scale=1.0):
 
   # Need squeeze and expand_dims because image interpolation takes
   # 4D tensors as input.
-  image = tf.squeeze(tf.image.resize_bilinear(
+  # TF2-MIGRATION: tf.image.resize_bilinear -> tf.image.resize
+  image = tf.squeeze(tf.image.resize(
       tf.expand_dims(image, 0),
       new_dim,
-      align_corners=True), [0])
+      method='bilinear'), [0])
   if label is not None:
+    # TF2-MIGRATION: tf.image.resize for labels
     label = tf.image.resize(
         label,
         new_dim,
-        method=get_label_resize_method(label),
-        align_corners=True)
+        method=get_label_resize_method(label))
 
   return image, label
 
@@ -429,6 +453,10 @@ def resize_to_range(image,
                     method=tf.image.ResizeMethod.BILINEAR):
   """Resizes image or label so their sides are within the provided range.
 
+  TF2-MIGRATION: Updated tf.image.resize calls.
+  Note: TF2's tf.image.resize doesn't have align_corners parameter.
+  The behavior is slightly different at image boundaries.
+
   The output size can be described by two cases:
   1. If the image can be rescaled so its minimum size is equal to min_size
      without the other side exceeding max_size, then do so.
@@ -451,6 +479,8 @@ def resize_to_range(image,
       input will be resized to [max_resize_value, max_resize_value] without
       keeping the original aspect ratio.
     align_corners: If True, exactly align all 4 corners of input and output.
+      TF2-MIGRATION-NOTE: This parameter is kept for API compatibility but 
+      TF2's tf.image.resize doesn't support it directly.
     label_layout_is_chw: If true, the label has shape [channel, height, width].
       We support this case because for some instance segmentation dataset, the
       instance segmentation is saved as [num_instances, height, width].
@@ -466,7 +496,7 @@ def resize_to_range(image,
   Raises:
     ValueError: If the image is not a 3D tensor.
   """
-  with tf.name_scope(scope, 'resize_to_range', [image]):
+  with tf.name_scope(scope or 'resize_to_range'):
     new_tensor_list = []
     min_size = tf.cast(min_size, tf.float32)
     if max_size is not None:
@@ -508,8 +538,8 @@ def resize_to_range(image,
       # If not keep the aspect ratio, we resize everything to max_size, allowing
       # us to do pre-processing without extra padding.
       new_size = [tf.reduce_max(new_size), tf.reduce_max(new_size)]
-    new_tensor_list.append(tf.image.resize(
-        image, new_size, method=method, align_corners=align_corners))
+    # TF2-MIGRATION: tf.image.resize without align_corners
+    new_tensor_list.append(tf.image.resize(image, new_size, method=method))
     if label is not None:
       if label_layout_is_chw:
         # Input label has shape [channel, height, width].
@@ -517,16 +547,14 @@ def resize_to_range(image,
         resized_label = tf.image.resize(
             resized_label,
             new_size,
-            method=get_label_resize_method(label),
-            align_corners=align_corners)
+            method=get_label_resize_method(label))
         resized_label = tf.squeeze(resized_label, 3)
       else:
         # Input label has shape [height, width, channel].
         resized_label = tf.image.resize(
             label,
             new_size,
-            method=get_label_resize_method(label),
-            align_corners=align_corners)
+            method=get_label_resize_method(label))
       new_tensor_list.append(resized_label)
     else:
       new_tensor_list.append(None)
