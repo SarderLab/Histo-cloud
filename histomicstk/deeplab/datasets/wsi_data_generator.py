@@ -101,9 +101,9 @@ class Dataset(object):
     """
 
     if model_variant is None:
-      tf.logging.warning('Please specify a model_variant. See '
-                         'feature_extractor.network_map for supported model '
-                         'variants.')
+      tf.get_logger().warning('Please specify a model_variant. See '
+                              'feature_extractor.network_map for supported model '
+                              'variants.')
 
     self.dataset_name = dataset_name
     self.dataset_dir = dataset_dir
@@ -194,7 +194,7 @@ class Dataset(object):
 
     wsi_dataset = wsi_dataset.batch(batch_size=self.batch_size, drop_remainder=True)
     wsi_dataset = wsi_dataset.prefetch(buffer_size=2) # <-- very important for efficency
-    return wsi_dataset.make_one_shot_iterator()
+    return iter(wsi_dataset)  # TF2: use iter() instead of make_one_shot_iterator()
 
   def get_one_shot_iterator_grid(self, wsi_path):
     """Gets an iterator that iterates across the dataset once.
@@ -229,7 +229,7 @@ class Dataset(object):
 
     wsi_dataset = wsi_dataset.batch(batch_size=self.batch_size, drop_remainder=False)
     wsi_dataset = wsi_dataset.prefetch(buffer_size=1) # <-- very important for efficency
-    return wsi_dataset.make_one_shot_iterator(), length, tissue_offset, tissue_size
+    return iter(wsi_dataset), length, tissue_offset, tissue_size  # TF2: use iter()
 
   def _get_all_files(self, with_xml=True, save_mask=True):
     """Gets all the files to read data from.

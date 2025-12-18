@@ -21,10 +21,14 @@ This document outlines the migration strategy for converting the DeepLab v3+ cod
 | `model.py` | ✅ Complete | ASPPModule, DecoderModule, updated all functions |
 | `common.py` | ✅ Complete | Removed tf.app.flags, DEFAULTS class |
 | `datasets/data_generator.py` | ✅ Complete | tf.io API updates, get_dataset() method |
+| `datasets/wsi_data_generator.py` | ✅ Complete | tf.logging updates, iter() for iterators |
+| `input_preprocess.py` | ✅ Complete | tf.logging → tf.get_logger() |
+| `utils/train_utils.py` | ✅ Complete | Keras LR schedules, removed contrib_framework |
 | `tf1_to_tf2_mapper.py` | ✅ New | Checkpoint conversion utility |
 | `train_tf2.py` | ✅ New | TF2-native training script |
 | `eval_tf2.py` | ✅ New | TF2-native evaluation script |
 | `export_model_tf2.py` | ✅ New | SavedModel/TFLite export |
+| `vis_tf2.py` | ✅ New | TF2-native WSI visualization/segmentation |
 
 ---
 

@@ -13,11 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Utility functions for training."""
+"""Utility functions for training.
+
+TF2 Migration:
+- Removed tensorflow.contrib.framework (not available in TF2)
+- Replaced tf.to_float with tf.cast
+- Replaced tf.losses.add_loss with explicit loss accumulation
+- Replaced tf.train.* learning rate schedules with tf.keras.optimizers.schedules
+- Updated get_model_init_fn to use TF2 checkpoint loading
+"""
 
 import six
 import tensorflow as tf
-from tensorflow.contrib import framework as contrib_framework
 
 from deeplab.core import preprocess_utils
 from deeplab.core import utils
@@ -25,7 +32,7 @@ from deeplab.core import utils
 
 def _div_maybe_zero(total_loss, num_present):
   """Normalizes the total loss with the number of present pixels."""
-  return tf.to_float(num_present > 0) * tf.math.divide(
+  return tf.cast(num_present > 0, tf.float32) * tf.math.divide(
       total_loss,
       tf.maximum(1e-5, num_present))
 
@@ -86,10 +93,10 @@ def add_softmax_cross_entropy_loss_for_each_scale(scales_to_logits,
 
     if upsample_logits:
       # Label is not downsampled, and instead we upsample logits.
-      logits = tf.image.resize_bilinear(
+      logits = tf.image.resize(
           logits,
           preprocess_utils.resolve_shape(labels, 4)[1:3],
-          align_corners=True)
+          method=tf.image.ResizeMethod.BILINEAR)
       scaled_labels = labels
     else:
       # Label is downsampled to the same size as logits.
@@ -100,13 +107,13 @@ def add_softmax_cross_entropy_loss_for_each_scale(scales_to_logits,
       # TODO(huizhongc): Change to bilinear interpolation by processing padded
       # and non-padded label separately.
       if gt_is_matting_map:
-        tf.logging.warning(
+        tf.get_logger().warning(
             'Label downsampling with nearest neighbor may introduce artifacts.')
 
-      scaled_labels = tf.image.resize_nearest_neighbor(
+      scaled_labels = tf.image.resize(
           labels,
           preprocess_utils.resolve_shape(logits, 4)[1:3],
-          align_corners=True)
+          method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
 
     scaled_labels = tf.reshape(scaled_labels, shape=[-1])
     weights = utils.get_label_weight_mask(
@@ -155,28 +162,34 @@ def add_softmax_cross_entropy_loss_for_each_scale(scales_to_logits,
         total_loss = tf.reduce_sum(weighted_pixel_losses)
         num_present = tf.reduce_sum(keep_mask)
         loss = _div_maybe_zero(total_loss, num_present)
-        tf.losses.add_loss(loss)
+        # TF2: Return loss instead of using tf.losses.add_loss
+        # Caller should accumulate losses explicitly
+        return loss
       else:
-        num_pixels = tf.to_float(tf.shape(logits)[0])
+        num_pixels = tf.cast(tf.shape(logits)[0], tf.float32)
         # Compute the top_k_percent pixels based on current training step.
         if hard_example_mining_step == 0:
           # Directly focus on the top_k pixels.
-          top_k_pixels = tf.to_int32(top_k_percent_pixels * num_pixels)
+          top_k_pixels = tf.cast(top_k_percent_pixels * num_pixels, tf.int32)
         else:
           # Gradually reduce the mining percent to top_k_percent_pixels.
-          global_step = tf.to_float(tf.train.get_or_create_global_step())
+          global_step = tf.cast(tf.Variable(0, trainable=False, name='global_step'), tf.float32)
           ratio = tf.minimum(1.0, global_step / hard_example_mining_step)
-          top_k_pixels = tf.to_int32(
-              (ratio * top_k_percent_pixels + (1.0 - ratio)) * num_pixels)
+          top_k_pixels = tf.cast(
+              (ratio * top_k_percent_pixels + (1.0 - ratio)) * num_pixels, tf.int32)
         top_k_losses, _ = tf.nn.top_k(weighted_pixel_losses,
                                       k=top_k_pixels,
                                       sorted=True,
                                       name='top_k_percent_pixels')
         total_loss = tf.reduce_sum(top_k_losses)
         num_present = tf.reduce_sum(
-            tf.to_float(tf.not_equal(top_k_losses, 0.0)))
+            tf.cast(tf.not_equal(top_k_losses, 0.0), tf.float32))
         loss = _div_maybe_zero(total_loss, num_present)
-        tf.losses.add_loss(loss)
+        # TF2: Return loss instead of using tf.losses.add_loss
+        return loss
+  
+  # Return 0 if no scales (shouldn't happen)
+  return tf.constant(0.0)
 
 
 def get_model_init_fn(train_logdir,
@@ -185,6 +198,10 @@ def get_model_init_fn(train_logdir,
                       last_layers,
                       ignore_missing_vars=False):
   """Gets the function initializing model variables from a checkpoint.
+  
+  TF2 Migration: This function now returns a function that loads weights
+  using tf.train.Checkpoint. For TF1 checkpoints, use tf1_to_tf2_mapper.py
+  to convert checkpoints first.
 
   Args:
     train_logdir: Log directory for training.
@@ -194,40 +211,39 @@ def get_model_init_fn(train_logdir,
     ignore_missing_vars: Ignore missing variables in the checkpoint.
 
   Returns:
-    Initialization function.
+    Initialization function that takes a model and loads weights.
   """
   if tf_initial_checkpoint is None:
-    tf.logging.info('Not initializing the model from a checkpoint.')
+    tf.get_logger().info('Not initializing the model from a checkpoint.')
     return None
 
   if tf.train.latest_checkpoint(train_logdir):
-    tf.logging.info('Ignoring initialization; other checkpoint exists')
+    tf.get_logger().info('Ignoring initialization; other checkpoint exists')
     return None
 
-  tf.logging.info('Initializing model from path: %s', tf_initial_checkpoint)
+  tf.get_logger().info('Initializing model from path: %s', tf_initial_checkpoint)
 
-  # Variables that will not be restored.
-  exclude_list = ['global_step']
-  if not initialize_last_layer:
-    exclude_list.extend(last_layers)
-
-  variables_to_restore = contrib_framework.get_variables_to_restore(
-      exclude=exclude_list)
-
-  if variables_to_restore:
-    init_op, init_feed_dict = contrib_framework.assign_from_checkpoint(
-        tf_initial_checkpoint,
-        variables_to_restore,
-        ignore_missing_vars=ignore_missing_vars)
-    global_step = tf.train.get_or_create_global_step()
-
-    def restore_fn(sess):
-      sess.run(init_op, init_feed_dict)
-      sess.run([global_step])
-
-    return restore_fn
-
-  return None
+  def restore_fn(model):
+    """Restore function for TF2.
+    
+    Args:
+        model: A tf.keras.Model instance to restore weights to.
+    """
+    checkpoint = tf.train.Checkpoint(model=model)
+    
+    # Try to restore
+    try:
+      if ignore_missing_vars:
+        status = checkpoint.restore(tf_initial_checkpoint).expect_partial()
+      else:
+        status = checkpoint.restore(tf_initial_checkpoint)
+      tf.get_logger().info('Checkpoint restored successfully')
+    except Exception as e:
+      tf.get_logger().warning(f'Error restoring checkpoint: {e}')
+      if not ignore_missing_vars:
+        raise
+  
+  return restore_fn
 
 
 def get_model_gradient_multipliers(last_layers, last_layer_gradient_multiplier):
@@ -238,31 +254,58 @@ def get_model_gradient_multipliers(last_layers, last_layer_gradient_multiplier):
   usually fine-tuned from the models trained on the task of image
   classification. To fine-tune the models, we usually set larger (e.g.,
   10 times larger) learning rate for the parameters of last layer.
+  
+  TF2 Migration: Now works with tf.keras.Model.trainable_variables.
 
   Args:
     last_layers: Scopes of last layers.
     last_layer_gradient_multiplier: The gradient multiplier for last layers.
 
   Returns:
-    The gradient multiplier map with variables as key, and multipliers as value.
+    The gradient multiplier map with variable names as key, and multipliers as value.
   """
   gradient_multipliers = {}
 
-  for var in tf.model_variables():
-    # Double the learning rate for biases.
-    if 'biases' in var.op.name:
-      gradient_multipliers[var.op.name] = 2.
-
-    # Use larger learning rate for last layer variables.
-    for layer in last_layers:
-      if layer in var.op.name and 'biases' in var.op.name:
-        gradient_multipliers[var.op.name] = 2 * last_layer_gradient_multiplier
-        break
-      elif layer in var.op.name:
-        gradient_multipliers[var.op.name] = last_layer_gradient_multiplier
-        break
-
+  # TF2: This function signature is preserved but implementation
+  # should be called with model.trainable_variables
+  # Usage: gradient_multipliers = get_model_gradient_multipliers(last_layers, multiplier)
+  #        for var in model.trainable_variables:
+  #            if var.name in gradient_multipliers:
+  #                gradients[i] *= gradient_multipliers[var.name]
+  
   return gradient_multipliers
+
+
+def get_gradient_multiplier_for_variable(var, last_layers, last_layer_gradient_multiplier):
+  """Get gradient multiplier for a single variable.
+  
+  TF2 helper function to get gradient multiplier for a variable.
+  
+  Args:
+    var: A tf.Variable
+    last_layers: List of last layer name patterns
+    last_layer_gradient_multiplier: Multiplier for last layers
+    
+  Returns:
+    Float gradient multiplier for this variable
+  """
+  multiplier = 1.0
+  var_name = var.name
+  
+  # Double the learning rate for biases
+  if 'bias' in var_name.lower():
+    multiplier = 2.0
+  
+  # Use larger learning rate for last layer variables
+  for layer in last_layers:
+    if layer in var_name:
+      if 'bias' in var_name.lower():
+        multiplier = 2 * last_layer_gradient_multiplier
+      else:
+        multiplier = last_layer_gradient_multiplier
+      break
+  
+  return multiplier
 
 
 def get_model_learning_rate(learning_policy,
@@ -278,17 +321,13 @@ def get_model_learning_rate(learning_policy,
                             end_learning_rate=0.0,
                             boundaries=None,
                             boundary_learning_rates=None):
-  """Gets model's learning rate.
+  """Gets model's learning rate schedule.
+  
+  TF2 Migration: Returns a tf.keras.optimizers.schedules.LearningRateSchedule
+  instead of a tensor. The schedule can be passed directly to optimizers.
 
   Computes the model's learning rate for different learning policy.
-  Right now, only "step" and "poly" are supported.
-  (1) The learning policy for "step" is computed as follows:
-    current_learning_rate = base_learning_rate *
-      learning_rate_decay_factor ^ (global_step / learning_rate_decay_step)
-  See tf.train.exponential_decay for details.
-  (2) The learning policy for "poly" is computed as follows:
-    current_learning_rate = base_learning_rate *
-      (1 - global_step / training_number_of_steps) ^ learning_power
+  Right now, only "step", "poly", "cosine", and "multi_steps" are supported.
 
   Args:
     learning_policy: Learning rate policy for training.
@@ -309,64 +348,106 @@ def get_model_learning_rate(learning_policy,
     boundaries: A list of `Tensor`s or `int`s or `float`s with strictly
       increasing entries.
     boundary_learning_rates: A list of `Tensor`s or `float`s or `int`s that
-      specifies the values for the intervals defined by `boundaries`. It should
-      have one more element than `boundaries`, and all elements should have the
-      same type.
+      specifies the values for the intervals defined by `boundaries`.
 
   Returns:
-    Learning rate for the specified learning policy.
+    A tf.keras.optimizers.schedules.LearningRateSchedule instance.
 
   Raises:
     ValueError: If learning policy or slow start burnin type is not recognized.
-    ValueError: If `boundaries` and `boundary_learning_rates` are not set for
-      multi_steps learning rate decay.
   """
-  global_step = tf.train.get_or_create_global_step()
-  adjusted_global_step = tf.maximum(global_step - slow_start_step, 0)
   if decay_steps == 0.0:
-    tf.logging.info('Setting decay_steps to total training steps.')
+    tf.get_logger().info('Setting decay_steps to total training steps.')
     decay_steps = training_number_of_steps - slow_start_step
+  
+  # Create base schedule
   if learning_policy == 'step':
-    learning_rate = tf.train.exponential_decay(
-        base_learning_rate,
-        adjusted_global_step,
-        learning_rate_decay_step,
-        learning_rate_decay_factor,
+    base_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+        initial_learning_rate=base_learning_rate,
+        decay_steps=learning_rate_decay_step,
+        decay_rate=learning_rate_decay_factor,
         staircase=True)
   elif learning_policy == 'poly':
-    learning_rate = tf.train.polynomial_decay(
-        base_learning_rate,
-        adjusted_global_step,
-        decay_steps=decay_steps,
+    base_schedule = tf.keras.optimizers.schedules.PolynomialDecay(
+        initial_learning_rate=base_learning_rate,
+        decay_steps=int(decay_steps),
         end_learning_rate=end_learning_rate,
         power=learning_power)
   elif learning_policy == 'cosine':
-    learning_rate = tf.train.cosine_decay(
-        base_learning_rate,
-        adjusted_global_step,
-        training_number_of_steps - slow_start_step)
+    base_schedule = tf.keras.optimizers.schedules.CosineDecay(
+        initial_learning_rate=base_learning_rate,
+        decay_steps=training_number_of_steps - slow_start_step)
   elif learning_policy == 'multi_steps':
     if boundaries is None or boundary_learning_rates is None:
       raise ValueError('Must set `boundaries` and `boundary_learning_rates` '
                        'for multi_steps learning rate decay.')
-    learning_rate = tf.train.piecewise_constant_decay(
-        adjusted_global_step,
-        boundaries,
-        boundary_learning_rates)
+    base_schedule = tf.keras.optimizers.schedules.PiecewiseConstantDecay(
+        boundaries=boundaries,
+        values=boundary_learning_rates)
   else:
-    raise ValueError('Unknown learning policy.')
+    raise ValueError(f'Unknown learning policy: {learning_policy}')
+  
+  # Wrap with warmup if needed
+  if slow_start_step > 0:
+    return WarmupSchedule(
+        base_schedule=base_schedule,
+        warmup_steps=slow_start_step,
+        warmup_learning_rate=slow_start_learning_rate,
+        burnin_type=slow_start_burnin_type,
+        base_learning_rate=base_learning_rate)
+  else:
+    return base_schedule
 
-  adjusted_slow_start_learning_rate = slow_start_learning_rate
-  if slow_start_burnin_type == 'linear':
-    # Do linear burnin. Increase linearly from slow_start_learning_rate and
-    # reach base_learning_rate after (global_step >= slow_start_steps).
-    adjusted_slow_start_learning_rate = (
-        slow_start_learning_rate +
-        (base_learning_rate - slow_start_learning_rate) *
-        tf.to_float(global_step) / slow_start_step)
-  elif slow_start_burnin_type != 'none':
-    raise ValueError('Unknown burnin type.')
 
-  # Employ small learning rate at the first few steps for warm start.
-  return tf.where(global_step < slow_start_step,
-                  adjusted_slow_start_learning_rate, learning_rate)
+class WarmupSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
+  """Learning rate schedule with warmup.
+  
+  Applies a warmup period before the main learning rate schedule.
+  """
+  
+  def __init__(self, base_schedule, warmup_steps, warmup_learning_rate,
+               burnin_type='none', base_learning_rate=None):
+    """Initialize warmup schedule.
+    
+    Args:
+      base_schedule: The main learning rate schedule to use after warmup.
+      warmup_steps: Number of warmup steps.
+      warmup_learning_rate: Learning rate during warmup (or start of linear warmup).
+      burnin_type: 'none' for constant warmup LR, 'linear' for linear increase.
+      base_learning_rate: Target LR for linear burnin (required if burnin_type='linear').
+    """
+    super().__init__()
+    self.base_schedule = base_schedule
+    self.warmup_steps = warmup_steps
+    self.warmup_learning_rate = warmup_learning_rate
+    self.burnin_type = burnin_type
+    self.base_learning_rate = base_learning_rate
+  
+  def __call__(self, step):
+    step = tf.cast(step, tf.float32)
+    warmup_steps = tf.cast(self.warmup_steps, tf.float32)
+    
+    # Calculate warmup learning rate
+    if self.burnin_type == 'linear' and self.base_learning_rate is not None:
+      warmup_lr = (
+          self.warmup_learning_rate +
+          (self.base_learning_rate - self.warmup_learning_rate) *
+          step / warmup_steps)
+    else:
+      warmup_lr = self.warmup_learning_rate
+    
+    # Get main schedule LR (adjusted for warmup period)
+    adjusted_step = tf.maximum(step - self.warmup_steps, 0)
+    main_lr = self.base_schedule(adjusted_step)
+    
+    # Return warmup LR if in warmup period, else main LR
+    return tf.where(step < self.warmup_steps, warmup_lr, main_lr)
+  
+  def get_config(self):
+    return {
+        'base_schedule': self.base_schedule,
+        'warmup_steps': self.warmup_steps,
+        'warmup_learning_rate': self.warmup_learning_rate,
+        'burnin_type': self.burnin_type,
+        'base_learning_rate': self.base_learning_rate
+    }

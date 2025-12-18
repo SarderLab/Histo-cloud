@@ -1,6 +1,6 @@
 ### first
 
-updated the following files to format them in TF2 idiomatic APIs. Looks into TF_MIGRATION_PLAN.md to see what changes I made in those files.
+updated the following files to format them in TF2 idiomatic APIs. Look into TF_MIGRATION_PLAN.md to see what changes I made in those files.
 
 1. core/utils.py
 2. core/preprocess_utils.py
@@ -17,3 +17,13 @@ updated the following files to format them in TF2 idiomatic APIs. Looks into TF_
 13. created new file `eval_tf2.py` replacing `eval.py`
 14. created new file `export_model_tf2.py` replacing `export_model.py`
 15. created `tf1_to_tf2_mapper.py` which I will use to map weights
+
+### second
+updated the following files to use TF2 idiomatics. Look into TF_MIGRATION_PLAN.md to see what changes I made in those files.
+
+16. datasets/wsi_data_generator.py
+17. input_preprocess.py
+18. utils/train_utils.py
+19. vis_tf2.py
+
+
