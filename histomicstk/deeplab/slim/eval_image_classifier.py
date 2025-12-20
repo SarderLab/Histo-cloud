@@ -21,21 +21,25 @@ from __future__ import print_function
 import math
 import tensorflow.compat.v1 as tf
 import tf_slim as slim
+from absl import flags
 
-from tensorflow.contrib import quantize as contrib_quantize
+try:
+  from tensorflow.contrib import quantize as contrib_quantize
+except Exception:
+  contrib_quantize = None
 
 from datasets import dataset_factory
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 
-tf.app.flags.DEFINE_integer(
+flags.DEFINE_integer(
     'batch_size', 100, 'The number of samples in each batch.')
 
-tf.app.flags.DEFINE_integer(
+flags.DEFINE_integer(
     'max_num_batches', None,
     'Max number of batches to evaluate by default use all.')
 
-tf.app.flags.DEFINE_string(
+flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
@@ -80,13 +84,13 @@ tf.app.flags.DEFINE_float(
 tf.app.flags.DEFINE_integer(
     'eval_image_size', None, 'Eval image size')
 
-tf.app.flags.DEFINE_bool(
+flags.DEFINE_bool(
     'quantize', False, 'whether to use quantized graph or not.')
 
 tf.app.flags.DEFINE_bool('use_grayscale', False,
                          'Whether to convert input images to grayscale.')
 
-FLAGS = tf.app.flags.FLAGS
+FLAGS = flags.FLAGS
 
 
 def main(_):
@@ -182,7 +186,7 @@ def main(_):
       # This ensures that we make a single pass over all of the data.
       num_batches = math.ceil(dataset.num_samples / float(FLAGS.batch_size))
 
-    if tf.gfile.IsDirectory(FLAGS.checkpoint_path):
+    if tf.io.gfile.isdir(FLAGS.checkpoint_path):
       checkpoint_path = tf.train.latest_checkpoint(FLAGS.checkpoint_path)
     else:
       checkpoint_path = FLAGS.checkpoint_path

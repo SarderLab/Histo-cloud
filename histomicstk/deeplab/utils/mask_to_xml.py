@@ -46,7 +46,7 @@ def mask_to_xml(xml_path, mask, downsample=1, min_size_thresh=0, simplify_contou
 
         # get contour points of the mask
         pointsList = get_contour_points(binaryMask, downsample=downsample, min_size_thresh=min_size_thresh, simplify_contours=simplify_contours, offset=offset)
-        for i in range(np.shape(pointsList)[0]):
+        for i in range(len(pointsList)):
             pointList = pointsList[i]
             Annotations = xml_add_region(Annotations=Annotations, pointList=pointList, annotationID=class_)
 
@@ -82,9 +82,9 @@ def get_contour_points(mask, downsample, min_size_thresh=0, simplify_contours=0,
             maskPoints[idx] = approx
 
     pointsList = []
-    for j in range(np.shape(maskPoints)[0]):
+    for j in range(len(maskPoints)):
         pointList = []
-        for i in range(0,np.shape(maskPoints[j])[0]):
+        for i in range(0, len(maskPoints[j])):
             point = {'X': (maskPoints[j][i][0][0] * downsample) + offset['X'], 'Y': (maskPoints[j][i][0][1] * downsample) + offset['Y']}
             pointList.append(point)
         pointsList.append(pointList)

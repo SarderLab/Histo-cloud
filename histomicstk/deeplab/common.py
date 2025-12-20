@@ -20,8 +20,9 @@ import collections
 import copy
 import json
 import tensorflow as tf
+from absl import flags
 
-flags = tf.app.flags
+# Use absl flags (TF2 idiomatic replacement for tf.app.flags)
 
 # Flags for input preprocessing.
 
@@ -34,8 +35,8 @@ flags.DEFINE_integer('max_resize_value', None,
 flags.DEFINE_integer('resize_factor', None,
                      'Resized dimensions are multiple of factor plus one.')
 
-flags.DEFINE_boolean('keep_aspect_ratio', True,
-                     'Keep aspect ratio after resizing or not.')
+flags.DEFINE_bool('keep_aspect_ratio', True,
+                  'Keep aspect ratio after resizing or not.')
 
 # Model dependent flags.
 
@@ -52,8 +53,8 @@ flags.DEFINE_string('model_variant', 'mobilenet_v2', 'DeepLab model variant.')
 flags.DEFINE_multi_float('image_pyramid', None,
                          'Input scales for multi-scale feature extraction.')
 
-flags.DEFINE_boolean('add_image_level_feature', True,
-                     'Add image level feature.')
+flags.DEFINE_bool('add_image_level_feature', True,
+                  'Add image level feature.')
 
 flags.DEFINE_list(
     'image_pooling_crop_size', None,
@@ -65,11 +66,11 @@ flags.DEFINE_list(
     'image_pooling_stride', '1,1',
     'Image pooling stride [height, width] used in the ASPP image pooling. ')
 
-flags.DEFINE_boolean('aspp_with_batch_norm', True,
-                     'Use batch norm parameters for ASPP or not.')
+flags.DEFINE_bool('aspp_with_batch_norm', True,
+                  'Use batch norm parameters for ASPP or not.')
 
-flags.DEFINE_boolean('aspp_with_separable_conv', True,
-                     'Use separable convolution for ASPP or not.')
+flags.DEFINE_bool('aspp_with_separable_conv', True,
+                  'Use separable convolution for ASPP or not.')
 
 # Defaults to None. Set multi_grid = [1, 2, 4] when using provided
 # 'resnet_v1_{50,101}_beta' checkpoints.
@@ -93,13 +94,13 @@ flags.DEFINE_list('decoder_output_stride', None,
                   'most one output stride (i.e., either None or a list with '
                   'only one element.')
 
-flags.DEFINE_boolean('decoder_use_separable_conv', True,
-                     'Employ separable convolution for decoder or not.')
+flags.DEFINE_bool('decoder_use_separable_conv', True,
+                  'Employ separable convolution for decoder or not.')
 
 flags.DEFINE_enum('merge_method', 'max', ['max', 'avg'],
                   'Scheme to merge multi scale features.')
 
-flags.DEFINE_boolean(
+flags.DEFINE_bool(
     'prediction_with_upsampled_logits', False,
     'When performing prediction, there are two options: (1) bilinear '
     'upsampling the logits followed by softmax, or (2) softmax followed by '
@@ -124,23 +125,23 @@ flags.DEFINE_bool('use_bounded_activation', False,
                   'Whether or not to use bounded activations. Bounded '
                   'activations better lend themselves to quantized inference.')
 
-flags.DEFINE_boolean('aspp_with_concat_projection', True,
-                     'ASPP with concat projection.')
+flags.DEFINE_bool('aspp_with_concat_projection', True,
+                  'ASPP with concat projection.')
 
-flags.DEFINE_boolean('aspp_with_squeeze_and_excitation', False,
-                     'ASPP with squeeze and excitation.')
+flags.DEFINE_bool('aspp_with_squeeze_and_excitation', False,
+                  'ASPP with squeeze and excitation.')
 
 flags.DEFINE_integer('aspp_convs_filters', 256, 'ASPP convolution filters.')
 
-flags.DEFINE_boolean('decoder_use_sum_merge', False,
-                     'Decoder uses simply sum merge.')
+flags.DEFINE_bool('decoder_use_sum_merge', False,
+                  'Decoder uses simply sum merge.')
 
 flags.DEFINE_integer('decoder_filters', 256, 'Decoder filters.')
 
-flags.DEFINE_boolean('decoder_output_is_logits', False,
-                     'Use decoder output as logits or not.')
+flags.DEFINE_bool('decoder_output_is_logits', False,
+                  'Use decoder output as logits or not.')
 
-flags.DEFINE_boolean('image_se_uses_qsigmoid', False, 'Use q-sigmoid.')
+flags.DEFINE_bool('image_se_uses_qsigmoid', False, 'Use q-sigmoid.')
 
 flags.DEFINE_multi_float(
     'label_weights', None,
@@ -232,7 +233,7 @@ class ModelOptions(
     """
     dense_prediction_cell_config = None
     if FLAGS.dense_prediction_cell_json:
-      with tf.gfile.Open(FLAGS.dense_prediction_cell_json, 'r') as f:
+      with tf.io.gfile.GFile(FLAGS.dense_prediction_cell_json, 'r') as f:
         dense_prediction_cell_config = json.load(f)
     decoder_output_stride = None
     if FLAGS.decoder_output_stride:

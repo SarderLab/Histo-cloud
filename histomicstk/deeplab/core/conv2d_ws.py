@@ -30,14 +30,40 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-from tensorflow.contrib import framework as contrib_framework
-from tensorflow.contrib import layers as contrib_layers
+import tf_slim as slim
 
-from tensorflow.contrib.layers.python.layers import layers
-from tensorflow.contrib.layers.python.layers import utils
+# Local helpers to mimic a subset of TF1 contrib.layers utilities used here.
+
+def _variable_getter_for_compat(getter, name, *args, **kwargs):
+  """A compatibility custom_getter that maps old TF1 var names to new ones.
+
+  It maps suffixes 'kernel'->'weights' and 'bias'->'biases' to maintain
+  compatibility with checkpoints that use TF1 naming.
+  """
+  new_name = name.replace('/kernel', '/weights').replace('/bias', '/biases')
+  return getter(new_name, *args, **kwargs)
 
 
-class Conv2D(tf.keras.layers.Conv2D, tf.layers.Layer):
+def _add_variable_to_collections(var, variables_collections, var_name):
+  """Add variable to the given collections (compat shim).
+
+  variables_collections may be a list of collection names or a dict mapping
+  variable short names to list of collection names.
+  """
+  if not variables_collections:
+    return
+  if isinstance(variables_collections, dict):
+    # Expect keys like 'weights' or 'biases'. Fall back to any default.
+    colls = variables_collections.get(var_name, None)
+    if colls:
+      for c in colls:
+        tf.compat.v1.add_to_collection(c, var)
+  else:
+    for c in variables_collections:
+      tf.compat.v1.add_to_collection(c, var)
+
+
+class Conv2D(tf.keras.layers.Conv2D):
   """2D convolution layer (e.g. spatial convolution over images).
 
   This layer creates a convolution kernel that is convolved
@@ -139,7 +165,7 @@ class Conv2D(tf.keras.layers.Conv2D, tf.layers.Layer):
 
   def call(self, inputs):
     if self.use_weight_standardization:
-      mean, var = tf.nn.moments(self.kernel, [0, 1, 2], keep_dims=True)
+      mean, var = tf.nn.moments(self.kernel, [0, 1, 2], keepdims=True)
       kernel = (self.kernel - mean) / tf.sqrt(var + 1e-5)
       outputs = self._convolution_op(inputs, kernel)
     else:
@@ -161,7 +187,7 @@ class Conv2D(tf.keras.layers.Conv2D, tf.layers.Layer):
     return outputs
 
 
-@contrib_framework.add_arg_scope
+@slim.add_arg_scope
 def conv2d(inputs,
            num_outputs,
            kernel_size,
@@ -172,7 +198,7 @@ def conv2d(inputs,
            activation_fn=tf.nn.relu,
            normalizer_fn=None,
            normalizer_params=None,
-           weights_initializer=contrib_layers.xavier_initializer(),
+           weights_initializer=tf.initializers.GlorotUniform(),
            weights_regularizer=None,
            biases_initializer=tf.zeros_initializer(),
            biases_regularizer=None,
@@ -252,15 +278,11 @@ def conv2d(inputs,
   if data_format not in [None, 'NWC', 'NCW', 'NHWC', 'NCHW', 'NDHWC', 'NCDHW']:
     raise ValueError('Invalid data_format: %r' % (data_format,))
 
-  # pylint: disable=protected-access
-  layer_variable_getter = layers._build_variable_getter({
-      'bias': 'biases',
-      'kernel': 'weights'
-  })
+  # Use a compat variable getter that preserves TF1 naming for checkpoints.
   # pylint: enable=protected-access
-  with tf.variable_scope(
+  with tf.compat.v1.variable_scope(
       scope, 'Conv', [inputs], reuse=reuse,
-      custom_getter=layer_variable_getter) as sc:
+      custom_getter=_variable_getter_for_compat) as sc:
     inputs = tf.convert_to_tensor(inputs)
     input_rank = inputs.get_shape().ndims
 
@@ -292,21 +314,18 @@ def conv2d(inputs,
         _reuse=reuse)
     outputs = layer.apply(inputs)
 
-    # Add variables to collections.
-    # pylint: disable=protected-access
-    layers._add_variable_to_collections(layer.kernel, variables_collections,
-                                        'weights')
+    # Add variables to collections (compat shim).
+    _add_variable_to_collections(layer.kernel, variables_collections, 'weights')
     if layer.use_bias:
-      layers._add_variable_to_collections(layer.bias, variables_collections,
-                                          'biases')
-    # pylint: enable=protected-access
+      _add_variable_to_collections(layer.bias, variables_collections, 'biases')
+
     if normalizer_fn is not None:
       normalizer_params = normalizer_params or {}
       outputs = normalizer_fn(outputs, **normalizer_params)
 
     if activation_fn is not None:
       outputs = activation_fn(outputs)
-    return utils.collect_named_outputs(outputs_collections, sc.name, outputs)
+    return slim.utils.collect_named_outputs(outputs_collections, sc.name, outputs)
 
 
 def conv2d_same(inputs, num_outputs, kernel_size, stride, rate=1, scope=None):

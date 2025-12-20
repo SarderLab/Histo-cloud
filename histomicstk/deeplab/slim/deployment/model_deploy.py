@@ -187,7 +187,7 @@ def create_clones(config, model_fn, args=None, kwargs=None):
       with tf.name_scope(config.clone_scope(i)) as clone_scope:
         clone_device = config.clone_device(i)
         with tf.device(clone_device):
-          with tf.variable_scope(tf.get_variable_scope(),
+          with tf.compat.v1.variable_scope(tf.compat.v1.get_variable_scope(),
                                  reuse=True if i > 0 else None):
             outputs = model_fn(*args, **kwargs)
           clones.append(Clone(outputs, clone_scope, clone_device))

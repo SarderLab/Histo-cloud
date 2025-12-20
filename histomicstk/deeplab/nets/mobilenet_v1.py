@@ -463,7 +463,7 @@ def mobilenet_v1_arg_scope(
     batch_norm_params['is_training'] = is_training
 
   # Set weight_decay for weights in Conv and DepthSepConv layers.
-  weights_init = tf.truncated_normal_initializer(stddev=stddev)
+  weights_init = tf.compat.v1.truncated_normal_initializer(stddev=stddev)
   regularizer = slim.l2_regularizer(weight_decay)
   if regularize_depthwise:
     depthwise_regularizer = regularizer

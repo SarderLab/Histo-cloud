@@ -53,12 +53,10 @@ Alan L. Yuille (* equal contribution)
 (https://arxiv.org/abs/1412.7062)
 """
 import tensorflow as tf
-from tensorflow.contrib import slim as contrib_slim
+import tf_slim as slim
 from deeplab.core import dense_prediction_cell
 from deeplab.core import feature_extractor
 from deeplab.core import utils
-
-slim = contrib_slim
 
 LOGITS_SCOPE_NAME = 'logits'
 MERGED_LOGITS_SCOPE = 'merged_logits'
@@ -121,7 +119,7 @@ def predict_labels_multi_scale(images,
   }
 
   for i, image_scale in enumerate(eval_scales):
-    with tf.variable_scope(tf.get_variable_scope(), reuse=True if i else None):
+    with tf.compat.v1.variable_scope(tf.compat.v1.get_variable_scope(), reuse=True if i else None):
       outputs_to_scales_to_logits = multi_scale_logits(
           images,
           model_options=model_options,
@@ -130,9 +128,9 @@ def predict_labels_multi_scale(images,
           fine_tune_batch_norm=False)
 
     if add_flipped_images:
-      with tf.variable_scope(tf.get_variable_scope(), reuse=True):
+      with tf.compat.v1.variable_scope(tf.compat.v1.get_variable_scope(), reuse=True):
         outputs_to_scales_to_logits_reversed = multi_scale_logits(
-            tf.reverse_v2(images, [2]),
+            tf.reverse(images, [2]),
             model_options=model_options,
             image_pyramid=[image_scale],
             is_training=False,
@@ -151,7 +149,7 @@ def predict_labels_multi_scale(images,
         scales_to_logits_reversed = (
             outputs_to_scales_to_logits_reversed[output])
         logits_reversed = _resize_bilinear(
-            tf.reverse_v2(scales_to_logits_reversed[MERGED_LOGITS_SCOPE], [2]),
+            tf.reverse(scales_to_logits_reversed[MERGED_LOGITS_SCOPE], [2]),
             tf.shape(images)[1:3],
             scales_to_logits_reversed[MERGED_LOGITS_SCOPE].dtype)
         outputs_to_predictions[output].append(
@@ -308,7 +306,7 @@ def multi_scale_logits(images,
         scaled_images,
         updated_options,
         weight_decay=weight_decay,
-        reuse=tf.AUTO_REUSE,
+        reuse=tf.compat.v1.AUTO_REUSE,
         is_training=is_training,
         fine_tune_batch_norm=fine_tune_batch_norm,
         nas_training_hyper_parameters=nas_training_hyper_parameters)
@@ -398,7 +396,7 @@ def extract_features(images,
     return features, end_points
   else:
     if model_options.dense_prediction_cell_config is not None:
-      tf.logging.info('Using dense prediction cell config.')
+      tf.compat.v1.logging.info('Using dense prediction cell config.')
       dense_prediction_layer = dense_prediction_cell.DensePredictionCell(
           config=model_options.dense_prediction_cell_config,
           hparams={
@@ -690,7 +688,7 @@ def refine_by_decoder(features,
       stride=1,
       reuse=reuse):
     with slim.arg_scope([batch_norm], **batch_norm_params):
-      with tf.variable_scope(DECODER_SCOPE, DECODER_SCOPE, [features]):
+      with tf.compat.v1.variable_scope(DECODER_SCOPE, values=[features]):
         decoder_features = features
         decoder_stage = 0
         scope_suffix = ''
@@ -880,9 +878,9 @@ def get_branch_logits(features,
   with slim.arg_scope(
       [slim.conv2d],
       weights_regularizer=slim.l2_regularizer(weight_decay),
-      weights_initializer=tf.truncated_normal_initializer(stddev=0.01),
+      weights_initializer=tf.compat.v1.truncated_normal_initializer(stddev=0.01),
       reuse=reuse):
-    with tf.variable_scope(LOGITS_SCOPE_NAME, LOGITS_SCOPE_NAME, [features]):
+    with tf.compat.v1.variable_scope(LOGITS_SCOPE_NAME, LOGITS_SCOPE_NAME, [features]):
       branch_logits = []
       for i, rate in enumerate(atrous_rates):
         scope = scope_suffix

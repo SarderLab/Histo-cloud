@@ -1,0 +1,1911 @@
+
+================================================================================
+INITIALIZING DEEPLAB GRAPH
+================================================================================
+
+Model Options:
+  - Crop size: [512, 512]
+  - Output stride: 16
+  - Atrous rates: [6, 12, 18]
+  - Number of classes: {'semantic': 2}
+
+Building model graph...
+✓ Model graph built successfully
+
+================================================================================
+GRAPH VARIABLES SUMMARY
+================================================================================
+
+Total number of variables: 302
+
+Total parameters: 2,599,682
+Trainable parameters: 2,563,138
+Non-trainable parameters: 36,544
+
+================================================================================
+VARIABLES BY SCOPE
+================================================================================
+
+
+MobilenetV2/ (255 variables, 1,843,264 parameters)
+--------------------------------------------------------------------------------
+
+aspp0/ (5 variables, 82,944 parameters)
+--------------------------------------------------------------------------------
+
+aspp1_depthwise/ (5 variables, 4,160 parameters)
+--------------------------------------------------------------------------------
+
+aspp1_pointwise/ (5 variables, 82,944 parameters)
+--------------------------------------------------------------------------------
+
+aspp2_depthwise/ (5 variables, 4,160 parameters)
+--------------------------------------------------------------------------------
+
+aspp2_pointwise/ (5 variables, 82,944 parameters)
+--------------------------------------------------------------------------------
+
+aspp3_depthwise/ (5 variables, 4,160 parameters)
+--------------------------------------------------------------------------------
+
+aspp3_pointwise/ (5 variables, 82,944 parameters)
+--------------------------------------------------------------------------------
+
+concat_projection/ (5 variables, 328,704 parameters)
+--------------------------------------------------------------------------------
+
+image_pooling/ (5 variables, 82,944 parameters)
+--------------------------------------------------------------------------------
+
+logits/ (2 variables, 514 parameters)
+--------------------------------------------------------------------------------
+
+================================================================================
+DETAILED VARIABLE INFORMATION
+================================================================================
+
+   1. MobilenetV2/Conv/weights:0
+       Shape: [3, 3, 3, 32]
+       Dtype: float32
+       Parameters: 864
+       Trainable: ✓
+
+   2. MobilenetV2/Conv/BatchNorm/MobilenetV2/Conv/BatchNorm/gamma:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+   3. MobilenetV2/Conv/BatchNorm/MobilenetV2/Conv/BatchNorm/beta:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+   4. MobilenetV2/Conv/BatchNorm/MobilenetV2/Conv/BatchNorm/moving_mean:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+   5. MobilenetV2/Conv/BatchNorm/MobilenetV2/Conv/BatchNorm/moving_variance:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+   6. MobilenetV2/expanded_conv/depthwise/depthwise_weights:0
+       Shape: [3, 3, 32, 1]
+       Dtype: float32
+       Parameters: 288
+       Trainable: ✓
+
+   7. MobilenetV2/expanded_conv/depthwise/BatchNorm/MobilenetV2/expanded_conv/depthwise/BatchNorm/gamma:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+   8. MobilenetV2/expanded_conv/depthwise/BatchNorm/MobilenetV2/expanded_conv/depthwise/BatchNorm/beta:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+   9. MobilenetV2/expanded_conv/depthwise/BatchNorm/MobilenetV2/expanded_conv/depthwise/BatchNorm/moving_mean:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  10. MobilenetV2/expanded_conv/depthwise/BatchNorm/MobilenetV2/expanded_conv/depthwise/BatchNorm/moving_variance:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  11. MobilenetV2/expanded_conv/project/weights:0
+       Shape: [1, 1, 32, 16]
+       Dtype: float32
+       Parameters: 512
+       Trainable: ✓
+
+  12. MobilenetV2/expanded_conv/project/BatchNorm/MobilenetV2/expanded_conv/project/BatchNorm/gamma:0
+       Shape: [16]
+       Dtype: float32
+       Parameters: 16
+       Trainable: ✓
+
+  13. MobilenetV2/expanded_conv/project/BatchNorm/MobilenetV2/expanded_conv/project/BatchNorm/beta:0
+       Shape: [16]
+       Dtype: float32
+       Parameters: 16
+       Trainable: ✓
+
+  14. MobilenetV2/expanded_conv/project/BatchNorm/MobilenetV2/expanded_conv/project/BatchNorm/moving_mean:0
+       Shape: [16]
+       Dtype: float32
+       Parameters: 16
+       Trainable: ✗
+
+  15. MobilenetV2/expanded_conv/project/BatchNorm/MobilenetV2/expanded_conv/project/BatchNorm/moving_variance:0
+       Shape: [16]
+       Dtype: float32
+       Parameters: 16
+       Trainable: ✗
+
+  16. MobilenetV2/expanded_conv_1/expand/weights:0
+       Shape: [1, 1, 16, 96]
+       Dtype: float32
+       Parameters: 1,536
+       Trainable: ✓
+
+  17. MobilenetV2/expanded_conv_1/expand/BatchNorm/MobilenetV2/expanded_conv_1/expand/BatchNorm/gamma:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+  18. MobilenetV2/expanded_conv_1/expand/BatchNorm/MobilenetV2/expanded_conv_1/expand/BatchNorm/beta:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+  19. MobilenetV2/expanded_conv_1/expand/BatchNorm/MobilenetV2/expanded_conv_1/expand/BatchNorm/moving_mean:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+  20. MobilenetV2/expanded_conv_1/expand/BatchNorm/MobilenetV2/expanded_conv_1/expand/BatchNorm/moving_variance:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+  21. MobilenetV2/expanded_conv_1/depthwise/depthwise_weights:0
+       Shape: [3, 3, 96, 1]
+       Dtype: float32
+       Parameters: 864
+       Trainable: ✓
+
+  22. MobilenetV2/expanded_conv_1/depthwise/BatchNorm/MobilenetV2/expanded_conv_1/depthwise/BatchNorm/gamma:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+  23. MobilenetV2/expanded_conv_1/depthwise/BatchNorm/MobilenetV2/expanded_conv_1/depthwise/BatchNorm/beta:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+  24. MobilenetV2/expanded_conv_1/depthwise/BatchNorm/MobilenetV2/expanded_conv_1/depthwise/BatchNorm/moving_mean:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+  25. MobilenetV2/expanded_conv_1/depthwise/BatchNorm/MobilenetV2/expanded_conv_1/depthwise/BatchNorm/moving_variance:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+  26. MobilenetV2/expanded_conv_1/project/weights:0
+       Shape: [1, 1, 96, 24]
+       Dtype: float32
+       Parameters: 2,304
+       Trainable: ✓
+
+  27. MobilenetV2/expanded_conv_1/project/BatchNorm/MobilenetV2/expanded_conv_1/project/BatchNorm/gamma:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✓
+
+  28. MobilenetV2/expanded_conv_1/project/BatchNorm/MobilenetV2/expanded_conv_1/project/BatchNorm/beta:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✓
+
+  29. MobilenetV2/expanded_conv_1/project/BatchNorm/MobilenetV2/expanded_conv_1/project/BatchNorm/moving_mean:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✗
+
+  30. MobilenetV2/expanded_conv_1/project/BatchNorm/MobilenetV2/expanded_conv_1/project/BatchNorm/moving_variance:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✗
+
+  31. MobilenetV2/expanded_conv_2/expand/weights:0
+       Shape: [1, 1, 24, 144]
+       Dtype: float32
+       Parameters: 3,456
+       Trainable: ✓
+
+  32. MobilenetV2/expanded_conv_2/expand/BatchNorm/MobilenetV2/expanded_conv_2/expand/BatchNorm/gamma:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  33. MobilenetV2/expanded_conv_2/expand/BatchNorm/MobilenetV2/expanded_conv_2/expand/BatchNorm/beta:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  34. MobilenetV2/expanded_conv_2/expand/BatchNorm/MobilenetV2/expanded_conv_2/expand/BatchNorm/moving_mean:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  35. MobilenetV2/expanded_conv_2/expand/BatchNorm/MobilenetV2/expanded_conv_2/expand/BatchNorm/moving_variance:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  36. MobilenetV2/expanded_conv_2/depthwise/depthwise_weights:0
+       Shape: [3, 3, 144, 1]
+       Dtype: float32
+       Parameters: 1,296
+       Trainable: ✓
+
+  37. MobilenetV2/expanded_conv_2/depthwise/BatchNorm/MobilenetV2/expanded_conv_2/depthwise/BatchNorm/gamma:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  38. MobilenetV2/expanded_conv_2/depthwise/BatchNorm/MobilenetV2/expanded_conv_2/depthwise/BatchNorm/beta:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  39. MobilenetV2/expanded_conv_2/depthwise/BatchNorm/MobilenetV2/expanded_conv_2/depthwise/BatchNorm/moving_mean:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  40. MobilenetV2/expanded_conv_2/depthwise/BatchNorm/MobilenetV2/expanded_conv_2/depthwise/BatchNorm/moving_variance:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  41. MobilenetV2/expanded_conv_2/project/weights:0
+       Shape: [1, 1, 144, 24]
+       Dtype: float32
+       Parameters: 3,456
+       Trainable: ✓
+
+  42. MobilenetV2/expanded_conv_2/project/BatchNorm/MobilenetV2/expanded_conv_2/project/BatchNorm/gamma:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✓
+
+  43. MobilenetV2/expanded_conv_2/project/BatchNorm/MobilenetV2/expanded_conv_2/project/BatchNorm/beta:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✓
+
+  44. MobilenetV2/expanded_conv_2/project/BatchNorm/MobilenetV2/expanded_conv_2/project/BatchNorm/moving_mean:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✗
+
+  45. MobilenetV2/expanded_conv_2/project/BatchNorm/MobilenetV2/expanded_conv_2/project/BatchNorm/moving_variance:0
+       Shape: [24]
+       Dtype: float32
+       Parameters: 24
+       Trainable: ✗
+
+  46. MobilenetV2/expanded_conv_3/expand/weights:0
+       Shape: [1, 1, 24, 144]
+       Dtype: float32
+       Parameters: 3,456
+       Trainable: ✓
+
+  47. MobilenetV2/expanded_conv_3/expand/BatchNorm/MobilenetV2/expanded_conv_3/expand/BatchNorm/gamma:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  48. MobilenetV2/expanded_conv_3/expand/BatchNorm/MobilenetV2/expanded_conv_3/expand/BatchNorm/beta:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  49. MobilenetV2/expanded_conv_3/expand/BatchNorm/MobilenetV2/expanded_conv_3/expand/BatchNorm/moving_mean:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  50. MobilenetV2/expanded_conv_3/expand/BatchNorm/MobilenetV2/expanded_conv_3/expand/BatchNorm/moving_variance:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  51. MobilenetV2/expanded_conv_3/depthwise/depthwise_weights:0
+       Shape: [3, 3, 144, 1]
+       Dtype: float32
+       Parameters: 1,296
+       Trainable: ✓
+
+  52. MobilenetV2/expanded_conv_3/depthwise/BatchNorm/MobilenetV2/expanded_conv_3/depthwise/BatchNorm/gamma:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  53. MobilenetV2/expanded_conv_3/depthwise/BatchNorm/MobilenetV2/expanded_conv_3/depthwise/BatchNorm/beta:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✓
+
+  54. MobilenetV2/expanded_conv_3/depthwise/BatchNorm/MobilenetV2/expanded_conv_3/depthwise/BatchNorm/moving_mean:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  55. MobilenetV2/expanded_conv_3/depthwise/BatchNorm/MobilenetV2/expanded_conv_3/depthwise/BatchNorm/moving_variance:0
+       Shape: [144]
+       Dtype: float32
+       Parameters: 144
+       Trainable: ✗
+
+  56. MobilenetV2/expanded_conv_3/project/weights:0
+       Shape: [1, 1, 144, 32]
+       Dtype: float32
+       Parameters: 4,608
+       Trainable: ✓
+
+  57. MobilenetV2/expanded_conv_3/project/BatchNorm/MobilenetV2/expanded_conv_3/project/BatchNorm/gamma:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+  58. MobilenetV2/expanded_conv_3/project/BatchNorm/MobilenetV2/expanded_conv_3/project/BatchNorm/beta:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+  59. MobilenetV2/expanded_conv_3/project/BatchNorm/MobilenetV2/expanded_conv_3/project/BatchNorm/moving_mean:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  60. MobilenetV2/expanded_conv_3/project/BatchNorm/MobilenetV2/expanded_conv_3/project/BatchNorm/moving_variance:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  61. MobilenetV2/expanded_conv_4/expand/weights:0
+       Shape: [1, 1, 32, 192]
+       Dtype: float32
+       Parameters: 6,144
+       Trainable: ✓
+
+  62. MobilenetV2/expanded_conv_4/expand/BatchNorm/MobilenetV2/expanded_conv_4/expand/BatchNorm/gamma:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  63. MobilenetV2/expanded_conv_4/expand/BatchNorm/MobilenetV2/expanded_conv_4/expand/BatchNorm/beta:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  64. MobilenetV2/expanded_conv_4/expand/BatchNorm/MobilenetV2/expanded_conv_4/expand/BatchNorm/moving_mean:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  65. MobilenetV2/expanded_conv_4/expand/BatchNorm/MobilenetV2/expanded_conv_4/expand/BatchNorm/moving_variance:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  66. MobilenetV2/expanded_conv_4/depthwise/depthwise_weights:0
+       Shape: [3, 3, 192, 1]
+       Dtype: float32
+       Parameters: 1,728
+       Trainable: ✓
+
+  67. MobilenetV2/expanded_conv_4/depthwise/BatchNorm/MobilenetV2/expanded_conv_4/depthwise/BatchNorm/gamma:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  68. MobilenetV2/expanded_conv_4/depthwise/BatchNorm/MobilenetV2/expanded_conv_4/depthwise/BatchNorm/beta:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  69. MobilenetV2/expanded_conv_4/depthwise/BatchNorm/MobilenetV2/expanded_conv_4/depthwise/BatchNorm/moving_mean:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  70. MobilenetV2/expanded_conv_4/depthwise/BatchNorm/MobilenetV2/expanded_conv_4/depthwise/BatchNorm/moving_variance:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  71. MobilenetV2/expanded_conv_4/project/weights:0
+       Shape: [1, 1, 192, 32]
+       Dtype: float32
+       Parameters: 6,144
+       Trainable: ✓
+
+  72. MobilenetV2/expanded_conv_4/project/BatchNorm/MobilenetV2/expanded_conv_4/project/BatchNorm/gamma:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+  73. MobilenetV2/expanded_conv_4/project/BatchNorm/MobilenetV2/expanded_conv_4/project/BatchNorm/beta:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+  74. MobilenetV2/expanded_conv_4/project/BatchNorm/MobilenetV2/expanded_conv_4/project/BatchNorm/moving_mean:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  75. MobilenetV2/expanded_conv_4/project/BatchNorm/MobilenetV2/expanded_conv_4/project/BatchNorm/moving_variance:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  76. MobilenetV2/expanded_conv_5/expand/weights:0
+       Shape: [1, 1, 32, 192]
+       Dtype: float32
+       Parameters: 6,144
+       Trainable: ✓
+
+  77. MobilenetV2/expanded_conv_5/expand/BatchNorm/MobilenetV2/expanded_conv_5/expand/BatchNorm/gamma:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  78. MobilenetV2/expanded_conv_5/expand/BatchNorm/MobilenetV2/expanded_conv_5/expand/BatchNorm/beta:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  79. MobilenetV2/expanded_conv_5/expand/BatchNorm/MobilenetV2/expanded_conv_5/expand/BatchNorm/moving_mean:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  80. MobilenetV2/expanded_conv_5/expand/BatchNorm/MobilenetV2/expanded_conv_5/expand/BatchNorm/moving_variance:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  81. MobilenetV2/expanded_conv_5/depthwise/depthwise_weights:0
+       Shape: [3, 3, 192, 1]
+       Dtype: float32
+       Parameters: 1,728
+       Trainable: ✓
+
+  82. MobilenetV2/expanded_conv_5/depthwise/BatchNorm/MobilenetV2/expanded_conv_5/depthwise/BatchNorm/gamma:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  83. MobilenetV2/expanded_conv_5/depthwise/BatchNorm/MobilenetV2/expanded_conv_5/depthwise/BatchNorm/beta:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  84. MobilenetV2/expanded_conv_5/depthwise/BatchNorm/MobilenetV2/expanded_conv_5/depthwise/BatchNorm/moving_mean:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  85. MobilenetV2/expanded_conv_5/depthwise/BatchNorm/MobilenetV2/expanded_conv_5/depthwise/BatchNorm/moving_variance:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  86. MobilenetV2/expanded_conv_5/project/weights:0
+       Shape: [1, 1, 192, 32]
+       Dtype: float32
+       Parameters: 6,144
+       Trainable: ✓
+
+  87. MobilenetV2/expanded_conv_5/project/BatchNorm/MobilenetV2/expanded_conv_5/project/BatchNorm/gamma:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+  88. MobilenetV2/expanded_conv_5/project/BatchNorm/MobilenetV2/expanded_conv_5/project/BatchNorm/beta:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✓
+
+  89. MobilenetV2/expanded_conv_5/project/BatchNorm/MobilenetV2/expanded_conv_5/project/BatchNorm/moving_mean:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  90. MobilenetV2/expanded_conv_5/project/BatchNorm/MobilenetV2/expanded_conv_5/project/BatchNorm/moving_variance:0
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+       Trainable: ✗
+
+  91. MobilenetV2/expanded_conv_6/expand/weights:0
+       Shape: [1, 1, 32, 192]
+       Dtype: float32
+       Parameters: 6,144
+       Trainable: ✓
+
+  92. MobilenetV2/expanded_conv_6/expand/BatchNorm/MobilenetV2/expanded_conv_6/expand/BatchNorm/gamma:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  93. MobilenetV2/expanded_conv_6/expand/BatchNorm/MobilenetV2/expanded_conv_6/expand/BatchNorm/beta:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  94. MobilenetV2/expanded_conv_6/expand/BatchNorm/MobilenetV2/expanded_conv_6/expand/BatchNorm/moving_mean:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  95. MobilenetV2/expanded_conv_6/expand/BatchNorm/MobilenetV2/expanded_conv_6/expand/BatchNorm/moving_variance:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+  96. MobilenetV2/expanded_conv_6/depthwise/depthwise_weights:0
+       Shape: [3, 3, 192, 1]
+       Dtype: float32
+       Parameters: 1,728
+       Trainable: ✓
+
+  97. MobilenetV2/expanded_conv_6/depthwise/BatchNorm/MobilenetV2/expanded_conv_6/depthwise/BatchNorm/gamma:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  98. MobilenetV2/expanded_conv_6/depthwise/BatchNorm/MobilenetV2/expanded_conv_6/depthwise/BatchNorm/beta:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✓
+
+  99. MobilenetV2/expanded_conv_6/depthwise/BatchNorm/MobilenetV2/expanded_conv_6/depthwise/BatchNorm/moving_mean:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+ 100. MobilenetV2/expanded_conv_6/depthwise/BatchNorm/MobilenetV2/expanded_conv_6/depthwise/BatchNorm/moving_variance:0
+       Shape: [192]
+       Dtype: float32
+       Parameters: 192
+       Trainable: ✗
+
+ 101. MobilenetV2/expanded_conv_6/project/weights:0
+       Shape: [1, 1, 192, 64]
+       Dtype: float32
+       Parameters: 12,288
+       Trainable: ✓
+
+ 102. MobilenetV2/expanded_conv_6/project/BatchNorm/MobilenetV2/expanded_conv_6/project/BatchNorm/gamma:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 103. MobilenetV2/expanded_conv_6/project/BatchNorm/MobilenetV2/expanded_conv_6/project/BatchNorm/beta:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 104. MobilenetV2/expanded_conv_6/project/BatchNorm/MobilenetV2/expanded_conv_6/project/BatchNorm/moving_mean:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 105. MobilenetV2/expanded_conv_6/project/BatchNorm/MobilenetV2/expanded_conv_6/project/BatchNorm/moving_variance:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 106. MobilenetV2/expanded_conv_7/expand/weights:0
+       Shape: [1, 1, 64, 384]
+       Dtype: float32
+       Parameters: 24,576
+       Trainable: ✓
+
+ 107. MobilenetV2/expanded_conv_7/expand/BatchNorm/MobilenetV2/expanded_conv_7/expand/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 108. MobilenetV2/expanded_conv_7/expand/BatchNorm/MobilenetV2/expanded_conv_7/expand/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 109. MobilenetV2/expanded_conv_7/expand/BatchNorm/MobilenetV2/expanded_conv_7/expand/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 110. MobilenetV2/expanded_conv_7/expand/BatchNorm/MobilenetV2/expanded_conv_7/expand/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 111. MobilenetV2/expanded_conv_7/depthwise/depthwise_weights:0
+       Shape: [3, 3, 384, 1]
+       Dtype: float32
+       Parameters: 3,456
+       Trainable: ✓
+
+ 112. MobilenetV2/expanded_conv_7/depthwise/BatchNorm/MobilenetV2/expanded_conv_7/depthwise/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 113. MobilenetV2/expanded_conv_7/depthwise/BatchNorm/MobilenetV2/expanded_conv_7/depthwise/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 114. MobilenetV2/expanded_conv_7/depthwise/BatchNorm/MobilenetV2/expanded_conv_7/depthwise/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 115. MobilenetV2/expanded_conv_7/depthwise/BatchNorm/MobilenetV2/expanded_conv_7/depthwise/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 116. MobilenetV2/expanded_conv_7/project/weights:0
+       Shape: [1, 1, 384, 64]
+       Dtype: float32
+       Parameters: 24,576
+       Trainable: ✓
+
+ 117. MobilenetV2/expanded_conv_7/project/BatchNorm/MobilenetV2/expanded_conv_7/project/BatchNorm/gamma:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 118. MobilenetV2/expanded_conv_7/project/BatchNorm/MobilenetV2/expanded_conv_7/project/BatchNorm/beta:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 119. MobilenetV2/expanded_conv_7/project/BatchNorm/MobilenetV2/expanded_conv_7/project/BatchNorm/moving_mean:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 120. MobilenetV2/expanded_conv_7/project/BatchNorm/MobilenetV2/expanded_conv_7/project/BatchNorm/moving_variance:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 121. MobilenetV2/expanded_conv_8/expand/weights:0
+       Shape: [1, 1, 64, 384]
+       Dtype: float32
+       Parameters: 24,576
+       Trainable: ✓
+
+ 122. MobilenetV2/expanded_conv_8/expand/BatchNorm/MobilenetV2/expanded_conv_8/expand/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 123. MobilenetV2/expanded_conv_8/expand/BatchNorm/MobilenetV2/expanded_conv_8/expand/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 124. MobilenetV2/expanded_conv_8/expand/BatchNorm/MobilenetV2/expanded_conv_8/expand/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 125. MobilenetV2/expanded_conv_8/expand/BatchNorm/MobilenetV2/expanded_conv_8/expand/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 126. MobilenetV2/expanded_conv_8/depthwise/depthwise_weights:0
+       Shape: [3, 3, 384, 1]
+       Dtype: float32
+       Parameters: 3,456
+       Trainable: ✓
+
+ 127. MobilenetV2/expanded_conv_8/depthwise/BatchNorm/MobilenetV2/expanded_conv_8/depthwise/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 128. MobilenetV2/expanded_conv_8/depthwise/BatchNorm/MobilenetV2/expanded_conv_8/depthwise/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 129. MobilenetV2/expanded_conv_8/depthwise/BatchNorm/MobilenetV2/expanded_conv_8/depthwise/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 130. MobilenetV2/expanded_conv_8/depthwise/BatchNorm/MobilenetV2/expanded_conv_8/depthwise/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 131. MobilenetV2/expanded_conv_8/project/weights:0
+       Shape: [1, 1, 384, 64]
+       Dtype: float32
+       Parameters: 24,576
+       Trainable: ✓
+
+ 132. MobilenetV2/expanded_conv_8/project/BatchNorm/MobilenetV2/expanded_conv_8/project/BatchNorm/gamma:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 133. MobilenetV2/expanded_conv_8/project/BatchNorm/MobilenetV2/expanded_conv_8/project/BatchNorm/beta:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 134. MobilenetV2/expanded_conv_8/project/BatchNorm/MobilenetV2/expanded_conv_8/project/BatchNorm/moving_mean:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 135. MobilenetV2/expanded_conv_8/project/BatchNorm/MobilenetV2/expanded_conv_8/project/BatchNorm/moving_variance:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 136. MobilenetV2/expanded_conv_9/expand/weights:0
+       Shape: [1, 1, 64, 384]
+       Dtype: float32
+       Parameters: 24,576
+       Trainable: ✓
+
+ 137. MobilenetV2/expanded_conv_9/expand/BatchNorm/MobilenetV2/expanded_conv_9/expand/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 138. MobilenetV2/expanded_conv_9/expand/BatchNorm/MobilenetV2/expanded_conv_9/expand/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 139. MobilenetV2/expanded_conv_9/expand/BatchNorm/MobilenetV2/expanded_conv_9/expand/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 140. MobilenetV2/expanded_conv_9/expand/BatchNorm/MobilenetV2/expanded_conv_9/expand/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 141. MobilenetV2/expanded_conv_9/depthwise/depthwise_weights:0
+       Shape: [3, 3, 384, 1]
+       Dtype: float32
+       Parameters: 3,456
+       Trainable: ✓
+
+ 142. MobilenetV2/expanded_conv_9/depthwise/BatchNorm/MobilenetV2/expanded_conv_9/depthwise/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 143. MobilenetV2/expanded_conv_9/depthwise/BatchNorm/MobilenetV2/expanded_conv_9/depthwise/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 144. MobilenetV2/expanded_conv_9/depthwise/BatchNorm/MobilenetV2/expanded_conv_9/depthwise/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 145. MobilenetV2/expanded_conv_9/depthwise/BatchNorm/MobilenetV2/expanded_conv_9/depthwise/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 146. MobilenetV2/expanded_conv_9/project/weights:0
+       Shape: [1, 1, 384, 64]
+       Dtype: float32
+       Parameters: 24,576
+       Trainable: ✓
+
+ 147. MobilenetV2/expanded_conv_9/project/BatchNorm/MobilenetV2/expanded_conv_9/project/BatchNorm/gamma:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 148. MobilenetV2/expanded_conv_9/project/BatchNorm/MobilenetV2/expanded_conv_9/project/BatchNorm/beta:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✓
+
+ 149. MobilenetV2/expanded_conv_9/project/BatchNorm/MobilenetV2/expanded_conv_9/project/BatchNorm/moving_mean:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 150. MobilenetV2/expanded_conv_9/project/BatchNorm/MobilenetV2/expanded_conv_9/project/BatchNorm/moving_variance:0
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+       Trainable: ✗
+
+ 151. MobilenetV2/expanded_conv_10/expand/weights:0
+       Shape: [1, 1, 64, 384]
+       Dtype: float32
+       Parameters: 24,576
+       Trainable: ✓
+
+ 152. MobilenetV2/expanded_conv_10/expand/BatchNorm/MobilenetV2/expanded_conv_10/expand/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 153. MobilenetV2/expanded_conv_10/expand/BatchNorm/MobilenetV2/expanded_conv_10/expand/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 154. MobilenetV2/expanded_conv_10/expand/BatchNorm/MobilenetV2/expanded_conv_10/expand/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 155. MobilenetV2/expanded_conv_10/expand/BatchNorm/MobilenetV2/expanded_conv_10/expand/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 156. MobilenetV2/expanded_conv_10/depthwise/depthwise_weights:0
+       Shape: [3, 3, 384, 1]
+       Dtype: float32
+       Parameters: 3,456
+       Trainable: ✓
+
+ 157. MobilenetV2/expanded_conv_10/depthwise/BatchNorm/MobilenetV2/expanded_conv_10/depthwise/BatchNorm/gamma:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 158. MobilenetV2/expanded_conv_10/depthwise/BatchNorm/MobilenetV2/expanded_conv_10/depthwise/BatchNorm/beta:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✓
+
+ 159. MobilenetV2/expanded_conv_10/depthwise/BatchNorm/MobilenetV2/expanded_conv_10/depthwise/BatchNorm/moving_mean:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 160. MobilenetV2/expanded_conv_10/depthwise/BatchNorm/MobilenetV2/expanded_conv_10/depthwise/BatchNorm/moving_variance:0
+       Shape: [384]
+       Dtype: float32
+       Parameters: 384
+       Trainable: ✗
+
+ 161. MobilenetV2/expanded_conv_10/project/weights:0
+       Shape: [1, 1, 384, 96]
+       Dtype: float32
+       Parameters: 36,864
+       Trainable: ✓
+
+ 162. MobilenetV2/expanded_conv_10/project/BatchNorm/MobilenetV2/expanded_conv_10/project/BatchNorm/gamma:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+ 163. MobilenetV2/expanded_conv_10/project/BatchNorm/MobilenetV2/expanded_conv_10/project/BatchNorm/beta:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+ 164. MobilenetV2/expanded_conv_10/project/BatchNorm/MobilenetV2/expanded_conv_10/project/BatchNorm/moving_mean:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+ 165. MobilenetV2/expanded_conv_10/project/BatchNorm/MobilenetV2/expanded_conv_10/project/BatchNorm/moving_variance:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+ 166. MobilenetV2/expanded_conv_11/expand/weights:0
+       Shape: [1, 1, 96, 576]
+       Dtype: float32
+       Parameters: 55,296
+       Trainable: ✓
+
+ 167. MobilenetV2/expanded_conv_11/expand/BatchNorm/MobilenetV2/expanded_conv_11/expand/BatchNorm/gamma:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 168. MobilenetV2/expanded_conv_11/expand/BatchNorm/MobilenetV2/expanded_conv_11/expand/BatchNorm/beta:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 169. MobilenetV2/expanded_conv_11/expand/BatchNorm/MobilenetV2/expanded_conv_11/expand/BatchNorm/moving_mean:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 170. MobilenetV2/expanded_conv_11/expand/BatchNorm/MobilenetV2/expanded_conv_11/expand/BatchNorm/moving_variance:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 171. MobilenetV2/expanded_conv_11/depthwise/depthwise_weights:0
+       Shape: [3, 3, 576, 1]
+       Dtype: float32
+       Parameters: 5,184
+       Trainable: ✓
+
+ 172. MobilenetV2/expanded_conv_11/depthwise/BatchNorm/MobilenetV2/expanded_conv_11/depthwise/BatchNorm/gamma:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 173. MobilenetV2/expanded_conv_11/depthwise/BatchNorm/MobilenetV2/expanded_conv_11/depthwise/BatchNorm/beta:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 174. MobilenetV2/expanded_conv_11/depthwise/BatchNorm/MobilenetV2/expanded_conv_11/depthwise/BatchNorm/moving_mean:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 175. MobilenetV2/expanded_conv_11/depthwise/BatchNorm/MobilenetV2/expanded_conv_11/depthwise/BatchNorm/moving_variance:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 176. MobilenetV2/expanded_conv_11/project/weights:0
+       Shape: [1, 1, 576, 96]
+       Dtype: float32
+       Parameters: 55,296
+       Trainable: ✓
+
+ 177. MobilenetV2/expanded_conv_11/project/BatchNorm/MobilenetV2/expanded_conv_11/project/BatchNorm/gamma:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+ 178. MobilenetV2/expanded_conv_11/project/BatchNorm/MobilenetV2/expanded_conv_11/project/BatchNorm/beta:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+ 179. MobilenetV2/expanded_conv_11/project/BatchNorm/MobilenetV2/expanded_conv_11/project/BatchNorm/moving_mean:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+ 180. MobilenetV2/expanded_conv_11/project/BatchNorm/MobilenetV2/expanded_conv_11/project/BatchNorm/moving_variance:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+ 181. MobilenetV2/expanded_conv_12/expand/weights:0
+       Shape: [1, 1, 96, 576]
+       Dtype: float32
+       Parameters: 55,296
+       Trainable: ✓
+
+ 182. MobilenetV2/expanded_conv_12/expand/BatchNorm/MobilenetV2/expanded_conv_12/expand/BatchNorm/gamma:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 183. MobilenetV2/expanded_conv_12/expand/BatchNorm/MobilenetV2/expanded_conv_12/expand/BatchNorm/beta:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 184. MobilenetV2/expanded_conv_12/expand/BatchNorm/MobilenetV2/expanded_conv_12/expand/BatchNorm/moving_mean:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 185. MobilenetV2/expanded_conv_12/expand/BatchNorm/MobilenetV2/expanded_conv_12/expand/BatchNorm/moving_variance:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 186. MobilenetV2/expanded_conv_12/depthwise/depthwise_weights:0
+       Shape: [3, 3, 576, 1]
+       Dtype: float32
+       Parameters: 5,184
+       Trainable: ✓
+
+ 187. MobilenetV2/expanded_conv_12/depthwise/BatchNorm/MobilenetV2/expanded_conv_12/depthwise/BatchNorm/gamma:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 188. MobilenetV2/expanded_conv_12/depthwise/BatchNorm/MobilenetV2/expanded_conv_12/depthwise/BatchNorm/beta:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 189. MobilenetV2/expanded_conv_12/depthwise/BatchNorm/MobilenetV2/expanded_conv_12/depthwise/BatchNorm/moving_mean:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 190. MobilenetV2/expanded_conv_12/depthwise/BatchNorm/MobilenetV2/expanded_conv_12/depthwise/BatchNorm/moving_variance:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 191. MobilenetV2/expanded_conv_12/project/weights:0
+       Shape: [1, 1, 576, 96]
+       Dtype: float32
+       Parameters: 55,296
+       Trainable: ✓
+
+ 192. MobilenetV2/expanded_conv_12/project/BatchNorm/MobilenetV2/expanded_conv_12/project/BatchNorm/gamma:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+ 193. MobilenetV2/expanded_conv_12/project/BatchNorm/MobilenetV2/expanded_conv_12/project/BatchNorm/beta:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✓
+
+ 194. MobilenetV2/expanded_conv_12/project/BatchNorm/MobilenetV2/expanded_conv_12/project/BatchNorm/moving_mean:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+ 195. MobilenetV2/expanded_conv_12/project/BatchNorm/MobilenetV2/expanded_conv_12/project/BatchNorm/moving_variance:0
+       Shape: [96]
+       Dtype: float32
+       Parameters: 96
+       Trainable: ✗
+
+ 196. MobilenetV2/expanded_conv_13/expand/weights:0
+       Shape: [1, 1, 96, 576]
+       Dtype: float32
+       Parameters: 55,296
+       Trainable: ✓
+
+ 197. MobilenetV2/expanded_conv_13/expand/BatchNorm/MobilenetV2/expanded_conv_13/expand/BatchNorm/gamma:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 198. MobilenetV2/expanded_conv_13/expand/BatchNorm/MobilenetV2/expanded_conv_13/expand/BatchNorm/beta:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 199. MobilenetV2/expanded_conv_13/expand/BatchNorm/MobilenetV2/expanded_conv_13/expand/BatchNorm/moving_mean:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 200. MobilenetV2/expanded_conv_13/expand/BatchNorm/MobilenetV2/expanded_conv_13/expand/BatchNorm/moving_variance:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 201. MobilenetV2/expanded_conv_13/depthwise/depthwise_weights:0
+       Shape: [3, 3, 576, 1]
+       Dtype: float32
+       Parameters: 5,184
+       Trainable: ✓
+
+ 202. MobilenetV2/expanded_conv_13/depthwise/BatchNorm/MobilenetV2/expanded_conv_13/depthwise/BatchNorm/gamma:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 203. MobilenetV2/expanded_conv_13/depthwise/BatchNorm/MobilenetV2/expanded_conv_13/depthwise/BatchNorm/beta:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✓
+
+ 204. MobilenetV2/expanded_conv_13/depthwise/BatchNorm/MobilenetV2/expanded_conv_13/depthwise/BatchNorm/moving_mean:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 205. MobilenetV2/expanded_conv_13/depthwise/BatchNorm/MobilenetV2/expanded_conv_13/depthwise/BatchNorm/moving_variance:0
+       Shape: [576]
+       Dtype: float32
+       Parameters: 576
+       Trainable: ✗
+
+ 206. MobilenetV2/expanded_conv_13/project/weights:0
+       Shape: [1, 1, 576, 160]
+       Dtype: float32
+       Parameters: 92,160
+       Trainable: ✓
+
+ 207. MobilenetV2/expanded_conv_13/project/BatchNorm/MobilenetV2/expanded_conv_13/project/BatchNorm/gamma:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✓
+
+ 208. MobilenetV2/expanded_conv_13/project/BatchNorm/MobilenetV2/expanded_conv_13/project/BatchNorm/beta:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✓
+
+ 209. MobilenetV2/expanded_conv_13/project/BatchNorm/MobilenetV2/expanded_conv_13/project/BatchNorm/moving_mean:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✗
+
+ 210. MobilenetV2/expanded_conv_13/project/BatchNorm/MobilenetV2/expanded_conv_13/project/BatchNorm/moving_variance:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✗
+
+ 211. MobilenetV2/expanded_conv_14/expand/weights:0
+       Shape: [1, 1, 160, 960]
+       Dtype: float32
+       Parameters: 153,600
+       Trainable: ✓
+
+ 212. MobilenetV2/expanded_conv_14/expand/BatchNorm/MobilenetV2/expanded_conv_14/expand/BatchNorm/gamma:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 213. MobilenetV2/expanded_conv_14/expand/BatchNorm/MobilenetV2/expanded_conv_14/expand/BatchNorm/beta:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 214. MobilenetV2/expanded_conv_14/expand/BatchNorm/MobilenetV2/expanded_conv_14/expand/BatchNorm/moving_mean:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 215. MobilenetV2/expanded_conv_14/expand/BatchNorm/MobilenetV2/expanded_conv_14/expand/BatchNorm/moving_variance:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 216. MobilenetV2/expanded_conv_14/depthwise/depthwise_weights:0
+       Shape: [3, 3, 960, 1]
+       Dtype: float32
+       Parameters: 8,640
+       Trainable: ✓
+
+ 217. MobilenetV2/expanded_conv_14/depthwise/BatchNorm/MobilenetV2/expanded_conv_14/depthwise/BatchNorm/gamma:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 218. MobilenetV2/expanded_conv_14/depthwise/BatchNorm/MobilenetV2/expanded_conv_14/depthwise/BatchNorm/beta:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 219. MobilenetV2/expanded_conv_14/depthwise/BatchNorm/MobilenetV2/expanded_conv_14/depthwise/BatchNorm/moving_mean:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 220. MobilenetV2/expanded_conv_14/depthwise/BatchNorm/MobilenetV2/expanded_conv_14/depthwise/BatchNorm/moving_variance:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 221. MobilenetV2/expanded_conv_14/project/weights:0
+       Shape: [1, 1, 960, 160]
+       Dtype: float32
+       Parameters: 153,600
+       Trainable: ✓
+
+ 222. MobilenetV2/expanded_conv_14/project/BatchNorm/MobilenetV2/expanded_conv_14/project/BatchNorm/gamma:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✓
+
+ 223. MobilenetV2/expanded_conv_14/project/BatchNorm/MobilenetV2/expanded_conv_14/project/BatchNorm/beta:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✓
+
+ 224. MobilenetV2/expanded_conv_14/project/BatchNorm/MobilenetV2/expanded_conv_14/project/BatchNorm/moving_mean:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✗
+
+ 225. MobilenetV2/expanded_conv_14/project/BatchNorm/MobilenetV2/expanded_conv_14/project/BatchNorm/moving_variance:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✗
+
+ 226. MobilenetV2/expanded_conv_15/expand/weights:0
+       Shape: [1, 1, 160, 960]
+       Dtype: float32
+       Parameters: 153,600
+       Trainable: ✓
+
+ 227. MobilenetV2/expanded_conv_15/expand/BatchNorm/MobilenetV2/expanded_conv_15/expand/BatchNorm/gamma:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 228. MobilenetV2/expanded_conv_15/expand/BatchNorm/MobilenetV2/expanded_conv_15/expand/BatchNorm/beta:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 229. MobilenetV2/expanded_conv_15/expand/BatchNorm/MobilenetV2/expanded_conv_15/expand/BatchNorm/moving_mean:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 230. MobilenetV2/expanded_conv_15/expand/BatchNorm/MobilenetV2/expanded_conv_15/expand/BatchNorm/moving_variance:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 231. MobilenetV2/expanded_conv_15/depthwise/depthwise_weights:0
+       Shape: [3, 3, 960, 1]
+       Dtype: float32
+       Parameters: 8,640
+       Trainable: ✓
+
+ 232. MobilenetV2/expanded_conv_15/depthwise/BatchNorm/MobilenetV2/expanded_conv_15/depthwise/BatchNorm/gamma:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 233. MobilenetV2/expanded_conv_15/depthwise/BatchNorm/MobilenetV2/expanded_conv_15/depthwise/BatchNorm/beta:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 234. MobilenetV2/expanded_conv_15/depthwise/BatchNorm/MobilenetV2/expanded_conv_15/depthwise/BatchNorm/moving_mean:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 235. MobilenetV2/expanded_conv_15/depthwise/BatchNorm/MobilenetV2/expanded_conv_15/depthwise/BatchNorm/moving_variance:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 236. MobilenetV2/expanded_conv_15/project/weights:0
+       Shape: [1, 1, 960, 160]
+       Dtype: float32
+       Parameters: 153,600
+       Trainable: ✓
+
+ 237. MobilenetV2/expanded_conv_15/project/BatchNorm/MobilenetV2/expanded_conv_15/project/BatchNorm/gamma:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✓
+
+ 238. MobilenetV2/expanded_conv_15/project/BatchNorm/MobilenetV2/expanded_conv_15/project/BatchNorm/beta:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✓
+
+ 239. MobilenetV2/expanded_conv_15/project/BatchNorm/MobilenetV2/expanded_conv_15/project/BatchNorm/moving_mean:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✗
+
+ 240. MobilenetV2/expanded_conv_15/project/BatchNorm/MobilenetV2/expanded_conv_15/project/BatchNorm/moving_variance:0
+       Shape: [160]
+       Dtype: float32
+       Parameters: 160
+       Trainable: ✗
+
+ 241. MobilenetV2/expanded_conv_16/expand/weights:0
+       Shape: [1, 1, 160, 960]
+       Dtype: float32
+       Parameters: 153,600
+       Trainable: ✓
+
+ 242. MobilenetV2/expanded_conv_16/expand/BatchNorm/MobilenetV2/expanded_conv_16/expand/BatchNorm/gamma:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 243. MobilenetV2/expanded_conv_16/expand/BatchNorm/MobilenetV2/expanded_conv_16/expand/BatchNorm/beta:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 244. MobilenetV2/expanded_conv_16/expand/BatchNorm/MobilenetV2/expanded_conv_16/expand/BatchNorm/moving_mean:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 245. MobilenetV2/expanded_conv_16/expand/BatchNorm/MobilenetV2/expanded_conv_16/expand/BatchNorm/moving_variance:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 246. MobilenetV2/expanded_conv_16/depthwise/depthwise_weights:0
+       Shape: [3, 3, 960, 1]
+       Dtype: float32
+       Parameters: 8,640
+       Trainable: ✓
+
+ 247. MobilenetV2/expanded_conv_16/depthwise/BatchNorm/MobilenetV2/expanded_conv_16/depthwise/BatchNorm/gamma:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 248. MobilenetV2/expanded_conv_16/depthwise/BatchNorm/MobilenetV2/expanded_conv_16/depthwise/BatchNorm/beta:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✓
+
+ 249. MobilenetV2/expanded_conv_16/depthwise/BatchNorm/MobilenetV2/expanded_conv_16/depthwise/BatchNorm/moving_mean:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 250. MobilenetV2/expanded_conv_16/depthwise/BatchNorm/MobilenetV2/expanded_conv_16/depthwise/BatchNorm/moving_variance:0
+       Shape: [960]
+       Dtype: float32
+       Parameters: 960
+       Trainable: ✗
+
+ 251. MobilenetV2/expanded_conv_16/project/weights:0
+       Shape: [1, 1, 960, 320]
+       Dtype: float32
+       Parameters: 307,200
+       Trainable: ✓
+
+ 252. MobilenetV2/expanded_conv_16/project/BatchNorm/MobilenetV2/expanded_conv_16/project/BatchNorm/gamma:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 253. MobilenetV2/expanded_conv_16/project/BatchNorm/MobilenetV2/expanded_conv_16/project/BatchNorm/beta:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 254. MobilenetV2/expanded_conv_16/project/BatchNorm/MobilenetV2/expanded_conv_16/project/BatchNorm/moving_mean:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 255. MobilenetV2/expanded_conv_16/project/BatchNorm/MobilenetV2/expanded_conv_16/project/BatchNorm/moving_variance:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 256. image_pooling/weights:0
+       Shape: [1, 1, 320, 256]
+       Dtype: float32
+       Parameters: 81,920
+       Trainable: ✓
+
+ 257. image_pooling/BatchNorm/image_pooling/BatchNorm/gamma:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 258. image_pooling/BatchNorm/image_pooling/BatchNorm/beta:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 259. image_pooling/BatchNorm/image_pooling/BatchNorm/moving_mean:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 260. image_pooling/BatchNorm/image_pooling/BatchNorm/moving_variance:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 261. aspp0/weights:0
+       Shape: [1, 1, 320, 256]
+       Dtype: float32
+       Parameters: 81,920
+       Trainable: ✓
+
+ 262. aspp0/BatchNorm/aspp0/BatchNorm/gamma:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 263. aspp0/BatchNorm/aspp0/BatchNorm/beta:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 264. aspp0/BatchNorm/aspp0/BatchNorm/moving_mean:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 265. aspp0/BatchNorm/aspp0/BatchNorm/moving_variance:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 266. aspp1_depthwise/depthwise_weights:0
+       Shape: [3, 3, 320, 1]
+       Dtype: float32
+       Parameters: 2,880
+       Trainable: ✓
+
+ 267. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/gamma:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 268. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/beta:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 269. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/moving_mean:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 270. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/moving_variance:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 271. aspp1_pointwise/weights:0
+       Shape: [1, 1, 320, 256]
+       Dtype: float32
+       Parameters: 81,920
+       Trainable: ✓
+
+ 272. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/gamma:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 273. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/beta:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 274. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/moving_mean:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 275. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/moving_variance:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 276. aspp2_depthwise/depthwise_weights:0
+       Shape: [3, 3, 320, 1]
+       Dtype: float32
+       Parameters: 2,880
+       Trainable: ✓
+
+ 277. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/gamma:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 278. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/beta:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 279. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/moving_mean:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 280. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/moving_variance:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 281. aspp2_pointwise/weights:0
+       Shape: [1, 1, 320, 256]
+       Dtype: float32
+       Parameters: 81,920
+       Trainable: ✓
+
+ 282. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/gamma:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 283. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/beta:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 284. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/moving_mean:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 285. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/moving_variance:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 286. aspp3_depthwise/depthwise_weights:0
+       Shape: [3, 3, 320, 1]
+       Dtype: float32
+       Parameters: 2,880
+       Trainable: ✓
+
+ 287. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/gamma:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 288. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/beta:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✓
+
+ 289. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/moving_mean:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 290. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/moving_variance:0
+       Shape: [320]
+       Dtype: float32
+       Parameters: 320
+       Trainable: ✗
+
+ 291. aspp3_pointwise/weights:0
+       Shape: [1, 1, 320, 256]
+       Dtype: float32
+       Parameters: 81,920
+       Trainable: ✓
+
+ 292. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/gamma:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 293. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/beta:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 294. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/moving_mean:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 295. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/moving_variance:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 296. concat_projection/weights:0
+       Shape: [1, 1, 1280, 256]
+       Dtype: float32
+       Parameters: 327,680
+       Trainable: ✓
+
+ 297. concat_projection/BatchNorm/concat_projection/BatchNorm/gamma:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 298. concat_projection/BatchNorm/concat_projection/BatchNorm/beta:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✓
+
+ 299. concat_projection/BatchNorm/concat_projection/BatchNorm/moving_mean:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 300. concat_projection/BatchNorm/concat_projection/BatchNorm/moving_variance:0
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+       Trainable: ✗
+
+ 301. logits/semantic/weights:0
+       Shape: [1, 1, 256, 2]
+       Dtype: float32
+       Parameters: 512
+       Trainable: ✓
+
+ 302. logits/semantic/biases:0
+       Shape: [2]
+       Dtype: float32
+       Parameters: 2
+       Trainable: ✓
+
+
+================================================================================
+GRAPH OPERATIONS SUMMARY
+================================================================================
+
+Total operations in graph: 2659
+
+Top 20 operation types:
+  ReadVariableOp                :   645
+  Const                         :   559
+  VarHandleOp                   :   302
+  VarIsInitializedOp            :   302
+  AssignVariableOp              :   302
+  Mul                           :   103
+  Identity                      :    86
+  AddV2                         :    71
+  FusedBatchNormV3              :    60
+  TruncatedNormal               :    58
+  L2Loss                        :    41
+  Conv2D                        :    41
+  Relu6                         :    34
+  DepthwiseConv2dNative         :    20
+  Relu                          :     9
+  SpaceToBatchND                :     6
+  BatchToSpaceND                :     6
+  Sub                           :     4
+  RandomUniform                 :     3
+  Placeholder                   :     1
+
+================================================================================
+ANALYSIS COMPLETE
+================================================================================
+
