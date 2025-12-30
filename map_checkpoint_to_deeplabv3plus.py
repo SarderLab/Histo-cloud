@@ -315,7 +315,7 @@ def main():
     )
     parser.add_argument(
         "--ckpt", 
-        default="/home/iansari/model/model.ckpt-5000",
+        default="/home/iansari/model_test/model.ckpt-5000",
         help="TF1 checkpoint prefix (no .index/.data suffix)"
     )
     parser.add_argument(

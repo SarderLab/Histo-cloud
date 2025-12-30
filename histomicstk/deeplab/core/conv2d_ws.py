@@ -32,8 +32,8 @@ from __future__ import print_function
 import tensorflow as tf
 import tf_slim as slim
 
-# Local helpers to mimic a subset of TF1 contrib.layers utilities used here.
 
+# Local helpers to mimic a subset of TF1 contrib.layers utilities used here.
 def _variable_getter_for_compat(getter, name, *args, **kwargs):
   """A compatibility custom_getter that maps old TF1 var names to new ones.
 
@@ -44,22 +44,23 @@ def _variable_getter_for_compat(getter, name, *args, **kwargs):
   return getter(new_name, *args, **kwargs)
 
 
-def _add_variable_to_collections(var, variables_collections, var_name):
+def _add_variable_to_collections(var, collections_set, collections_name):
   """Add variable to the given collections (compat shim).
 
-  variables_collections may be a list of collection names or a dict mapping
-  variable short names to list of collection names.
+  collections_set may be a list of collection names or a dict mapping
+  variable scope names to list of collection names.
   """
-  if not variables_collections:
+  if not collections_set:
     return
-  if isinstance(variables_collections, dict):
-    # Expect keys like 'weights' or 'biases'. Fall back to any default.
-    colls = variables_collections.get(var_name, None)
-    if colls:
-      for c in colls:
+  if isinstance(collections_set, dict):
+    # if collections_set is a dict, get the list for this variable
+    collection = collections_set.get(collections_name, None)
+    if collection:
+      for c in collection:
         tf.compat.v1.add_to_collection(c, var)
   else:
-    for c in variables_collections:
+    # collections_set is a list, add to all collections
+    for c in collections_set:
       tf.compat.v1.add_to_collection(c, var)
 
 
@@ -204,7 +205,7 @@ def conv2d(inputs,
            biases_regularizer=None,
            use_weight_standardization=False,
            reuse=None,
-           variables_collections=None,
+           collections_set=None,
            outputs_collections=None,
            trainable=True,
            scope=None):
@@ -261,7 +262,7 @@ def conv2d(inputs,
       standardization.
     reuse: Whether or not the layer and its variables should be reused. To be
       able to reuse the layer scope must be given.
-    variables_collections: Optional list of collections for all the variables or
+    collections_set: Optional list of collections for all the variables or
       a dictionary containing a different list of collection per variable.
     outputs_collections: Collection to add the outputs.
     trainable: If `True` also add variables to the graph collection
@@ -315,9 +316,9 @@ def conv2d(inputs,
     outputs = layer.apply(inputs)
 
     # Add variables to collections (compat shim).
-    _add_variable_to_collections(layer.kernel, variables_collections, 'weights')
+    _add_variable_to_collections(layer.kernel, collections_set, 'weights')
     if layer.use_bias:
-      _add_variable_to_collections(layer.bias, variables_collections, 'biases')
+      _add_variable_to_collections(layer.bias, collections_set, 'biases')
 
     if normalizer_fn is not None:
       normalizer_params = normalizer_params or {}

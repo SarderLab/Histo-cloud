@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-r"""Provides DeepLab model definition and helper functions.
+"""Provides DeepLab model definition and helper functions.
 
 DeepLab is a deep learning system for semantic image segmentation with
 the following features:
@@ -688,7 +688,7 @@ def refine_by_decoder(features,
       stride=1,
       reuse=reuse):
     with slim.arg_scope([batch_norm], **batch_norm_params):
-      with tf.compat.v1.variable_scope(DECODER_SCOPE, values=[features]):
+      with tf.compat.v1.variable_scope(DECODER_SCOPE, DECODER_SCOPE, values=[features]):
         decoder_features = features
         decoder_stage = 0
         scope_suffix = ''

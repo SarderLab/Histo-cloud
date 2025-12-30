@@ -54,6 +54,9 @@ def flip_dim(tensor_list, prob=0.5, dim=1):
       if dim < 0 or dim >= len(tensor.get_shape().as_list()):
         raise ValueError('dim must represent a valid dimension.')
       flipped.append(tf.reverse(tensor, [dim]))
+    return flipped
+
+  is_flipped = tf.less_equal(random_value, prob)
   outputs = tf.cond(is_flipped, flip, lambda: tensor_list)
   if not isinstance(outputs, (list, tuple)):
     outputs = [outputs]

@@ -1,8 +1,18 @@
 #!/bin/bash
-# Run vis.py with GPU allocation using srun
+#SBATCH --job-name=HistoCloud
+#SBATCH --partition=hpg-b200
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --gpus=1
+#SBATCH --mem=32gb
+#SBATCH --time=24:00:00
+#SBATCH --qos=pinaki.sarder
+#SBATCH --account=pinaki.sarder
+#SBATCH --output=HistoCloud_WSI_segmentation_%j.out
+#SBATCH --error=HistoCloud_WSI_segmentation_%j.err
 
-# Request GPU resources and run vis.py
-srun --gpus=2 --time=4:00:00 --mem=128G bash -c '
+echo "Starting HistoCloud WSI segmentation job..."
+
 # Load conda
 module load conda
 conda activate histo-cloud-tf2
@@ -10,15 +20,15 @@ conda activate histo-cloud-tf2
 # Set paths
 CHECKPOINT="/home/iansari/model/model_mapped_tf2.ckpt"
 DATA_DIR="/home/iansari/data/V10S14-085_XY03_21-0056.svs"
-OUTPUT_DIR="/home/iansari/test4_tf1/Histo-cloud/output"
-OUTPUT_JSON="glom1"
+OUTPUT_DIR="/home/iansari/frozen_test4_tf1/test4_tf1/Histo-cloud/output"
+OUTPUT_JSON="gloms-2.json"
 
 # Create output directory
 mkdir -p "$OUTPUT_DIR"
-cd /home/iansari/test4_tf1/Histo-cloud/histomicstk
+cd /home/iansari/frozen_test4_tf1/test4_tf1/Histo-cloud/histomicstk
 
 # Set Python path to find deeplab modules
-export PYTHONPATH=/home/iansari/test4_tf1/Histo-cloud/histomicstk:$PYTHONPATH
+export PYTHONPATH=/home/iansari/frozen_test4_tf1/test4_tf1/Histo-cloud/histomicstk:$PYTHONPATH
 
 # Run vis.py
 python3 deeplab/vis.py \
@@ -47,4 +57,3 @@ python3 deeplab/vis.py \
 
 echo ""
 echo "Annotation saved to: $OUTPUT_DIR/$OUTPUT_JSON"
-'

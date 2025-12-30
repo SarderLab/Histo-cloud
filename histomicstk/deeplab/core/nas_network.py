@@ -50,7 +50,7 @@ arg_scope = slim.arg_scope
 resize_bilinear = utils.resize_bilinear
 scale_dimension = utils.scale_dimension
 
-# Simple HParams replacement compatible with the subset of APIs used here.
+#Simple HParams replacement compatible with the subset of APIs used here.
 class HParams(object):
   def __init__(self, **kwargs):
     for k, v in kwargs.items():

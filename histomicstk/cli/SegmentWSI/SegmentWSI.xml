@@ -111,4 +111,29 @@
       <default>0</default>
     </integer>
   </parameters>
+  <parameters advanced="true">
+    <label>Girder Upload</label>
+    <description>Optional parameters for uploading annotations to Girder/DSA</description>
+    <string>
+      <name>girderApiUrl</name>
+      <label>Girder API URL</label>
+      <description>The base URL of the Girder API (e.g., http://localhost:8080/api/v1). If provided with girderToken, annotations will be uploaded to Girder.</description>
+      <longflag>girderApiUrl</longflag>
+      <default></default>
+    </string>
+    <string>
+      <name>girderToken</name>
+      <label>Girder API Token</label>
+      <description>Authentication token for Girder API access. Required if girderApiUrl is provided.</description>
+      <longflag>girderToken</longflag>
+      <default></default>
+    </string>
+    <string>
+      <name>girderItemId</name>
+      <label>Girder Item ID</label>
+      <description>The Girder item ID to upload annotations to. If not provided, will attempt to resolve from input image.</description>
+      <longflag>girderItemId</longflag>
+      <default></default>
+    </string>
+  </parameters>
 </executable>

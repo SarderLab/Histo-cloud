@@ -1,0 +1,56 @@
+================================================================================
+CHECKPOINT COMPARISON
+================================================================================
+
+TF1 variables: 1173
+TF2 variables: 733
+Common variables: 149
+TF1 only: 1024
+TF2 only: 584
+
+Common variables:
+  - aspp0/weights
+  - aspp1_depthwise/depthwise_weights
+  - aspp1_pointwise/weights
+  - aspp2_depthwise/depthwise_weights
+  - aspp2_pointwise/weights
+  - aspp3_depthwise/depthwise_weights
+  - aspp3_pointwise/weights
+  - concat_projection/weights
+  - decoder/decoder_conv0_depthwise/depthwise_weights
+  - decoder/decoder_conv0_pointwise/weights
+  ... and 139 more
+
+
+Variables only in TF1 (first 10):
+  - aspp0/BatchNorm/beta
+  - aspp0/BatchNorm/beta/Momentum
+  - aspp0/BatchNorm/gamma
+  - aspp0/BatchNorm/gamma/Momentum
+  - aspp0/BatchNorm/moving_mean
+  - aspp0/BatchNorm/moving_variance
+  - aspp0/weights/Momentum
+  - aspp1_depthwise/BatchNorm/beta
+  - aspp1_depthwise/BatchNorm/beta/Momentum
+  - aspp1_depthwise/BatchNorm/gamma
+  ... and 1014 more
+
+
+Variables only in TF2 (first 10):
+  - aspp0/BatchNorm/aspp0/BatchNorm/beta
+  - aspp0/BatchNorm/aspp0/BatchNorm/gamma
+  - aspp0/BatchNorm/aspp0/BatchNorm/moving_mean
+  - aspp0/BatchNorm/aspp0/BatchNorm/moving_variance
+  - aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/beta
+  - aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/gamma
+  - aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/moving_mean
+  - aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/moving_variance
+  - aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/beta
+  - aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/gamma
+  ... and 574 more
+
+
+================================================================================
+INSPECTION COMPLETE
+================================================================================
+

@@ -5,12 +5,12 @@
 # All plugins of HistomicsTK should derive from this docker image
 
 
-# start from nvidia/cuda 10.0
-# FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
-FROM tensorflow/tensorflow:1.15.4-gpu-py3
+# start from TensorFlow 2.x with GPU support
+FROM tensorflow/tensorflow:2.15.0-gpu
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 
 LABEL maintainer="Brendon Lutnick - Sarder Lab. <brendonl@buffalo.edu>"
+LABEL description="HistomicsTK with TensorFlow 2.x and DeepLabV3+ support"
 
 CMD echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! STARTING THE BUILD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # RUN mkdir /usr/local/nvidia && ln -s /usr/local/cuda-10.0/compat /usr/local/nvidia/lib
@@ -24,9 +24,7 @@ RUN rm \
 
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends software-properties-common && \
-    # As of 2018-04-16 this repo has the latest release of Python 2.7 (2.7.14) \
-    # add-apt-repository ppa:jonathonf/python-2.7 && \
-    add-apt-repository ppa:deadsnakes/ppa && \
+    RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN apt-get update && \
@@ -35,22 +33,12 @@ RUN apt-get update && \
     #keyboard-configuration \
     git \
     wget \
-    python-qt4 \
-    python3-pyqt4 \
     curl \
     ca-certificates \
     libcurl4-openssl-dev \
     libexpat1-dev \
     unzip \
     libhdf5-dev \
-    libpython-dev \
-    libpython3-dev \
-    python2.7-dev \
-    python-tk \
-    # We can't go higher than 3.7 and use tensorflow 1.x \
-    python3.6-dev \
-    python3.6-distutils \
-    python3-tk \
     software-properties-common \
     libssl-dev \
     # Standard build tools \
@@ -60,8 +48,6 @@ RUN apt-get update && \
     automake \
     libtool \
     pkg-config \
-    # needed for supporting CUDA \
-    # libcupti-dev \
     # useful later \
     libmemcached-dev && \
     #apt-get autoremove && \
@@ -81,19 +67,9 @@ RUN apt-get install 'ffmpeg'\
 # RUN apt-get install nvidia-driver-455 -y
 
 WORKDIR /
-# Make Python3 the default and install pip.  Whichever is done last determines
-# the default python version for pip.
-RUN rm /usr/bin/python && \
-    ln /usr/bin/python3.6 /usr/bin/python && \
-    rm /usr/local/bin/python && \
-    ln /usr/bin/python3.6 /usr/local/bin/python && \
-    ln /usr/bin/python3.6 /usr/local/bin/python3
-RUN which  python && \
+# Make Python3 the default and install pip. TF 2.15 comes with Python 3.11
+RUN which python && \
     python --version
-# RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
-RUN curl -O https://bootstrap.pypa.io/pip/3.6/get-pip.py && \
-    python get-pip.py && \
-    rm get-pip.py
 
 ENV build_path=$PWD/build
 
@@ -113,18 +89,16 @@ COPY . $htk_path/
 WORKDIR $htk_path
 
 # Install HistomicsTK and its dependencies
-#   Upgrade setuptools, as the version in Conda won't upgrade cleanly unless it
-# is ignored.
-RUN pip install --no-cache-dir --upgrade --ignore-installed pip setuptools && \
-    # pip install --no-cache-dir 'tensorflow<2' && \
-    # Install large_image memcached extras \
+# Upgrade setuptools and pip
+RUN pip install --no-cache-dir --upgrade pip setuptools && \
+    # Install large_image with memcached extras \
     pip install --no-cache-dir 'large-image[memcached]' && \
-    # Install HistomicsTK \
-    pip install --no-cache-dir . --find-links https://girder.github.io/large_image_wheels && \
-    # Install tf-slim \
+    # Install TF-Slim for TF2 compatibility \
     pip install --no-cache-dir 'tf-slim>=1.1.0' && \
     # Install pillow_lut \
     pip install --no-cache-dir 'pillow-lut' && \
+    # Install HistomicsTK \
+    pip install --no-cache-dir . --find-links https://girder.github.io/large_image_wheels && \
     # clean up \
     rm -rf /root/.cache/pip/*
 
@@ -137,9 +111,8 @@ RUN python --version && pip --version && pip freeze
 # pregenerate font cache
 RUN python -c "from matplotlib import pylab"
 
-# Suppress warnings
-RUN sed -i 's/^_PRINT_DEPRECATION_WARNINGS = True/_PRINT_DEPRECATION_WARNINGS = False/g' /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/util/deprecation.py && \
-    sed -i 's/rename = get_rename_v2(full_name)/rename = False/g' /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/util/module_wrapper.py
+# Note: TF2 deprecation warnings are handled via tf.compat.v1 API usage in code
+# No need to suppress warnings in the TF installation
 
 # define entrypoint through which all CLIs can be run
 WORKDIR $htk_path/histomicstk/cli
