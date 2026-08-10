@@ -46,14 +46,14 @@ def flip_dim(tensor_list, prob=0.5, dim=1):
   Raises:
     ValueError: If dim is negative or greater than the dimension of a `Tensor`.
   """
-  random_value = tf.random_uniform([])
+  random_value = tf.random.uniform([])
 
   def flip():
     flipped = []
     for tensor in tensor_list:
       if dim < 0 or dim >= len(tensor.get_shape().as_list()):
         raise ValueError('dim must represent a valid dimension.')
-      flipped.append(tf.reverse_v2(tensor, [dim]))
+      flipped.append(tf.reverse(tensor, [dim]))
     return flipped
 
   is_flipped = tf.less_equal(random_value, prob)
@@ -311,9 +311,9 @@ def random_crop(image_list, crop_height, crop_width):
   with tf.control_dependencies(asserts):
     max_offset_height = tf.reshape(image_height - crop_height + 1, [])
     max_offset_width = tf.reshape(image_width - crop_width + 1, [])
-  offset_height = tf.random_uniform(
+  offset_height = tf.random.uniform(
       [], maxval=max_offset_height, dtype=tf.int32)
-  offset_width = tf.random_uniform(
+  offset_width = tf.random.uniform(
       [], maxval=max_offset_width, dtype=tf.int32)
 
   return [_crop(image, offset_height, offset_width,
@@ -342,14 +342,15 @@ def get_random_scale(min_scale_factor, max_scale_factor, step_size):
 
   # When step_size = 0, we sample the value uniformly from [min, max).
   if step_size == 0:
-    return tf.random_uniform([1],
+    return tf.random.uniform([1],
                              minval=min_scale_factor,
-                             maxval=max_scale_factor)
+                             maxval=max_scale_factor,
+                             dtype=tf.float32)
 
   # When step_size != 0, we randomly select one discrete value from [min, max].
   num_steps = int((max_scale_factor - min_scale_factor) / step_size + 1)
-  scale_factors = tf.lin_space(min_scale_factor, max_scale_factor, num_steps)
-  shuffled_scale_factors = tf.random_shuffle(scale_factors)
+  scale_factors = tf.linspace(min_scale_factor, max_scale_factor, num_steps)
+  shuffled_scale_factors = tf.random.shuffle(scale_factors)
   return shuffled_scale_factors[0]
 
 
@@ -374,9 +375,10 @@ def randomly_scale_image_and_label(image, label=None, scale=1.0):
 
   # Need squeeze and expand_dims because image interpolation takes
   # 4D tensors as input.
-  image = tf.squeeze(tf.image.resize_bilinear(
+  image = tf.squeeze(tf.image.resize(
       tf.expand_dims(image, 0),
       new_dim,
+      method=tf.image.ResizeMethod.BILINEAR,
       align_corners=True), [0])
   if label is not None:
     label = tf.image.resize(

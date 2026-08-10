@@ -164,7 +164,7 @@ def _download_dataset(dataset_dir):
                                                filepath,
                                                _progress)
       print()
-      with tf.gfile.GFile(filepath) as f:
+      with tf.io.gfile.GFile(filepath) as f:
         size = f.size()
       print('Successfully downloaded', filename, size, 'bytes.')
 
@@ -180,7 +180,7 @@ def _clean_up_temporary_files(dataset_dir):
                    _TEST_DATA_FILENAME,
                    _TEST_LABELS_FILENAME]:
     filepath = os.path.join(dataset_dir, filename)
-    tf.gfile.Remove(filepath)
+    tf.io.gfile.remove(filepath)
 
 
 def run(dataset_dir):
@@ -189,8 +189,8 @@ def run(dataset_dir):
   Args:
     dataset_dir: The dataset directory where the dataset is stored.
   """
-  if not tf.gfile.Exists(dataset_dir):
-    tf.gfile.MakeDirs(dataset_dir)
+  if not tf.io.gfile.exists(dataset_dir):
+    tf.io.gfile.makedirs(dataset_dir)
 
   training_filename = _get_output_filename(dataset_dir, 'train')
   testing_filename = _get_output_filename(dataset_dir, 'test')

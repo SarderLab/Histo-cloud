@@ -26,11 +26,9 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-from tensorflow.contrib import slim as contrib_slim
+import tf_slim as slim
 
 from deeplab.core import utils
-
-slim = contrib_slim
 
 # Local constants.
 _META_ARCHITECTURE_SCOPE = 'meta_architecture'
@@ -211,7 +209,7 @@ class DensePredictionCell(object):
         stride=1,
         reuse=reuse):
       with slim.arg_scope([slim.batch_norm], **batch_norm_params):
-        with tf.variable_scope(scope, _META_ARCHITECTURE_SCOPE, [features]):
+        with tf.compat.v1.variable_scope(scope, _META_ARCHITECTURE_SCOPE, [features]):
           depth = hparams['reduction_size']
           branch_logits = []
           for i, current_config in enumerate(self.config):
@@ -221,7 +219,7 @@ class DensePredictionCell(object):
                 crop_size=crop_size,
                 output_stride=output_stride,
                 image_pooling_crop_size=image_pooling_crop_size)
-            tf.logging.info(current_config)
+            tf.compat.v1.logging.info(current_config)
             if current_config[_INPUT] < 0:
               operation_input = features
             else:
@@ -253,9 +251,10 @@ class DensePredictionCell(object):
                   depth,
                   1,
                   scope=scope)
-              pooled_features = tf.image.resize_bilinear(
+              pooled_features = tf.image.resize(
                   pooled_features,
                   current_config[_TARGET_SIZE],
+                  method=tf.image.ResizeMethod.BILINEAR,
                   align_corners=True)
               # Set shape for resize_height/resize_width if they are not Tensor.
               resize_height = current_config[_TARGET_SIZE][0]

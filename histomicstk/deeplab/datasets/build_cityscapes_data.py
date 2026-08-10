@@ -71,14 +71,15 @@ import sys
 import build_data
 from six.moves import range
 import tensorflow as tf
+from absl import flags
 
-FLAGS = tf.app.flags.FLAGS
+FLAGS = flags.FLAGS
 
-tf.app.flags.DEFINE_string('cityscapes_root',
+flags.DEFINE_string('cityscapes_root',
                            './cityscapes',
                            'Cityscapes dataset root folder.')
 
-tf.app.flags.DEFINE_string(
+flags.DEFINE_string(
     'output_dir',
     './tfrecord',
     'Path to save converted SSTable of TensorFlow examples.')

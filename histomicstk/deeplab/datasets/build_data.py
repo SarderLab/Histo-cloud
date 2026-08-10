@@ -32,13 +32,14 @@ The Example proto contains the following fields:
 import collections
 import six
 import tensorflow as tf
+from absl import flags
 
-FLAGS = tf.app.flags.FLAGS
+FLAGS = flags.FLAGS
 
-tf.app.flags.DEFINE_enum('image_format', 'png', ['jpg', 'jpeg', 'png'],
+flags.DEFINE_enum('image_format', 'png', ['jpg', 'jpeg', 'png'],
                          'Image format.')
 
-tf.app.flags.DEFINE_enum('label_format', 'png', ['png'],
+flags.DEFINE_enum('label_format', 'png', ['png'],
                          'Segmentation label format.')
 
 # A map from image format to expected data format.

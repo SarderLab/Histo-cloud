@@ -41,30 +41,31 @@ from __future__ import print_function
 
 import tensorflow.compat.v1 as tf
 
+from absl import flags
 from datasets import download_and_convert_cifar10
 from datasets import download_and_convert_flowers
 from datasets import download_and_convert_mnist
 from datasets import download_and_convert_visualwakewords
 
-FLAGS = tf.app.flags.FLAGS
+FLAGS = flags.FLAGS
 
-tf.app.flags.DEFINE_string(
+flags.DEFINE_string(
     'dataset_name',
     None,
     'The name of the dataset to convert, one of "flowers", "cifar10", "mnist", "visualwakewords"'
     )
 
-tf.app.flags.DEFINE_string(
+flags.DEFINE_string(
     'dataset_dir',
     None,
     'The directory where the output TFRecords and temporary files are saved.')
 
-tf.flags.DEFINE_float(
+flags.DEFINE_float(
     'small_object_area_threshold', 0.005,
     'For --dataset_name=visualwakewords only. Threshold of fraction of image '
     'area below which small objects are filtered')
 
-tf.flags.DEFINE_string(
+flags.DEFINE_string(
     'foreground_class_of_interest', 'person',
     'For --dataset_name=visualwakewords only. Build a binary classifier based '
     'on the presence or absence of this object in the image.')

@@ -19,7 +19,7 @@ import copy
 import functools
 
 import tensorflow.compat.v1 as tf
-from tensorflow.contrib import slim as contrib_slim
+import tf_slim as slim
 
 from deeplab.core import nas_network
 from deeplab.core import resnet_v1_beta
@@ -29,7 +29,6 @@ from nets.mobilenet import mobilenet
 from nets.mobilenet import mobilenet_v2
 from nets.mobilenet import mobilenet_v3
 
-slim = contrib_slim
 
 # Default end point for MobileNetv2 (one-based indexing).
 _MOBILENET_V2_FINAL_ENDPOINT = 'layer_18'
@@ -75,7 +74,7 @@ def _mobilenet_v2(net,
     divisible_by = 8 if depth_multiplier == 1.0 else 1
   if conv_defs is None:
     conv_defs = mobilenet_v2.V2_DEF
-  with tf.variable_scope(
+  with tf.compat.v1.variable_scope(
       scope, 'MobilenetV2', [net], reuse=reuse) as scope:
     return mobilenet_v2.mobilenet_base(
         net,
@@ -124,7 +123,7 @@ def _mobilenet_v3(net,
     ValueError: If conv_defs or final_endpoint is not specified.
   """
   del divisible_by
-  with tf.variable_scope(
+  with tf.compat.v1.variable_scope(
       scope, 'MobilenetV3', [net], reuse=reuse) as scope:
     if conv_defs is None:
       raise ValueError('conv_defs must be specified for mobilenet v3.')

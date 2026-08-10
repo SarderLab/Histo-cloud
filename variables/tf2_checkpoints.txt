@@ -1,0 +1,3701 @@
+
+================================================================================
+INSPECTING TF2 CHECKPOINT: /home/iansari/model/model_mapped_tf2.ckpt
+================================================================================
+
+Total variables: 733
+
+Total parameters: 41,253,330
+
+================================================================================
+VARIABLES BY SCOPE
+================================================================================
+
+aspp0/ (5 variables, 525,312 parameters)
+aspp1_depthwise/ (5 variables, 26,624 parameters)
+aspp1_pointwise/ (5 variables, 525,312 parameters)
+aspp2_depthwise/ (5 variables, 26,624 parameters)
+aspp2_pointwise/ (5 variables, 525,312 parameters)
+aspp3_depthwise/ (5 variables, 26,624 parameters)
+aspp3_pointwise/ (5 variables, 525,312 parameters)
+concat_projection/ (5 variables, 328,704 parameters)
+decoder/ (25 variables, 165,168 parameters)
+global_step/ (1 variables, 1.0 parameters)
+image_pooling/ (5 variables, 525,312 parameters)
+logits/ (2 variables, 514 parameters)
+xception_65/ (660 variables, 38,052,512 parameters)
+
+================================================================================
+DETAILED VARIABLE LIST
+================================================================================
+
+   1. aspp0/BatchNorm/aspp0/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+   2. aspp0/BatchNorm/aspp0/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+   3. aspp0/BatchNorm/aspp0/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+   4. aspp0/BatchNorm/aspp0/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+   5. aspp0/weights
+       Shape: [1, 1, 2048, 256]
+       Dtype: float32
+       Parameters: 524,288
+
+   6. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/beta
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+   7. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/gamma
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+   8. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/moving_mean
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+   9. aspp1_depthwise/BatchNorm/aspp1_depthwise/BatchNorm/moving_variance
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  10. aspp1_depthwise/depthwise_weights
+       Shape: [3, 3, 2048, 1]
+       Dtype: float32
+       Parameters: 18,432
+
+  11. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  12. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  13. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  14. aspp1_pointwise/BatchNorm/aspp1_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  15. aspp1_pointwise/weights
+       Shape: [1, 1, 2048, 256]
+       Dtype: float32
+       Parameters: 524,288
+
+  16. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/beta
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  17. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/gamma
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  18. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/moving_mean
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  19. aspp2_depthwise/BatchNorm/aspp2_depthwise/BatchNorm/moving_variance
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  20. aspp2_depthwise/depthwise_weights
+       Shape: [3, 3, 2048, 1]
+       Dtype: float32
+       Parameters: 18,432
+
+  21. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  22. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  23. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  24. aspp2_pointwise/BatchNorm/aspp2_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  25. aspp2_pointwise/weights
+       Shape: [1, 1, 2048, 256]
+       Dtype: float32
+       Parameters: 524,288
+
+  26. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/beta
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  27. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/gamma
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  28. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/moving_mean
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  29. aspp3_depthwise/BatchNorm/aspp3_depthwise/BatchNorm/moving_variance
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+  30. aspp3_depthwise/depthwise_weights
+       Shape: [3, 3, 2048, 1]
+       Dtype: float32
+       Parameters: 18,432
+
+  31. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  32. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  33. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  34. aspp3_pointwise/BatchNorm/aspp3_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  35. aspp3_pointwise/weights
+       Shape: [1, 1, 2048, 256]
+       Dtype: float32
+       Parameters: 524,288
+
+  36. concat_projection/BatchNorm/concat_projection/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  37. concat_projection/BatchNorm/concat_projection/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  38. concat_projection/BatchNorm/concat_projection/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  39. concat_projection/BatchNorm/concat_projection/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  40. concat_projection/weights
+       Shape: [1, 1, 1280, 256]
+       Dtype: float32
+       Parameters: 327,680
+
+  41. decoder/decoder_conv0_depthwise/BatchNorm/decoder/decoder_conv0_depthwise/BatchNorm/beta
+       Shape: [304]
+       Dtype: float32
+       Parameters: 304
+
+  42. decoder/decoder_conv0_depthwise/BatchNorm/decoder/decoder_conv0_depthwise/BatchNorm/gamma
+       Shape: [304]
+       Dtype: float32
+       Parameters: 304
+
+  43. decoder/decoder_conv0_depthwise/BatchNorm/decoder/decoder_conv0_depthwise/BatchNorm/moving_mean
+       Shape: [304]
+       Dtype: float32
+       Parameters: 304
+
+  44. decoder/decoder_conv0_depthwise/BatchNorm/decoder/decoder_conv0_depthwise/BatchNorm/moving_variance
+       Shape: [304]
+       Dtype: float32
+       Parameters: 304
+
+  45. decoder/decoder_conv0_depthwise/depthwise_weights
+       Shape: [3, 3, 304, 1]
+       Dtype: float32
+       Parameters: 2,736
+
+  46. decoder/decoder_conv0_pointwise/BatchNorm/decoder/decoder_conv0_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  47. decoder/decoder_conv0_pointwise/BatchNorm/decoder/decoder_conv0_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  48. decoder/decoder_conv0_pointwise/BatchNorm/decoder/decoder_conv0_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  49. decoder/decoder_conv0_pointwise/BatchNorm/decoder/decoder_conv0_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  50. decoder/decoder_conv0_pointwise/weights
+       Shape: [1, 1, 304, 256]
+       Dtype: float32
+       Parameters: 77,824
+
+  51. decoder/decoder_conv1_depthwise/BatchNorm/decoder/decoder_conv1_depthwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  52. decoder/decoder_conv1_depthwise/BatchNorm/decoder/decoder_conv1_depthwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  53. decoder/decoder_conv1_depthwise/BatchNorm/decoder/decoder_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  54. decoder/decoder_conv1_depthwise/BatchNorm/decoder/decoder_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  55. decoder/decoder_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 256, 1]
+       Dtype: float32
+       Parameters: 2,304
+
+  56. decoder/decoder_conv1_pointwise/BatchNorm/decoder/decoder_conv1_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  57. decoder/decoder_conv1_pointwise/BatchNorm/decoder/decoder_conv1_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  58. decoder/decoder_conv1_pointwise/BatchNorm/decoder/decoder_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  59. decoder/decoder_conv1_pointwise/BatchNorm/decoder/decoder_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  60. decoder/decoder_conv1_pointwise/weights
+       Shape: [1, 1, 256, 256]
+       Dtype: float32
+       Parameters: 65,536
+
+  61. decoder/feature_projection0/BatchNorm/decoder/feature_projection0/BatchNorm/beta
+       Shape: [48]
+       Dtype: float32
+       Parameters: 48
+
+  62. decoder/feature_projection0/BatchNorm/decoder/feature_projection0/BatchNorm/gamma
+       Shape: [48]
+       Dtype: float32
+       Parameters: 48
+
+  63. decoder/feature_projection0/BatchNorm/decoder/feature_projection0/BatchNorm/moving_mean
+       Shape: [48]
+       Dtype: float32
+       Parameters: 48
+
+  64. decoder/feature_projection0/BatchNorm/decoder/feature_projection0/BatchNorm/moving_variance
+       Shape: [48]
+       Dtype: float32
+       Parameters: 48
+
+  65. decoder/feature_projection0/weights
+       Shape: [1, 1, 256, 48]
+       Dtype: float32
+       Parameters: 12,288
+
+  66. global_step
+       Shape: []
+       Dtype: int64
+       Parameters: 0
+
+  67. image_pooling/BatchNorm/image_pooling/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  68. image_pooling/BatchNorm/image_pooling/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  69. image_pooling/BatchNorm/image_pooling/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  70. image_pooling/BatchNorm/image_pooling/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+  71. image_pooling/weights
+       Shape: [1, 1, 2048, 256]
+       Dtype: float32
+       Parameters: 524,288
+
+  72. logits/semantic/biases
+       Shape: [2]
+       Dtype: float32
+       Parameters: 2
+
+  73. logits/semantic/weights
+       Shape: [1, 1, 256, 2]
+       Dtype: float32
+       Parameters: 512
+
+  74. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+  75. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+  76. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+  77. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+  78. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 64, 1]
+       Dtype: float32
+       Parameters: 576
+
+  79. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  80. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  81. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  82. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  83. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 64, 128]
+       Dtype: float32
+       Parameters: 8,192
+
+  84. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  85. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  86. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  87. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  88. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 128, 1]
+       Dtype: float32
+       Parameters: 1,152
+
+  89. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  90. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  91. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  92. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  93. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 128, 128]
+       Dtype: float32
+       Parameters: 16,384
+
+  94. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  95. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  96. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  97. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+  98. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 128, 1]
+       Dtype: float32
+       Parameters: 1,152
+
+  99. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 100. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 101. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 102. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 103. xception_65/entry_flow/block1/unit_1/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 128, 128]
+       Dtype: float32
+       Parameters: 16,384
+
+ 104. xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/beta
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 105. xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/gamma
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 106. xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/moving_mean
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 107. xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block1/unit_1/xception_module/shortcut/BatchNorm/moving_variance
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 108. xception_65/entry_flow/block1/unit_1/xception_module/shortcut/weights
+       Shape: [1, 1, 64, 128]
+       Dtype: float32
+       Parameters: 8,192
+
+ 109. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 110. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 111. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 112. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [128]
+       Dtype: float32
+       Parameters: 128
+
+ 113. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 128, 1]
+       Dtype: float32
+       Parameters: 1,152
+
+ 114. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 115. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 116. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 117. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 118. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 128, 256]
+       Dtype: float32
+       Parameters: 32,768
+
+ 119. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 120. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 121. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 122. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 123. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 256, 1]
+       Dtype: float32
+       Parameters: 2,304
+
+ 124. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 125. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 126. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 127. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 128. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 256, 256]
+       Dtype: float32
+       Parameters: 65,536
+
+ 129. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 130. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 131. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 132. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 133. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 256, 1]
+       Dtype: float32
+       Parameters: 2,304
+
+ 134. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 135. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 136. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 137. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 138. xception_65/entry_flow/block2/unit_1/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 256, 256]
+       Dtype: float32
+       Parameters: 65,536
+
+ 139. xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 140. xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 141. xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 142. xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block2/unit_1/xception_module/shortcut/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 143. xception_65/entry_flow/block2/unit_1/xception_module/shortcut/weights
+       Shape: [1, 1, 128, 256]
+       Dtype: float32
+       Parameters: 32,768
+
+ 144. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 145. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 146. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 147. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [256]
+       Dtype: float32
+       Parameters: 256
+
+ 148. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 256, 1]
+       Dtype: float32
+       Parameters: 2,304
+
+ 149. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 150. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 151. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 152. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 153. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 256, 728]
+       Dtype: float32
+       Parameters: 186,368
+
+ 154. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 155. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 156. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 157. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 158. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 159. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 160. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 161. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 162. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 163. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 164. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 165. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 166. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 167. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 168. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 169. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 170. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 171. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 172. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 173. xception_65/entry_flow/block3/unit_1/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 174. xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 175. xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 176. xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 177. xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/xception_65/entry_flow/block3/unit_1/xception_module/shortcut/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 178. xception_65/entry_flow/block3/unit_1/xception_module/shortcut/weights
+       Shape: [1, 1, 256, 728]
+       Dtype: float32
+       Parameters: 186,368
+
+ 179. xception_65/entry_flow/conv1_1/BatchNorm/xception_65/entry_flow/conv1_1/BatchNorm/beta
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+
+ 180. xception_65/entry_flow/conv1_1/BatchNorm/xception_65/entry_flow/conv1_1/BatchNorm/gamma
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+
+ 181. xception_65/entry_flow/conv1_1/BatchNorm/xception_65/entry_flow/conv1_1/BatchNorm/moving_mean
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+
+ 182. xception_65/entry_flow/conv1_1/BatchNorm/xception_65/entry_flow/conv1_1/BatchNorm/moving_variance
+       Shape: [32]
+       Dtype: float32
+       Parameters: 32
+
+ 183. xception_65/entry_flow/conv1_1/weights
+       Shape: [3, 3, 3, 32]
+       Dtype: float32
+       Parameters: 864
+
+ 184. xception_65/entry_flow/conv1_2/BatchNorm/xception_65/entry_flow/conv1_2/BatchNorm/beta
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+ 185. xception_65/entry_flow/conv1_2/BatchNorm/xception_65/entry_flow/conv1_2/BatchNorm/gamma
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+ 186. xception_65/entry_flow/conv1_2/BatchNorm/xception_65/entry_flow/conv1_2/BatchNorm/moving_mean
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+ 187. xception_65/entry_flow/conv1_2/BatchNorm/xception_65/entry_flow/conv1_2/BatchNorm/moving_variance
+       Shape: [64]
+       Dtype: float32
+       Parameters: 64
+
+ 188. xception_65/entry_flow/conv1_2/weights
+       Shape: [3, 3, 32, 64]
+       Dtype: float32
+       Parameters: 18,432
+
+ 189. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 190. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 191. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 192. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 193. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 194. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 195. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 196. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 197. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 198. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 199. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 200. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 201. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 202. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 203. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 204. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 205. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 206. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 207. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 208. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 1024]
+       Dtype: float32
+       Parameters: 745,472
+
+ 209. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 210. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 211. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 212. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 213. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 1024, 1]
+       Dtype: float32
+       Parameters: 9,216
+
+ 214. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 215. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 216. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 217. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 218. xception_65/exit_flow/block1/unit_1/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 1024, 1024]
+       Dtype: float32
+       Parameters: 1,048,576
+
+ 219. xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/beta
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 220. xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/gamma
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 221. xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/moving_mean
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 222. xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/xception_65/exit_flow/block1/unit_1/xception_module/shortcut/BatchNorm/moving_variance
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 223. xception_65/exit_flow/block1/unit_1/xception_module/shortcut/weights
+       Shape: [1, 1, 728, 1024]
+       Dtype: float32
+       Parameters: 745,472
+
+ 224. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 225. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 226. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 227. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [1024]
+       Dtype: float32
+       Parameters: 1,024
+
+ 228. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 1024, 1]
+       Dtype: float32
+       Parameters: 9,216
+
+ 229. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 230. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 231. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 232. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 233. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 1024, 1536]
+       Dtype: float32
+       Parameters: 1,572,864
+
+ 234. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 235. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 236. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 237. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 238. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 1536, 1]
+       Dtype: float32
+       Parameters: 13,824
+
+ 239. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 240. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 241. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 242. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 243. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 1536, 1536]
+       Dtype: float32
+       Parameters: 2,359,296
+
+ 244. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 245. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 246. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 247. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [1536]
+       Dtype: float32
+       Parameters: 1,536
+
+ 248. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 1536, 1]
+       Dtype: float32
+       Parameters: 13,824
+
+ 249. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+ 250. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+ 251. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+ 252. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [2048]
+       Dtype: float32
+       Parameters: 2,048
+
+ 253. xception_65/exit_flow/block2/unit_1/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 1536, 2048]
+       Dtype: float32
+       Parameters: 3,145,728
+
+ 254. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 255. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 256. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 257. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 258. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 259. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 260. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 261. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 262. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 263. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 264. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 265. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 266. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 267. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 268. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 269. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 270. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 271. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 272. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 273. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 274. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 275. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 276. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 277. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 278. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 279. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 280. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 281. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 282. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 283. xception_65/middle_flow/block1/unit_1/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 284. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 285. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 286. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 287. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 288. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 289. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 290. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 291. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 292. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 293. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 294. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 295. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 296. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 297. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 298. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 299. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 300. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 301. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 302. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 303. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 304. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 305. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 306. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 307. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 308. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 309. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 310. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 311. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 312. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 313. xception_65/middle_flow/block1/unit_10/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 314. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 315. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 316. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 317. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 318. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 319. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 320. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 321. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 322. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 323. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 324. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 325. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 326. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 327. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 328. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 329. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 330. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 331. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 332. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 333. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 334. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 335. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 336. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 337. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 338. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 339. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 340. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 341. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 342. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 343. xception_65/middle_flow/block1/unit_11/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 344. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 345. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 346. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 347. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 348. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 349. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 350. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 351. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 352. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 353. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 354. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 355. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 356. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 357. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 358. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 359. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 360. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 361. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 362. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 363. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 364. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 365. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 366. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 367. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 368. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 369. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 370. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 371. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 372. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 373. xception_65/middle_flow/block1/unit_12/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 374. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 375. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 376. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 377. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 378. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 379. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 380. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 381. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 382. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 383. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 384. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 385. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 386. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 387. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 388. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 389. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 390. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 391. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 392. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 393. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 394. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 395. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 396. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 397. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 398. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 399. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 400. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 401. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 402. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 403. xception_65/middle_flow/block1/unit_13/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 404. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 405. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 406. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 407. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 408. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 409. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 410. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 411. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 412. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 413. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 414. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 415. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 416. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 417. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 418. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 419. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 420. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 421. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 422. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 423. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 424. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 425. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 426. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 427. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 428. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 429. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 430. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 431. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 432. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 433. xception_65/middle_flow/block1/unit_14/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 434. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 435. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 436. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 437. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 438. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 439. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 440. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 441. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 442. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 443. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 444. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 445. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 446. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 447. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 448. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 449. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 450. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 451. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 452. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 453. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 454. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 455. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 456. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 457. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 458. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 459. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 460. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 461. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 462. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 463. xception_65/middle_flow/block1/unit_15/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 464. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 465. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 466. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 467. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 468. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 469. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 470. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 471. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 472. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 473. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 474. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 475. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 476. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 477. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 478. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 479. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 480. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 481. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 482. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 483. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 484. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 485. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 486. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 487. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 488. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 489. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 490. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 491. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 492. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 493. xception_65/middle_flow/block1/unit_16/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 494. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 495. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 496. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 497. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 498. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 499. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 500. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 501. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 502. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 503. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 504. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 505. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 506. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 507. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 508. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 509. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 510. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 511. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 512. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 513. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 514. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 515. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 516. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 517. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 518. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 519. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 520. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 521. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 522. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 523. xception_65/middle_flow/block1/unit_2/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 524. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 525. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 526. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 527. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 528. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 529. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 530. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 531. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 532. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 533. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 534. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 535. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 536. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 537. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 538. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 539. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 540. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 541. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 542. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 543. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 544. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 545. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 546. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 547. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 548. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 549. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 550. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 551. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 552. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 553. xception_65/middle_flow/block1/unit_3/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 554. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 555. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 556. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 557. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 558. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 559. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 560. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 561. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 562. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 563. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 564. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 565. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 566. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 567. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 568. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 569. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 570. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 571. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 572. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 573. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 574. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 575. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 576. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 577. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 578. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 579. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 580. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 581. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 582. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 583. xception_65/middle_flow/block1/unit_4/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 584. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 585. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 586. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 587. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 588. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 589. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 590. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 591. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 592. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 593. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 594. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 595. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 596. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 597. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 598. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 599. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 600. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 601. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 602. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 603. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 604. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 605. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 606. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 607. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 608. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 609. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 610. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 611. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 612. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 613. xception_65/middle_flow/block1/unit_5/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 614. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 615. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 616. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 617. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 618. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 619. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 620. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 621. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 622. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 623. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 624. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 625. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 626. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 627. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 628. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 629. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 630. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 631. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 632. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 633. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 634. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 635. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 636. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 637. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 638. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 639. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 640. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 641. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 642. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 643. xception_65/middle_flow/block1/unit_6/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 644. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 645. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 646. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 647. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 648. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 649. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 650. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 651. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 652. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 653. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 654. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 655. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 656. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 657. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 658. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 659. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 660. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 661. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 662. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 663. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 664. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 665. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 666. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 667. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 668. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 669. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 670. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 671. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 672. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 673. xception_65/middle_flow/block1/unit_7/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 674. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 675. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 676. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 677. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 678. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 679. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 680. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 681. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 682. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 683. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 684. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 685. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 686. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 687. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 688. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 689. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 690. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 691. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 692. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 693. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 694. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 695. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 696. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 697. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 698. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 699. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 700. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 701. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 702. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 703. xception_65/middle_flow/block1/unit_8/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 704. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 705. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 706. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 707. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 708. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 709. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 710. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 711. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 712. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 713. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv1_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 714. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 715. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 716. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 717. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 718. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 719. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 720. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 721. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 722. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 723. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv2_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+ 724. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 725. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 726. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 727. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 728. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_depthwise/depthwise_weights
+       Shape: [3, 3, 728, 1]
+       Dtype: float32
+       Parameters: 6,552
+
+ 729. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/beta
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 730. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/gamma
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 731. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/moving_mean
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 732. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/BatchNorm/moving_variance
+       Shape: [728]
+       Dtype: float32
+       Parameters: 728
+
+ 733. xception_65/middle_flow/block1/unit_9/xception_module/separable_conv3_pointwise/weights
+       Shape: [1, 1, 728, 728]
+       Dtype: float32
+       Parameters: 529,984
+
+
+================================================================================
+INSPECTION COMPLETE
+================================================================================
+

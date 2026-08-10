@@ -39,7 +39,7 @@ def _realdiv_maybe_zero(x, y):
 
 def _running_total(value, shape, name=None):
   """Maintains a running total of tensor `value` between calls."""
-  with tf.variable_scope(name, 'running_total', [value]):
+  with tf.compat.v1.variable_scope(name, 'running_total', [value]):
     total_var = tf.get_variable(
         'total',
         shape,
@@ -122,7 +122,7 @@ def streaming_panoptic_quality(groundtruth_categories,
       tf.float64,
       tf.float64,
   ]
-  with tf.variable_scope(name, 'streaming_panoptic_quality', input_args):
+  with tf.compat.v1.variable_scope(name, 'streaming_panoptic_quality', input_args):
     panoptic_results = tf.py_func(
         _panoptic_quality_helper, input_args, return_types, stateful=False)
     iou, tp, fn, fp = tuple(panoptic_results)
@@ -215,7 +215,7 @@ def streaming_parsing_covering(groundtruth_categories,
       tf.float64,
       tf.float64,
   ]
-  with tf.variable_scope(name, 'streaming_parsing_covering', input_args):
+  with tf.compat.v1.variable_scope(name, 'streaming_parsing_covering', input_args):
     covering_results = tf.py_func(
         _parsing_covering_helper, input_args, return_types, stateful=False)
     weighted_iou_per_class, gt_area_per_class = tuple(covering_results)

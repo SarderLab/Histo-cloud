@@ -62,5 +62,6 @@ def save_annotation(label,
       colored_label = 255. * colored_label
 
   pil_image = img.fromarray(colored_label.astype(dtype=np.uint8))
-  with tf.gfile.Open('%s/%s.png' % (save_dir, filename), mode='w') as f:
+  # Use TF2-style gfile API and write in binary mode to ensure correct PNG write.
+  with tf.io.gfile.GFile('%s/%s.png' % (save_dir, filename), 'wb') as f:
     pil_image.save(f, 'PNG')

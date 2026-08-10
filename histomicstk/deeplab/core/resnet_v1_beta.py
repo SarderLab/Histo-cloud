@@ -30,12 +30,10 @@ from __future__ import print_function
 import functools
 from six.moves import range
 import tensorflow as tf
-from tensorflow.contrib import slim as contrib_slim
+import tf_slim as slim
 from deeplab.core import conv2d_ws
 from deeplab.core import utils
-from tensorflow.contrib.slim.nets import resnet_utils
-
-slim = contrib_slim
+from tf_slim.nets import resnet_utils
 
 _DEFAULT_MULTI_GRID = [1, 1, 1]
 _DEFAULT_MULTI_GRID_RESNET_18 = [1, 1]
@@ -73,7 +71,7 @@ def bottleneck(inputs,
   Returns:
     The ResNet unit's output.
   """
-  with tf.variable_scope(scope, 'bottleneck_v1', [inputs]) as sc:
+  with tf.compat.v1.variable_scope(scope, 'bottleneck_v1', [inputs]) as sc:
     depth_in = slim.utils.last_dimension(inputs.get_shape(), min_rank=4)
     if depth == depth_in:
       shortcut = resnet_utils.subsample(inputs, stride, 'shortcut')
@@ -128,7 +126,7 @@ def lite_bottleneck(inputs,
   Returns:
     The ResNet unit's output.
   """
-  with tf.variable_scope(scope, 'lite_bottleneck_v1', [inputs]) as sc:
+  with tf.compat.v1.variable_scope(scope, 'lite_bottleneck_v1', [inputs]) as sc:
     depth_in = slim.utils.last_dimension(inputs.get_shape(), min_rank=4)
     if depth == depth_in:
       shortcut = resnet_utils.subsample(inputs, stride, 'shortcut')
@@ -238,7 +236,7 @@ def resnet_v1_beta(inputs,
                                       stride=2,
                                       scope='conv1')
   batch_norm = utils.get_batch_norm_fn(sync_batch_norm_method)
-  with tf.variable_scope(scope, 'resnet_v1', [inputs], reuse=reuse) as sc:
+  with tf.compat.v1.variable_scope(scope, 'resnet_v1', [inputs], reuse=reuse) as sc:
     end_points_collection = sc.original_name_scope + '_end_points'
     with slim.arg_scope([
         conv2d_ws.conv2d, bottleneck, lite_bottleneck,

@@ -21,15 +21,27 @@ See model.py for more details and usage.
 import numpy as np
 import six
 import tensorflow as tf
-from tensorflow.contrib import metrics as contrib_metrics
-from tensorflow.contrib import quantize as contrib_quantize
-from tensorflow.contrib import tfprof as contrib_tfprof
-from tensorflow.contrib import training as contrib_training
+try:
+  from tensorflow.contrib import metrics as contrib_metrics
+except Exception:
+  contrib_metrics = None
+try:
+  from tensorflow.contrib import quantize as contrib_quantize
+except Exception:
+  contrib_quantize = None
+try:
+  from tensorflow.contrib import tfprof as contrib_tfprof
+except Exception:
+  contrib_tfprof = None
+try:
+  from tensorflow.contrib import training as contrib_training
+except Exception:
+  contrib_training = None
 from deeplab import common
 from deeplab import model
 from deeplab.datasets import data_generator
 
-flags = tf.app.flags
+from absl import flags
 FLAGS = flags.FLAGS
 
 flags.DEFINE_string('master', '', 'BNS name of the tensorflow server')
@@ -105,7 +117,7 @@ def main(unused_argv):
       should_shuffle=False,
       should_repeat=False)
 
-  tf.gfile.MakeDirs(FLAGS.eval_logdir)
+  tf.io.gfile.makedirs(FLAGS.eval_logdir)
   tf.logging.info('Evaluating on %s set', FLAGS.eval_split)
 
   with tf.Graph().as_default():
@@ -141,7 +153,7 @@ def main(unused_argv):
     predictions = predictions[common.OUTPUT_TYPE]
     predictions = tf.reshape(predictions, shape=[-1])
     labels = tf.reshape(samples[common.LABEL], shape=[-1])
-    weights = tf.to_float(tf.not_equal(labels, dataset.ignore_label))
+    weights = tf.cast(tf.not_equal(labels, dataset.ignore_label), tf.float32)
 
     # Set ignore_label regions to label 0, because metrics.mean_iou requires
     # range of labels = [0, dataset.num_classes). Note the ignore_label regions

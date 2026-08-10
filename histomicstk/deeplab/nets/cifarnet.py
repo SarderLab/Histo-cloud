@@ -22,8 +22,7 @@ import tensorflow.compat.v1 as tf
 import tf_slim as slim
 
 # pylint: disable=g-long-lambda
-trunc_normal = lambda stddev: tf.truncated_normal_initializer(
-    stddev=stddev)
+trunc_normal = lambda stddev: tf.compat.v1.truncated_normal_initializer(stddev=stddev)
 
 
 def cifarnet(images, num_classes=10, is_training=False,

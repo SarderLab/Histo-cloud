@@ -36,26 +36,34 @@ from __future__ import print_function
 
 from six.moves import range
 import tensorflow as tf
-from tensorflow.contrib import framework as contrib_framework
-from tensorflow.contrib import layers as contrib_layers
-from tensorflow.contrib import slim as contrib_slim
-from tensorflow.contrib import training as contrib_training
+import tf_slim as slim
+from tensorflow.keras import regularizers as keras_regularizers
+from tensorflow.keras import initializers as keras_initializers
 
 from deeplab.core import nas_genotypes
 from deeplab.core import utils
 from deeplab.core.nas_cell import NASBaseCell
-from tensorflow.contrib.slim.nets import resnet_utils
+from tf_slim.nets import resnet_utils
 
-arg_scope = contrib_framework.arg_scope
-slim = contrib_slim
+# tf_slim's arg_scope
+arg_scope = slim.arg_scope
 resize_bilinear = utils.resize_bilinear
 scale_dimension = utils.scale_dimension
+
+#Simple HParams replacement compatible with the subset of APIs used here.
+class HParams(object):
+  def __init__(self, **kwargs):
+    for k, v in kwargs.items():
+      setattr(self, k, v)
+
+  def set_hparam(self, name, value):
+    setattr(self, name, value)
 
 
 def config(num_conv_filters=20,
            total_training_steps=500000,
            drop_path_keep_prob=1.0):
-  return contrib_training.HParams(
+  return HParams(
       # Multiplier when spatial size is reduced by 2.
       filter_scaling_rate=2.0,
       # Number of filters of the stem output tensor.
@@ -80,9 +88,10 @@ def nas_arg_scope(weight_decay=4e-5,
       'scale': True,
   }
   batch_norm = utils.get_batch_norm_fn(sync_batch_norm_method)
-  weights_regularizer = contrib_layers.l2_regularizer(weight_decay)
-  weights_initializer = contrib_layers.variance_scaling_initializer(
-      factor=1 / 3.0, mode='FAN_IN', uniform=True)
+  # Use Keras regularizer/initializer equivalents
+  weights_regularizer = keras_regularizers.l2(weight_decay)
+  weights_initializer = keras_initializers.VarianceScaling(
+      scale=1 / 3.0, mode='fan_in', distribution='uniform')
   with arg_scope([slim.fully_connected, slim.conv2d, slim.separable_conv2d],
                  weights_regularizer=weights_regularizer,
                  weights_initializer=weights_initializer):
@@ -152,7 +161,7 @@ def _build_nas_base(images,
   Raises:
     ValueError: If output_stride is not a multiple of backbone output stride.
   """
-  with tf.variable_scope(scope, 'nas', [images], reuse=reuse):
+  with tf.compat.v1.variable_scope(scope, 'nas', [images], reuse=reuse):
     end_points = {}
     def add_and_check_endpoint(endpoint_name, net):
       end_points[endpoint_name] = net
@@ -183,8 +192,8 @@ def _build_nas_base(images,
             pass
           else:
             # Scale features by a factor of 2.
-            scaled_height = scale_dimension(net.shape[1].value, 2)
-            scaled_width = scale_dimension(net.shape[2].value, 2)
+            scaled_height = scale_dimension(tf.shape(net)[1], 2)
+            scaled_width = scale_dimension(tf.shape(net)[2], 2)
             net = resize_bilinear(net, [scaled_height, scaled_width], net.dtype)
           filter_scaling /= hparams.filter_scaling_rate
       net = cell(

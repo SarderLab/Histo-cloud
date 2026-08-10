@@ -34,8 +34,6 @@ with warnings.catch_warnings():
     import numpy as np
     from six.moves import range
     import tensorflow as tf
-    from tensorflow.contrib import quantize as contrib_quantize
-    from tensorflow.contrib import training as contrib_training
     from deeplab import common
     from deeplab import model
     from deeplab.datasets import wsi_data_generator
@@ -44,7 +42,7 @@ with warnings.catch_warnings():
     from deeplab.utils.xml_to_json import convert_xml_json
     from deeplab.progress_helper import ProgressHelper
 
-flags = tf.app.flags
+flags = tf.compat.v1.flags
 
 FLAGS = flags.FLAGS
 
@@ -217,7 +215,7 @@ def main(unused_argv):
       os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
       os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.gpu
 
-      tf.logging.set_verbosity(tf.logging.INFO)
+      tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.INFO)
 
       # Get dataset-dependent information.
       dataset = wsi_data_generator.Dataset(
@@ -248,10 +246,10 @@ def main(unused_argv):
 
       with tf.Graph().as_default():
           checkpoint_path = FLAGS.checkpoint_dir
-          config = tf.ConfigProto()
+          config = tf.compat.v1.ConfigProto()
           config.gpu_options.allow_growth = True
-          scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
-          session_creator = tf.train.ChiefSessionCreator(
+          scaffold = tf.compat.v1.train.Scaffold(init_op=tf.compat.v1.global_variables_initializer())
+          session_creator = tf.compat.v1.train.ChiefSessionCreator(
                 scaffold=scaffold,
                 master=FLAGS.master,
                 config=config,
@@ -278,7 +276,7 @@ def main(unused_argv):
                   atrous_rates=FLAGS.atrous_rates,
                   output_stride=FLAGS.output_stride)
 
-              tf.logging.info('Performing WSI patch detection.\n')
+              tf.compat.v1.logging.info('Performing WSI patch detection.\n')
               predictions = model.predict_labels(
                     samples[common.IMAGE],
                     model_options=model_options,
@@ -301,11 +299,11 @@ def main(unused_argv):
               slide_mask = np.zeros([mask_size[0], mask_size[1]], dtype=np.uint8)
               slide_heatmap = np.zeros([mask_size[0], mask_size[1], FLAGS.num_classes], dtype=np.float16)
 
-              tf.train.get_or_create_global_step()
+              tf.compat.v1.train.get_or_create_global_step()
               if FLAGS.quantize_delay_step >= 0:
-                  contrib_quantize.create_eval_graph()
+                  tf.contrib.quantization.create_eval_graph()
 
-              with tf.train.MonitoredSession(
+              with tf.compat.v1.train.MonitoredSession(
                   session_creator=session_creator, hooks=None) as sess:
                   batch = 0
                   image_id_offset = 0
@@ -405,5 +403,5 @@ def main(unused_argv):
 if __name__ == '__main__':
   flags.mark_flag_as_required('checkpoint_dir')
   flags.mark_flag_as_required('dataset_dir')
-  tf.app.run()
+  tf.compat.v1.app.run()
   print('\n\nall done.')

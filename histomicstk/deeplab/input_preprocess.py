@@ -70,9 +70,9 @@ def preprocess_image_and_label(image,
   if is_training and label is None:
     raise ValueError('During training, label must be provided.')
   if model_variant is None:
-    tf.logging.warning('Default mean-subtraction is performed. Please specify '
-                       'a model_variant. See feature_extractor.network_map for '
-                       'supported model variants.')
+    tf.compat.v1.logging.warning('Default mean-subtraction is performed. Please specify '
+                                 'a model_variant. See feature_extractor.network_map for '
+                                 'supported model variants.')
 
   # Keep reference to original image.
   original_image = image

@@ -140,6 +140,8 @@ def get_patch_from_points(filename, point, patch_size, downsample=1, wsi=None, c
 
     # create zeros mask to pass - NOT USED LATER
     mask = np.zeros([patch_size,patch_size], dtype=np.uint8)
+    # ensure channel-last shape [H,W,1] to match graph expectations
+    mask = np.expand_dims(mask, -1)
     # print('t2: {}'.format(time.time()-t))
 
     return [region, mask, imageID]

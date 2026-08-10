@@ -20,8 +20,12 @@ from __future__ import print_function
 
 import tensorflow.compat.v1 as tf
 import tf_slim as slim
+from absl import flags
 
-from tensorflow.contrib import quantize as contrib_quantize
+try:
+  from tensorflow.contrib import quantize as contrib_quantize
+except Exception:
+  contrib_quantize = None
 
 from datasets import dataset_factory
 from deployment import model_deploy
@@ -45,7 +49,7 @@ tf.app.flags.DEFINE_integer('num_clones', 1,
                             'out and learning rate decay happen per clone '
                             'epochs')
 
-tf.app.flags.DEFINE_boolean('clone_on_cpu', False,
+flags.DEFINE_bool('clone_on_cpu', False,
                             'Use CPUs to deploy clones.')
 
 tf.app.flags.DEFINE_integer('worker_replicas', 1, 'Number of worker replicas.')

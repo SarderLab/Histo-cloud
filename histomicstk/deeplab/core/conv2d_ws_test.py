@@ -116,7 +116,7 @@ class ConvolutionTest(tf.test.TestCase):
         called[0] += 1
         return getter(*args, **kwargs)
 
-      with tf.variable_scope('test', custom_getter=custom_getter):
+      with tf.compat.v1.variable_scope('test', custom_getter=custom_getter):
         images = tf.random_uniform((5, height, width, 32), seed=1)
         conv2d_ws.conv2d(images, 64, images.get_shape()[1:3])
       self.assertEqual(called[0], 2)  # Custom getter called twice.
